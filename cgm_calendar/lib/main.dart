@@ -1,4 +1,4 @@
-import 'package:cgm_calendar/year_page.dart';
+import 'package:cgm_calendar/pages/year_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -33,7 +33,7 @@ class CgmCalanderApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
-      home: const YearPage(),
+      home: YearPage(),
     );
   }
 }

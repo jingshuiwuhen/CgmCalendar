@@ -1,7 +1,24 @@
 import 'package:flutter/material.dart';
 
-class YearPage extends StatelessWidget {
-  const YearPage({Key? key}) : super(key: key);
+class YearPage extends StatefulWidget {
+  YearPage({Key? key}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => _YearPageState();
+}
+
+class _YearPageState extends State<YearPage> {
+  List<String> data = [
+    "2018",
+    "2019",
+    "2020",
+    "2021",
+    "2022",
+    "2023",
+    "2024",
+    "2025",
+    "2026",
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +75,22 @@ class YearPage extends StatelessWidget {
               ),
             ],
           ),
+        ),
+      ),
+      body: NotificationListener<ScrollNotification>(
+        onNotification: (notification) {
+          debugPrint("scroll : ${notification.metrics.pixels}");
+          debugPrint("max : ${notification.metrics.maxScrollExtent}");
+          return true;
+        },
+        child: ListView.builder(
+          itemCount: data.length,
+          itemBuilder: ((context, index) {
+            return Container(
+              margin: const EdgeInsets.all(10),
+              child: Text(data[index]),
+            );
+          }),
         ),
       ),
     );
