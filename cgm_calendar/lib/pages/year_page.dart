@@ -1,5 +1,87 @@
+import 'package:cgm_calendar/model/year_page_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
+import 'package:provider/provider.dart';
+
+class YearPage extends StatelessWidget {
+  bool _needCalculate = false;
+
+  YearPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.red,
+        elevation: 1,
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.add,
+            ),
+          )
+        ],
+      ),
+      bottomNavigationBar: Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey,
+              blurRadius: 1,
+            )
+          ],
+        ),
+        child: SafeArea(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.calendar_today,
+                  color: Colors.red,
+                ),
+              ),
+              const Spacer(),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.menu,
+                  color: Colors.red,
+                ),
+              ),
+              const Spacer(),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.info_outline,
+                  color: Colors.red,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      body: ChangeNotifierProvider(
+        create: (_) => YearPageModel(),
+        child: NotificationListener<ScrollNotification>(
+          onNotification: (notification) {
+            return true;
+          },
+          child: CustomScrollView(
+            slivers: [
+              SliverList(
+                delegate: SliverChildBuilderDelegate(),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 class YearPage extends StatefulWidget {
   YearPage({Key? key}) : super(key: key);
