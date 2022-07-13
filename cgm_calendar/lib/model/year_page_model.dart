@@ -17,18 +17,11 @@ class YearPageModel with ChangeNotifier {
   void initData() {
     oldYears.clear();
     newYears.clear();
-    _addOldYears();
-    _addNewYears();
-    notifyListeners();
+    addOldYears(false);
+    addNewYears(true);
   }
 
-  void addData() {
-    _addOldYears();
-    _addNewYears();
-    notifyListeners();
-  }
-
-  void _addOldYears() {
+  void addOldYears(bool refresh) {
     int lastYear = DateTime.now().year - 1;
     if (oldYears.isNotEmpty) {
       lastYear = oldYears.last.year - 1;
@@ -37,9 +30,13 @@ class YearPageModel with ChangeNotifier {
       var dateModel = DateModel(lastYear - i);
       oldYears.add(dateModel);
     }
+
+    if (refresh) {
+      notifyListeners();
+    }
   }
 
-  void _addNewYears() {
+  void addNewYears(bool refresh) {
     int beginYear = DateTime.now().year;
     if (newYears.isNotEmpty) {
       beginYear = newYears.last.year + 1;
@@ -47,6 +44,10 @@ class YearPageModel with ChangeNotifier {
     for (var i = 0; i < _length; i++) {
       var dateModel = DateModel(beginYear + i);
       newYears.add(dateModel);
+    }
+
+    if (refresh) {
+      notifyListeners();
     }
   }
 }
