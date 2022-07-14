@@ -123,7 +123,9 @@ class YearPage extends StatelessWidget {
               SliverList(
                 delegate: SliverChildBuilderDelegate(
                   ((context, index) {
-                    return const CellOneYear();
+                    return CellOneYear(
+                      yearModel: context.watch<YearPageModel>().oldYears[index],
+                    );
                   }),
                   childCount: context.watch<YearPageModel>().oldYears.length,
                 ),
@@ -132,20 +134,8 @@ class YearPage extends StatelessWidget {
                 key: _centerKey,
                 delegate: SliverChildBuilderDelegate(
                   ((context, index) {
-                    return Container(
-                      height: 100,
-                      decoration: const BoxDecoration(
-                          border: Border(
-                              bottom:
-                                  BorderSide(color: Colors.black, width: 1))),
-                      margin: const EdgeInsets.all(10),
-                      child: Text(
-                        context
-                            .watch<YearPageModel>()
-                            .newYears[index]
-                            .year
-                            .toString(),
-                      ),
+                    return CellOneYear(
+                      yearModel: context.watch<YearPageModel>().newYears[index],
                     );
                   }),
                   childCount: context.watch<YearPageModel>().newYears.length,

@@ -1,14 +1,57 @@
+import 'package:cgm_calendar/widgets/cell_one_month.dart';
 import 'package:flutter/material.dart';
-import 'package:relative_scale/relative_scale.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../model/year_model.dart';
 
 class CellOneYear extends StatelessWidget {
-  const CellOneYear({Key? key}) : super(key: key);
+  final YearModel yearModel;
+
+  const CellOneYear({Key? key, required this.yearModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return RelativeBuilder(
-      builder: (context, height, width, sy, sx) =>
-          Padding(padding: EdgeInsets.fromLTRB(sx(10), sy(10), sx(10), sy(10))),
+    ScreenUtil.init(context);
+    return Padding(
+      padding: EdgeInsets.fromLTRB(10.w, 10.h, 10.w, 10.h),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "${yearModel.year}年",
+            style: TextStyle(
+              color: yearModel.isThisYear() ? Colors.red : Colors.black,
+              fontSize: 30.sp,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+              top: 3.h,
+              bottom: 6.h,
+            ),
+            child: const Divider(
+              color: Colors.black,
+              thickness: 2,
+            ),
+          ),
+          GridView.builder(
+              primary: false,
+              shrinkWrap: true,
+              itemCount: yearModel.monthsOfYear.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                mainAxisSpacing: 5.w,
+                crossAxisSpacing: 5.h,
+              ),
+              itemBuilder: (context, index) {
+                return CellOneMonth(
+                  monthModel: yearModel.monthsOfYear[index],
+                );
+              }),
+        ],
+      ),
     );
   }
 }

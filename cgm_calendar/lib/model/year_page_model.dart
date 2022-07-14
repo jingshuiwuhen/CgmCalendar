@@ -1,18 +1,18 @@
-import 'package:cgm_calendar/model/date_model.dart';
+import 'package:cgm_calendar/model/year_model.dart';
 import 'package:flutter/material.dart';
 
 class YearPageModel with ChangeNotifier {
   static const int _length = 10;
 
-  final List<DateModel> _oldYears = [];
-  final List<DateModel> _newYears = [];
+  final List<YearModel> _oldYears = [];
+  final List<YearModel> _newYears = [];
 
   YearPageModel() {
     initData();
   }
 
-  List<DateModel> get oldYears => _oldYears;
-  List<DateModel> get newYears => _newYears;
+  List<YearModel> get oldYears => _oldYears;
+  List<YearModel> get newYears => _newYears;
 
   void initData() {
     oldYears.clear();
@@ -27,7 +27,7 @@ class YearPageModel with ChangeNotifier {
       lastYear = oldYears.last.year - 1;
     }
     for (var i = 0; i < _length; i++) {
-      var dateModel = DateModel(lastYear - i);
+      var dateModel = YearModel(lastYear - i);
       oldYears.add(dateModel);
     }
 
@@ -42,7 +42,7 @@ class YearPageModel with ChangeNotifier {
       beginYear = newYears.last.year + 1;
     }
     for (var i = 0; i < _length; i++) {
-      var dateModel = DateModel(beginYear + i);
+      var dateModel = YearModel(beginYear + i);
       newYears.add(dateModel);
     }
 
