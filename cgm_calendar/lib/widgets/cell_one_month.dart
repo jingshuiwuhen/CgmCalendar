@@ -10,7 +10,7 @@ class CellOneMonth extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(context);
+    ScreenUtil.init(context, designSize: const Size(414, 896));
     return Padding(
       padding: EdgeInsets.fromLTRB(1.w, 1.h, 1.w, 1.h),
       child: Column(
@@ -22,6 +22,7 @@ class CellOneMonth extends StatelessWidget {
             style: TextStyle(
               color: monthModel.isThisMonth() ? Colors.red : Colors.black,
               fontSize: 20.sp,
+              fontWeight: FontWeight.bold,
             ),
           ),
           Padding(
@@ -33,28 +34,19 @@ class CellOneMonth extends StatelessWidget {
                 shrinkWrap: true,
                 itemCount: monthModel.daysOfMonth.length +
                     (monthModel.daysOfMonth[0].dayOfWeek % 7),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 7,
-                  mainAxisSpacing: 2.w,
-                  crossAxisSpacing: 2.h,
                 ),
                 itemBuilder: (context, index) {
                   if (index < (monthModel.daysOfMonth[0].dayOfWeek % 7)) {
                     return Container(
-                      color: Colors.white,
+                      color: Colors.transparent,
                     );
                   } else {
-                    return Container(
-                      color: Colors.green,
-                    );
+                    return CellOneDay(
+                        dayModel: monthModel.daysOfMonth[
+                            index - (monthModel.daysOfMonth[0].dayOfWeek % 7)]);
                   }
-                  // if (index < (monthModel.daysOfMonth[0].dayOfWeek % 7)) {
-                  //   return const Text("");
-                  // } else {
-                  //   return CellOneDay(
-                  //       dayModel: monthModel.daysOfMonth[
-                  //           index - (monthModel.daysOfMonth[0].dayOfWeek % 7)]);
-                  // }
                 }),
           ),
         ],

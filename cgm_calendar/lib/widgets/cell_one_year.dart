@@ -11,7 +11,7 @@ class CellOneYear extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(context);
+    ScreenUtil.init(context, designSize: const Size(414, 896));
     return Padding(
       padding: EdgeInsets.fromLTRB(10.w, 10.h, 10.w, 10.h),
       child: Column(
@@ -42,8 +42,9 @@ class CellOneYear extends StatelessWidget {
               itemCount: yearModel.monthsOfYear.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
-                mainAxisSpacing: 5.w,
-                crossAxisSpacing: 5.h,
+                mainAxisSpacing: 8.w,
+                crossAxisSpacing: 8.h,
+                childAspectRatio: 0.85,
               ),
               itemBuilder: (context, index) {
                 return CellOneMonth(

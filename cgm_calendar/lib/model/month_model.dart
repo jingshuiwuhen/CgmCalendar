@@ -14,7 +14,7 @@ class MonthModel {
     var firstDayWeek = DateTime(year, month, 1).weekday;
     for (var i = 1; i <= dayCount; i++) {
       DayModel dayModel = DayModel();
-      dayModel.year == year;
+      dayModel.year = year;
       dayModel.month = month;
       dayModel.dayOfMonth = i;
       dayModel.dayOfWeek = (firstDayWeek + i - 1) % 7;
