@@ -8,10 +8,8 @@ class CellOneDay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(context, designSize: const Size(414, 896));
     return Container(
       alignment: Alignment.center,
-      // padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: dayModel.isToday() ? Colors.red : Colors.transparent,

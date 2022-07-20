@@ -1,7 +1,11 @@
+import 'package:cgm_calendar/model/month_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MonthPage extends StatelessWidget {
-  const MonthPage({Key? key}) : super(key: key);
+  MonthModel monthModel;
+
+  MonthPage({Key? key, required this.monthModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +22,12 @@ class MonthPage extends StatelessWidget {
             ),
           )
         ],
+        flexibleSpace: GridView.count(
+          crossAxisCount: 7,
+          shrinkWrap: true,
+          primary: false,
+          children: _headWeekdayWidgets(),
+        ),
       ),
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
@@ -60,6 +70,37 @@ class MonthPage extends StatelessWidget {
           ),
         ),
       ),
+      body: Column(),
     );
+  }
+
+  List<Widget> _headWeekdayWidgets() {
+    List<Widget> target = List.empty(growable: true);
+    for (int i = 0; i < 7; i++) {
+      target.add(Text(
+        _weekDayName(i),
+        style: TextStyle(color: Colors.black, fontSize: 10.sp),
+      ));
+    }
+    return target;
+  }
+
+  String _weekDayName(int weekday) {
+    switch (weekday) {
+      case 0:
+        return "日";
+      case 1:
+        return "一";
+      case 2:
+        return "二";
+      case 3:
+        return "三";
+      case 4:
+        return "四";
+      case 5:
+        return "五";
+      default:
+        return "六";
+    }
   }
 }

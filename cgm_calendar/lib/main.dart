@@ -15,7 +15,6 @@ void main() {
     ],
   ).then(
     (_) async {
-      await ScreenUtil.ensureScreenSize();
       runApp(const CgmCalanderApp());
     },
   );
@@ -35,7 +34,10 @@ class CgmCalanderApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
-      home: YearPage(),
+      home: ScreenUtilInit(
+        designSize: const Size(414, 896),
+        builder: (context, child) => YearPage(),
+      ),
     );
   }
 }
