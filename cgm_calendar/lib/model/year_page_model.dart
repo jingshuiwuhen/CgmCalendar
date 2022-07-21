@@ -1,27 +1,24 @@
 import 'package:cgm_calendar/model/year_model.dart';
-import 'package:flutter/material.dart';
 
-class YearPageModel with ChangeNotifier {
-  static const int _length = 10;
+class YearPageModel {
+  static const int _length = 100;
 
   final List<YearModel> _oldYears = [];
   final List<YearModel> _newYears = [];
 
   YearPageModel() {
-    initData();
+    _initData();
   }
 
   List<YearModel> get oldYears => _oldYears;
   List<YearModel> get newYears => _newYears;
 
-  void initData() {
-    oldYears.clear();
-    newYears.clear();
-    addOldYears(false);
-    addNewYears(true);
+  void _initData() {
+    _addOldYears();
+    _addNewYears();
   }
 
-  void addOldYears(bool refresh) {
+  void _addOldYears() {
     int lastYear = DateTime.now().year - 1;
     if (oldYears.isNotEmpty) {
       lastYear = oldYears.last.year - 1;
@@ -30,13 +27,9 @@ class YearPageModel with ChangeNotifier {
       var dateModel = YearModel(lastYear - i);
       oldYears.add(dateModel);
     }
-
-    if (refresh) {
-      notifyListeners();
-    }
   }
 
-  void addNewYears(bool refresh) {
+  void _addNewYears() {
     int beginYear = DateTime.now().year;
     if (newYears.isNotEmpty) {
       beginYear = newYears.last.year + 1;
@@ -44,10 +37,6 @@ class YearPageModel with ChangeNotifier {
     for (var i = 0; i < _length; i++) {
       var dateModel = YearModel(beginYear + i);
       newYears.add(dateModel);
-    }
-
-    if (refresh) {
-      notifyListeners();
     }
   }
 }

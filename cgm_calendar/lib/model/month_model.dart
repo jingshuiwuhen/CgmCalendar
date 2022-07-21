@@ -25,4 +25,8 @@ class MonthModel {
   bool isThisMonth() {
     return year == DateTime.now().year && month == DateTime.now().month;
   }
+
+  String getYearAndMonth() {
+    return "$year年$month月";
+  }
 }

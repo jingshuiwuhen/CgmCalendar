@@ -4,11 +4,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CellOneDay extends StatelessWidget {
   final DayModel dayModel;
-  const CellOneDay({Key? key, required this.dayModel}) : super(key: key);
+  final double? fontSize;
+  final EdgeInsetsGeometry? itemMargin;
+  const CellOneDay({
+    Key? key,
+    required this.dayModel,
+    this.fontSize,
+    this.itemMargin,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: itemMargin ?? const EdgeInsets.all(0),
       alignment: Alignment.center,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
@@ -18,7 +26,7 @@ class CellOneDay extends StatelessWidget {
         dayModel.dayOfMonth.toString(),
         style: TextStyle(
           color: dayModel.isToday() ? Colors.white : Colors.black,
-          fontSize: 10.sp,
+          fontSize: fontSize ?? 10.sp,
           fontWeight: FontWeight.bold,
         ),
       ),

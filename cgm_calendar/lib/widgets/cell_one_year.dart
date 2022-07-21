@@ -42,9 +42,9 @@ class CellOneYear extends StatelessWidget {
               itemCount: yearModel.monthsOfYear.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
-                mainAxisSpacing: 4.w,
-                crossAxisSpacing: 8.h,
-                childAspectRatio: 0.85,
+                crossAxisSpacing: 8.w,
+                mainAxisSpacing: 8.h,
+                mainAxisExtent: 0.35.sw,
               ),
               itemBuilder: (context, index) {
                 return GestureDetector(

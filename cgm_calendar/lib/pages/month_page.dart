@@ -1,11 +1,12 @@
 import 'package:cgm_calendar/model/month_model.dart';
+import 'package:cgm_calendar/widgets/cell_one_month.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MonthPage extends StatelessWidget {
-  MonthModel monthModel;
+  final MonthModel monthModel;
 
-  MonthPage({Key? key, required this.monthModel}) : super(key: key);
+  const MonthPage({Key? key, required this.monthModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +15,11 @@ class MonthPage extends StatelessWidget {
         backgroundColor: Colors.white,
         foregroundColor: Colors.red,
         elevation: 1,
+        title: Text(
+          monthModel.getYearAndMonth(),
+          style: TextStyle(fontSize: 20.sp),
+        ),
+        centerTitle: true,
         actions: [
           IconButton(
             onPressed: () {},
@@ -22,11 +28,25 @@ class MonthPage extends StatelessWidget {
             ),
           )
         ],
-        flexibleSpace: GridView.count(
-          crossAxisCount: 7,
-          shrinkWrap: true,
-          primary: false,
-          children: _headWeekdayWidgets(),
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(20.h),
+          child: GridView.builder(
+            itemCount: 7,
+            shrinkWrap: true,
+            primary: false,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 7,
+              mainAxisExtent: 20.h,
+            ),
+            itemBuilder: (context, index) {
+              return Center(
+                child: Text(
+                  _weekDayName(index),
+                  style: TextStyle(color: Colors.black, fontSize: 10.sp),
+                ),
+              );
+            },
+          ),
         ),
       ),
       bottomNavigationBar: Container(
@@ -70,19 +90,22 @@ class MonthPage extends StatelessWidget {
           ),
         ),
       ),
-      body: Column(),
+      body: Column(
+        children: [
+          CellOneMonth(
+            monthModel: monthModel,
+            showTitle: false,
+            crossAxisSpacing: 10.h,
+            fontSize: 15.sp,
+            itemMargin: EdgeInsets.fromLTRB(8.w, 8.h, 8.w, 8.h),
+          ),
+          Expanded(
+              child: Container(
+            color: Colors.green,
+          )),
+        ],
+      ),
     );
-  }
-
-  List<Widget> _headWeekdayWidgets() {
-    List<Widget> target = List.empty(growable: true);
-    for (int i = 0; i < 7; i++) {
-      target.add(Text(
-        _weekDayName(i),
-        style: TextStyle(color: Colors.black, fontSize: 10.sp),
-      ));
-    }
-    return target;
   }
 
   String _weekDayName(int weekday) {
