@@ -1,4 +1,4 @@
-import 'package:cgm_calendar/model/day_model.dart';
+import 'package:cgm_calendar/models/day_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

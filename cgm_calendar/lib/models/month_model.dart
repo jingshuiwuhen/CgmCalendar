@@ -1,4 +1,4 @@
-import 'package:cgm_calendar/model/day_model.dart';
+import 'package:cgm_calendar/models/day_model.dart';
 
 class MonthModel {
   int year;
@@ -26,7 +26,11 @@ class MonthModel {
     return year == DateTime.now().year && month == DateTime.now().month;
   }
 
-  String getYearAndMonth() {
+  String getYearAndMonthStr() {
     return "$year年$month月";
+  }
+
+  String getMonthStr() {
+    return "$month月";
   }
 }

@@ -1,11 +1,10 @@
-import 'package:cgm_calendar/model/year_page_model.dart';
+import 'package:cgm_calendar/global.dart';
 import 'package:cgm_calendar/widgets/cell_one_year.dart';
 import 'package:flutter/material.dart';
 
 class YearPage extends StatelessWidget {
   final Key _centerKey = const ValueKey("second-sliver-list");
   final ScrollController _scrollController = ScrollController();
-  final YearPageModel _yearPageModel = YearPageModel();
 
   YearPage({Key? key}) : super(key: key);
 
@@ -80,10 +79,10 @@ class YearPage extends StatelessWidget {
             delegate: SliverChildBuilderDelegate(
               ((context, index) {
                 return CellOneYear(
-                  yearModel: _yearPageModel.oldYears[index],
+                  yearModel: Global.oldYears[index],
                 );
               }),
-              childCount: _yearPageModel.oldYears.length,
+              childCount: Global.oldYears.length,
             ),
           ),
           SliverList(
@@ -91,10 +90,10 @@ class YearPage extends StatelessWidget {
             delegate: SliverChildBuilderDelegate(
               ((context, index) {
                 return CellOneYear(
-                  yearModel: _yearPageModel.newYears[index],
+                  yearModel: Global.newYears[index],
                 );
               }),
-              childCount: _yearPageModel.newYears.length,
+              childCount: Global.newYears.length,
             ),
           ),
         ],

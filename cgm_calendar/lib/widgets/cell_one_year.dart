@@ -1,9 +1,9 @@
+import 'package:cgm_calendar/global.dart';
+import 'package:cgm_calendar/models/year_model.dart';
 import 'package:cgm_calendar/pages/month_page.dart';
 import 'package:cgm_calendar/widgets/cell_one_month.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../model/year_model.dart';
 
 class CellOneYear extends StatelessWidget {
   final YearModel yearModel;
@@ -19,7 +19,7 @@ class CellOneYear extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "${yearModel.year}年",
+            yearModel.getYearStr(),
             style: TextStyle(
               color: yearModel.isThisYear() ? Colors.red : Colors.black,
               fontSize: 30.sp,
@@ -49,9 +49,20 @@ class CellOneYear extends StatelessWidget {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
+                    var monthModelIndex = 0;
+                    if (yearModel.year < Global.newYears.first.year) {
+                      monthModelIndex =
+                          (Global.oldYears.last.year - yearModel.year) * 12 +
+                              index;
+                    } else {
+                      monthModelIndex += Global.oldYears.length * 12;
+                      monthModelIndex +=
+                          (yearModel.year - Global.newYears.first.year) * 12 +
+                              index;
+                    }
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: ((context) => MonthPage(
-                            monthModel: yearModel.monthsOfYear[index]))));
+                        builder: ((context) =>
+                            MonthPage(monthModelIndex: monthModelIndex))));
                   },
                   child: CellOneMonth(
                     monthModel: yearModel.monthsOfYear[index],

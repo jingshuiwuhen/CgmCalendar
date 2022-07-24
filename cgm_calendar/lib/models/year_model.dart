@@ -1,4 +1,4 @@
-import 'package:cgm_calendar/model/month_model.dart';
+import 'package:cgm_calendar/models/month_model.dart';
 
 class YearModel {
   int year;
@@ -17,5 +17,9 @@ class YearModel {
 
   bool isThisYear() {
     return year == DateTime.now().year;
+  }
+
+  String getYearStr() {
+    return "$year年";
   }
 }

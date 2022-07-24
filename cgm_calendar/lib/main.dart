@@ -1,3 +1,4 @@
+import 'package:cgm_calendar/global.dart';
 import 'package:cgm_calendar/pages/year_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,6 +16,7 @@ void main() {
     ],
   ).then(
     (_) async {
+      Global.init();
       runApp(const CgmCalanderApp());
     },
   );

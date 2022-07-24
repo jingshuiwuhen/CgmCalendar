@@ -1,4 +1,4 @@
-import 'package:cgm_calendar/model/month_model.dart';
+import 'package:cgm_calendar/models/month_model.dart';
 import 'package:cgm_calendar/widgets/cell_one_day.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -28,7 +28,7 @@ class CellOneMonth extends StatelessWidget {
         Visibility(
           visible: showTitle,
           child: Text(
-            "${monthModel.month}月",
+            monthModel.getMonthStr(),
             style: TextStyle(
               color: monthModel.isThisMonth() ? Colors.red : Colors.black,
               fontSize: 20.sp,
