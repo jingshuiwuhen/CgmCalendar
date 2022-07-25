@@ -1,4 +1,5 @@
 import 'package:cgm_calendar/global.dart';
+import 'package:cgm_calendar/pages/add_schedule_page.dart';
 import 'package:cgm_calendar/widgets/cell_one_year.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,9 @@ class YearPage extends StatelessWidget {
         elevation: 1,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).push(_createRoute());
+            },
             icon: const Icon(
               Icons.add,
             ),
@@ -98,6 +101,26 @@ class YearPage extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Route _createRoute() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          const AddSchedulePage(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, 1.0);
+        const end = Offset.zero;
+        const curve = Curves.ease;
+
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
     );
   }
 }
