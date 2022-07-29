@@ -11,6 +11,7 @@ class CellDateTimePicker extends StatelessWidget {
   final Function(DateTime) onDateChanged;
   final Function(DateTime) onTimeChanged;
   bool isNotRightTime;
+  Function()? onClick;
 
   CellDateTimePicker({
     Key? key,
@@ -20,6 +21,7 @@ class CellDateTimePicker extends StatelessWidget {
     required this.onDateChanged,
     required this.onTimeChanged,
     this.isNotRightTime = false,
+    this.onClick,
   }) : super(key: key);
 
   @override
@@ -39,6 +41,9 @@ class CellDateTimePicker extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () {
+                  if (onClick != null) {
+                    onClick!();
+                  }
                   showModalBottomSheet(
                     context: context,
                     builder: ((context) => CupertinoDatePicker(
@@ -79,6 +84,9 @@ class CellDateTimePicker extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
+                  if (onClick != null) {
+                    onClick!();
+                  }
                   showModalBottomSheet(
                     context: context,
                     builder: ((context) => CupertinoDatePicker(

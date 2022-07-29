@@ -15,6 +15,7 @@ enum SchedualType {
 
 class AddSchedulePageViewModel with ChangeNotifier {
   late TextEditingController _titleEditingController;
+  late FocusNode _titleFocus;
   late String _startDate;
   late String _startTime;
   late String _endDate;
@@ -23,23 +24,36 @@ class AddSchedulePageViewModel with ChangeNotifier {
   late SchedualType _scheduleType;
   late bool _isNotRightTime;
   late TextEditingController _remarksEditingController;
+  late FocusNode _remarksFocus;
 
   AddSchedulePageViewModel() {
     _titleEditingController = TextEditingController(text: "");
+    _titleEditingController.addListener(() {
+      notifyListeners();
+    });
+    _titleFocus = FocusNode();
+
     _startDate = formatDate(DateTime.now(), [yyyy, '/', mm, '/', dd]);
     _startTime =
         "${formatDate(DateTime.now().add(const Duration(hours: 1)), [HH])}:00";
+
     _endDate = formatDate(
         DateTime.now().add(const Duration(hours: 2)), [yyyy, '/', mm, '/', dd]);
     _endTime =
         "${formatDate(DateTime.now().add(const Duration(hours: 2)), [HH])}:00";
+
     _repeatType = RepeatType.none;
+
     _scheduleType = SchedualType.personal;
+
     _isNotRightTime = false;
+
     _remarksEditingController = TextEditingController(text: "");
+    _remarksFocus = FocusNode();
   }
 
   TextEditingController get titleEditingController => _titleEditingController;
+  FocusNode get titleFocus => _titleFocus;
   String get startDate => _startDate;
   String get startTime => _startTime;
   String get endDate => _endDate;
@@ -49,6 +63,7 @@ class AddSchedulePageViewModel with ChangeNotifier {
   bool get isNotRightTime => _isNotRightTime;
   TextEditingController? get remarksEditingController =>
       _remarksEditingController;
+  FocusNode get remarksFocus => _remarksFocus;
 
   void updateStartDate(DateTime newStartDate) {
     _startDate = formatDate(newStartDate, [yyyy, '/', mm, '/', dd]);
@@ -90,5 +105,10 @@ class AddSchedulePageViewModel with ChangeNotifier {
     DateTime wholeEndDate = DateTime.parse(
         "${_endDate.replaceAll(RegExp(r'/'), "-")} $_endTime:00");
     return wholeStartDate.isAfter(wholeEndDate);
+  }
+
+  void cancelFocus() {
+    _titleFocus.unfocus();
+    _remarksFocus.unfocus();
   }
 }

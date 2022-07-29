@@ -50,9 +50,7 @@ class AddSchedulePage extends StatelessWidget {
                 ),
                 child: GestureDetector(
                   onTap: () {
-                    if (!context
-                        .read<AddSchedulePageViewModel>()
-                        .isNotRightTime) {
+                    if (_canAddSchedule(context)) {
                       Navigator.pop(context);
                     }
                   },
@@ -61,11 +59,7 @@ class AddSchedulePage extends StatelessWidget {
                       "添加",
                       style: TextStyle(
                         fontSize: 20.sp,
-                        color: context
-                                .watch<AddSchedulePageViewModel>()
-                                .isNotRightTime
-                            ? Colors.grey
-                            : null,
+                        color: _canAddSchedule(context) ? null : Colors.grey,
                       ),
                     ),
                   ),
@@ -93,6 +87,8 @@ class AddSchedulePage extends StatelessWidget {
                     right: 20.w,
                   ),
                   child: TextField(
+                    focusNode:
+                        context.read<AddSchedulePageViewModel>().titleFocus,
                     controller: context
                         .read<AddSchedulePageViewModel>()
                         .titleEditingController,
@@ -135,6 +131,9 @@ class AddSchedulePage extends StatelessWidget {
                         onTimeChanged: (time) => context
                             .read<AddSchedulePageViewModel>()
                             .updateStartTime(time),
+                        onClick: () => context
+                            .read<AddSchedulePageViewModel>()
+                            .cancelFocus(),
                       ),
                       Divider(
                         height: 2.h,
@@ -152,24 +151,33 @@ class AddSchedulePage extends StatelessWidget {
                         onTimeChanged: (time) => context
                             .read<AddSchedulePageViewModel>()
                             .updateEndTime(time),
+                        onClick: () => context
+                            .read<AddSchedulePageViewModel>()
+                            .cancelFocus(),
                       ),
                       Divider(
                         height: 2.h,
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          _showSelector<RepeatType>(context);
-                        },
-                        child: Row(
-                          children: [
-                            Text(
-                              "重复",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 18.sp,
-                              ),
+                      Row(
+                        children: [
+                          Text(
+                            "重复",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18.sp,
                             ),
-                            Expanded(
+                          ),
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () {
+                                context
+                                    .read<AddSchedulePageViewModel>()
+                                    .cancelFocus();
+                                _showSelector<RepeatType>(
+                                  context,
+                                  RepeatType.values,
+                                );
+                              },
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
@@ -198,15 +206,21 @@ class AddSchedulePage extends StatelessWidget {
                                 ],
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                       Divider(
                         height: 2.h,
                       ),
                       GestureDetector(
                         onTap: () {
-                          _showSelector<SchedualType>(context);
+                          context
+                              .read<AddSchedulePageViewModel>()
+                              .cancelFocus();
+                          _showSelector<SchedualType>(
+                            context,
+                            SchedualType.values,
+                          );
                         },
                         child: Row(
                           children: [
@@ -273,6 +287,8 @@ class AddSchedulePage extends StatelessWidget {
                     right: 20.w,
                   ),
                   child: TextField(
+                    focusNode:
+                        context.read<AddSchedulePageViewModel>().remarksFocus,
                     controller: context
                         .read<AddSchedulePageViewModel>()
                         .remarksEditingController,
@@ -301,41 +317,38 @@ class AddSchedulePage extends StatelessWidget {
     );
   }
 
-  void _showSelector<T>(BuildContext context) {
+  void _showSelector<T>(BuildContext pContext, List<T> typeValues) {
     showCupertinoModalPopup<void>(
-      context: context,
+      context: pContext,
       builder: ((context) => CupertinoActionSheet(
-            actions: _actionList<T>(context),
+            actions: _actionList<T>(pContext, typeValues),
           )),
     );
   }
 
-  List<CupertinoActionSheetAction> _actionList<T>(BuildContext context) {
+  List<CupertinoActionSheetAction> _actionList<T>(
+      BuildContext context, List<T> typeValues) {
     List<CupertinoActionSheetAction> list = List.empty(growable: true);
-    if (T is RepeatType) {
-      for (int i = 0; i < RepeatType.values.length; i++) {
-        RepeatType type = RepeatType.values.elementAt(i);
-        list.add(CupertinoActionSheetAction(
-          isDefaultAction: true,
-          onPressed: () {
+    for (int i = 0; i < typeValues.length; i++) {
+      T type = typeValues.elementAt(i);
+      list.add(CupertinoActionSheetAction(
+        isDefaultAction: true,
+        onPressed: () {
+          if (type is RepeatType) {
             context.read<AddSchedulePageViewModel>().updateRepeatType(type);
-            Navigator.pop(context);
-          },
-          child: Text(_getRepeatStr(type)),
-        ));
-      }
-    } else {
-      for (int i = 0; i < SchedualType.values.length; i++) {
-        SchedualType type = SchedualType.values.elementAt(i);
-        list.add(CupertinoActionSheetAction(
-          isDefaultAction: true,
-          onPressed: () {
-            context.read<AddSchedulePageViewModel>().updateScheduleType(type);
-            Navigator.pop(context);
-          },
-          child: Text(_getScheduleStr(type)),
-        ));
-      }
+          } else {
+            context
+                .read<AddSchedulePageViewModel>()
+                .updateScheduleType((type as SchedualType));
+          }
+          Navigator.pop(context);
+        },
+        child: Text(
+          type is RepeatType
+              ? _getRepeatStr(type)
+              : _getScheduleStr((type as SchedualType)),
+        ),
+      ));
     }
     return list;
   }
@@ -370,5 +383,14 @@ class AddSchedulePage extends StatelessWidget {
         break;
     }
     return text;
+  }
+
+  bool _canAddSchedule(BuildContext context) {
+    return !context.read<AddSchedulePageViewModel>().isNotRightTime &&
+        context
+            .read<AddSchedulePageViewModel>()
+            .titleEditingController
+            .text
+            .isNotEmpty;
   }
 }
