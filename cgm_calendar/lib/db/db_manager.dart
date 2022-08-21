@@ -36,6 +36,14 @@ class DBManager {
     await database?.delete(tableName, where: "$columnId = ?", whereArgs: [id]);
   }
 
+  Future deleteTimeOutSchedules(int time) async {
+    await _checkDB();
+    await database?.delete(tableName,
+        where:
+            "($columnRepeatType = ? and $columnEndTime <= ?) or ($columnRepeatType <> ? and $columnRepeatUntil <= ?)",
+        whereArgs: [0, time, 0, time]);
+  }
+
   Future update(ScheduleDBModel model) async {
     await _checkDB();
     await database?.update(tableName, model.toMap(),

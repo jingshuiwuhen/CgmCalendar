@@ -1,3 +1,5 @@
+import 'package:cgm_calendar/models/schedule_model.dart';
+
 const String tableName = "Schedule";
 const String columnId = "id";
 const String columnTitle = "title";
@@ -19,6 +21,8 @@ class ScheduleDBModel {
   int repeatUntil = 0;
   int scheduleType = 0;
   String remarks = "";
+
+  ScheduleDBModel();
 
   Map<String, Object?> toMap() {
     var map = <String, Object?>{
@@ -49,5 +53,17 @@ class ScheduleDBModel {
     repeatType = map[columnRepeatType]! as int;
     scheduleType = map[columnScheduleType]! as int;
     remarks = map[columnRemarks]! as String;
+  }
+
+  ScheduleModel copyToScheduleModel() {
+    ScheduleModel scheduleModel = ScheduleModel();
+    scheduleModel.id = id ?? 0;
+    scheduleModel.title = title;
+    scheduleModel.startTime = startTime;
+    scheduleModel.endTime = endTime;
+    scheduleModel.repeatType = repeatType;
+    scheduleModel.scheduleType = scheduleType;
+    scheduleModel.remarks = remarks;
+    return scheduleModel;
   }
 }

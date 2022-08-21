@@ -1,3 +1,6 @@
+import 'package:cgm_calendar/add_schedule_helper.dart';
+import 'package:cgm_calendar/db/db_manager.dart';
+import 'package:cgm_calendar/db/schedule_db_model.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 
@@ -110,5 +113,28 @@ class AddSchedulePageViewModel with ChangeNotifier {
   void cancelFocus() {
     _titleFocus.unfocus();
     _remarksFocus.unfocus();
+  }
+
+  Future addSchedule() async {
+    ScheduleDBModel model = await addToDB();
+    AddScheduleHelper.addToCalendar(model);
+  }
+
+  Future<ScheduleDBModel> addToDB() async {
+    ScheduleDBModel model = ScheduleDBModel();
+    model.title = _titleEditingController.text;
+
+    String startTimeStr = _startDate.replaceAll(RegExp(r'/'), "") +
+        _startTime.replaceAll(RegExp(r':'), "");
+    model.startTime = int.parse(startTimeStr);
+
+    String endTimeStr = _endDate.replaceAll(RegExp(r'/'), "") +
+        _endTime.replaceAll(RegExp(r':'), "");
+    model.endTime = int.parse(endTimeStr);
+
+    model.repeatType = _repeatType.index;
+    model.scheduleType = _scheduleType.index;
+    model.remarks = _remarksEditingController.text;
+    return await DBManager.db.insert(model);
   }
 }
