@@ -12,8 +12,9 @@ class AddScheduleHelper {
     if (model.repeatType == RepeatType.none.index) {
       addScheduleToTargetDaysOnce(model.copyToScheduleModel());
     } else if (model.repeatType == RepeatType.everyDay.index) {
-      addScheduleToTargetDaysEveryDay(model);
+      addScheduleToTargetDaysEveryDayOrEveryWeek(model, true);
     } else if (model.repeatType == RepeatType.everyWeek.index) {
+      addScheduleToTargetDaysEveryDayOrEveryWeek(model, false);
     } else if (model.repeatType == RepeatType.everyMonth.index) {}
   }
 
@@ -65,15 +66,16 @@ class AddScheduleHelper {
     } while (startDate <= endDate);
   }
 
-  static void addScheduleToTargetDaysEveryDay(ScheduleDBModel model) {
+  static void addScheduleToTargetDaysEveryDayOrEveryWeek(
+      ScheduleDBModel model, bool isEveryDay) {
     String startTime = "${model.startTime.toString()}:00";
     DateTime startDateTime = DateTime.parse(startTime);
     String endTime = "${model.endTime.toString()}:00";
     DateTime endDateTime = DateTime.parse(endTime);
     ScheduleModel scheduleModel = model.copyToScheduleModel();
-    for (int i = 0;; i++) {
-      startDateTime.add(Duration(days: i));
-      endDateTime.add(Duration(days: i));
+    while (true) {
+      startDateTime.add(Duration(days: isEveryDay ? 1 : 7));
+      endDateTime.add(Duration(days: isEveryDay ? 1 : 7));
       if (endDateTime.compareTo(DateTime.parse(
                   "${Global.oldYears.last.year}-01-01 00:00:00")) ==
               -1 ||
