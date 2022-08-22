@@ -15,7 +15,9 @@ class AddScheduleHelper {
       addScheduleToTargetDaysEveryDayOrEveryWeek(model, true);
     } else if (model.repeatType == RepeatType.everyWeek.index) {
       addScheduleToTargetDaysEveryDayOrEveryWeek(model, false);
-    } else if (model.repeatType == RepeatType.everyMonth.index) {}
+    } else if (model.repeatType == RepeatType.everyMonth.index) {
+      addScheduleToTargetDaysEveryMonth(model);
+    }
   }
 
   static void addScheduleToTargetDaysOnce(ScheduleModel model) {
@@ -73,9 +75,12 @@ class AddScheduleHelper {
     String endTime = "${model.endTime.toString()}:00";
     DateTime endDateTime = DateTime.parse(endTime);
     ScheduleModel scheduleModel = model.copyToScheduleModel();
-    while (true) {
-      startDateTime.add(Duration(days: isEveryDay ? 1 : 7));
-      endDateTime.add(Duration(days: isEveryDay ? 1 : 7));
+    for (var i = 0;; i++) {
+      if (i != 0) {
+        startDateTime.add(Duration(days: isEveryDay ? 1 : 7));
+        endDateTime.add(Duration(days: isEveryDay ? 1 : 7));
+      }
+
       if (endDateTime.compareTo(DateTime.parse(
                   "${Global.oldYears.last.year}-01-01 00:00:00")) ==
               -1 ||
@@ -98,6 +103,71 @@ class AddScheduleHelper {
       scheduleModel.endTime = int.parse(
           "${endDateTime.year}${sprintf("%02i", endDateTime.month)}${sprintf("%02i", endDateTime.day)}${sprintf("%02i", endDateTime.hour)}${sprintf("%02i", endDateTime.minute)}");
       addScheduleToTargetDaysOnce(scheduleModel);
+    }
+  }
+
+  static void addScheduleToTargetDaysEveryMonth(ScheduleDBModel model) {
+    String startTime = model.startTime.toString();
+    int startYear = int.parse(startTime.substring(0, 4));
+    int startMonth = int.parse(startTime.substring(4, 6));
+    int startDay = int.parse(startTime.substring(6, 8));
+
+    String startTimeStr =
+        "$startYear-${sprintf("%02i", startMonth)}-${sprintf("%02i", startDay)} ${startTime.substring(8, 10)}:${startTime.substring(10)}:00";
+    DateTime startDateTime = DateTime.parse(startTimeStr);
+    String endTimeStr = "${model.endTime.toString()}:00";
+    DateTime endDateTime = DateTime.parse(endTimeStr);
+    int daysBetweenStartToEnd = startDateTime.difference(endDateTime).inDays;
+
+    DateTime tempLastDayOfMonthDateTime = DateTime.parse(startTimeStr);
+    do {
+      tempLastDayOfMonthDateTime.add(const Duration(days: 1));
+    } while (tempLastDayOfMonthDateTime.month == startMonth);
+    tempLastDayOfMonthDateTime.subtract(const Duration(days: 1));
+    int daysBetweenStartToLastDayOfMonth =
+        startDateTime.difference(tempLastDayOfMonthDateTime).inDays;
+
+    int thisYear = Global.newYears.first.year;
+    for (var i = 0;; i++) {
+      if (i != 0) {
+        if (startMonth == 12) {
+          startYear++;
+          startMonth = 1;
+        } else {
+          startMonth++;
+        }
+
+        MonthModel targetMonth;
+        if (thisYear <= startYear) {
+          targetMonth =
+              Global.newYears[startYear - thisYear].monthsOfYear[startMonth];
+        } else {
+          targetMonth = Global
+              .oldYears[thisYear - startYear - 1].monthsOfYear[startMonth];
+        }
+
+        if (targetMonth.daysOfMonth.length >= startDay) {
+          startTimeStr =
+              "$startYear-${sprintf("%02i", startMonth)}-${sprintf("%02i", startDay)} ${startTime.substring(8, 10)}:${startTime.substring(10)}:00";
+        }
+      }
+
+      if (endDateTime.compareTo(DateTime.parse(
+                  "${Global.oldYears.last.year}-01-01 00:00:00")) ==
+              -1 ||
+          model.exceptionTimes.contains(
+              "${startDateTime.year}${sprintf("%02i", startDateTime.month)}${sprintf("%02i", startDateTime.day)}${sprintf("%02i", startDateTime.hour)}${sprintf("%02i", startDateTime.minute)}")) {
+        continue;
+      }
+
+      if (startDateTime.compareTo(DateTime.parse(
+                  "${Global.newYears.last.year + 1}-01-01 00:00:00")) ==
+              -1 ||
+          model.repeatUntil ==
+              int.parse(
+                  "${startDateTime.year}${sprintf("%02i", startDateTime.month)}${sprintf("%02i", startDateTime.day)}${sprintf("%02i", startDateTime.hour)}${sprintf("%02i", startDateTime.minute)}")) {
+        break;
+      }
     }
   }
 }
