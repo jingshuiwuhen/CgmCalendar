@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 class MonthPage extends StatelessWidget {
   final int monthModelIndex;
 
-  MonthPage({Key? key, required this.monthModelIndex}) : super(key: key);
+  const MonthPage({Key? key, required this.monthModelIndex}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -104,18 +104,33 @@ class MonthPage extends StatelessWidget {
                 onPageChanged: (index) {
                   context.read<MonthPageViewModel>().updateTitle(index);
                 },
-                itemBuilder: ((context, index) => CellOneMonth(
-                      monthModel: Global.allMonths[index],
-                      showTitle: false,
-                      crossAxisSpacing: 10.h,
-                      fontSize: 15.sp,
-                      itemMargin: EdgeInsets.fromLTRB(8.w, 8.h, 8.w, 8.h),
-                    )),
+                itemBuilder: (context, index) => CellOneMonth(
+                  monthModel: Global.allMonths[index],
+                  showTitle: false,
+                  crossAxisSpacing: 10.h,
+                  fontSize: 15.sp,
+                  itemMargin: EdgeInsets.fromLTRB(8.w, 8.h, 8.w, 8.h),
+                  oneDayClick: (list) => context
+                      .read<MonthPageViewModel>()
+                      .refreshScheduleList(list),
+                ),
               ),
               Expanded(
-                  child: Container(
-                color: Colors.green,
-              )),
+                child: context.watch<MonthPageViewModel>().scheduleList.isEmpty
+                    ? Center(
+                        child: Text(
+                          "没有日程",
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 20.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      )
+                    : ListView.builder(
+                        itemBuilder: (context, index) => Container(),
+                      ),
+              ),
             ],
           ),
         );

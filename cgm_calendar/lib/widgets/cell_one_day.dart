@@ -20,7 +20,11 @@ class CellOneDay extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: dayModel.isToday() ? Colors.red : Colors.transparent,
+        color: dayModel.isSelecting
+            ? Colors.grey
+            : dayModel.isToday()
+                ? Colors.red
+                : Colors.transparent,
       ),
       child: Text(
         dayModel.dayOfMonth.toString(),

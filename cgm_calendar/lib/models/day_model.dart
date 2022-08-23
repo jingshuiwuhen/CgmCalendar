@@ -13,6 +13,8 @@ class DayModel {
   //星期
   int dayOfWeek = 0;
 
+  bool isSelecting = false;
+
   List<ScheduleModel> scheduleList = List.empty(growable: true);
 
   void addScheduleAndSort(ScheduleModel model) {

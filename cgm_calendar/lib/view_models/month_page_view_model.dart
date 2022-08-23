@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class MonthPageViewModel with ChangeNotifier {
   String _title = "";
   PageController? _controller;
-  List<ScheduleModel>? _scheduleList;
+  List<ScheduleModel> _scheduleList = [];
 
   MonthPageViewModel(int index) {
     _title = Global.allMonths[index].getYearAndMonthStr();
@@ -15,7 +15,7 @@ class MonthPageViewModel with ChangeNotifier {
 
   String get title => _title;
   PageController? get controller => _controller;
-  List<ScheduleModel>? get scheduleList => _scheduleList;
+  List<ScheduleModel> get scheduleList => _scheduleList;
 
   void updateTitle(int index) {
     MonthModel newMonth = Global.allMonths[index];
