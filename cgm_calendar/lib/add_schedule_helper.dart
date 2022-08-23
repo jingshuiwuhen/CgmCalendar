@@ -63,45 +63,62 @@ class AddScheduleHelper {
       } else {
         startDay++;
       }
-      startDate = int.parse(
-          "$startYear${sprintf("%02i", startMonth)}${sprintf("%02i", startDay)}");
+      startDate = int.parse("$startYear${sprintf("%02i", [
+            startMonth
+          ])}${sprintf("%02i", [startDay])}");
     } while (startDate <= endDate);
   }
 
   static void addScheduleToTargetDaysEveryDayOrEveryWeek(
       ScheduleDBModel model, bool isEveryDay) {
-    String startTime = "${model.startTime.toString()}:00";
-    DateTime startDateTime = DateTime.parse(startTime);
-    String endTime = "${model.endTime.toString()}:00";
-    DateTime endDateTime = DateTime.parse(endTime);
-    ScheduleModel scheduleModel = model.copyToScheduleModel();
+    String startTimeStr = model.startTime.toString();
+    DateTime startDateTime = DateTime.parse(
+        "${startTimeStr.substring(0, 8)} ${startTimeStr.substring(8, 10)}:${startTimeStr.substring(10)}:00");
+    String endTimeStr = model.endTime.toString();
+    DateTime endDateTime = DateTime.parse(
+        "${endTimeStr.substring(0, 8)} ${endTimeStr.substring(8, 10)}:${endTimeStr.substring(10)}:00");
     for (var i = 0;; i++) {
       if (i != 0) {
-        startDateTime.add(Duration(days: isEveryDay ? 1 : 7));
-        endDateTime.add(Duration(days: isEveryDay ? 1 : 7));
+        startDateTime = startDateTime.add(Duration(days: isEveryDay ? 1 : 7));
+        startDateTime = endDateTime.add(Duration(days: isEveryDay ? 1 : 7));
       }
 
       if (endDateTime.compareTo(DateTime.parse(
-                  "${Global.oldYears.last.year}-01-01 00:00:00")) ==
+                  "${Global.oldYears.last.year}0101 00:00:00")) ==
               -1 ||
           model.exceptionTimes.contains(
-              "${startDateTime.year}${sprintf("%02i", startDateTime.month)}${sprintf("%02i", startDateTime.day)}${sprintf("%02i", startDateTime.hour)}${sprintf("%02i", startDateTime.minute)}")) {
+              "${startDateTime.year}${sprintf("%02i", [
+                startDateTime.month
+              ])}${sprintf("%02i", [startDateTime.day])}${sprintf("%02i", [
+                startDateTime.hour
+              ])}${sprintf("%02i", [startDateTime.minute])}")) {
         continue;
       }
 
       if (startDateTime.compareTo(DateTime.parse(
-                  "${Global.newYears.last.year + 1}-01-01 00:00:00")) ==
+                  "${Global.newYears.last.year + 1}0101 00:00:00")) ==
               -1 ||
           model.repeatUntil ==
-              int.parse(
-                  "${startDateTime.year}${sprintf("%02i", startDateTime.month)}${sprintf("%02i", startDateTime.day)}${sprintf("%02i", startDateTime.hour)}${sprintf("%02i", startDateTime.minute)}")) {
+              int.parse("${startDateTime.year}${sprintf("%02i", [
+                    startDateTime.month
+                  ])}${sprintf("%02i", [startDateTime.day])}${sprintf("%02i", [
+                    startDateTime.hour
+                  ])}${sprintf("%02i", [startDateTime.minute])}")) {
         break;
       }
 
+      ScheduleModel scheduleModel = model.copyToScheduleModel();
       scheduleModel.startTime = int.parse(
-          "${startDateTime.year}${sprintf("%02i", startDateTime.month)}${sprintf("%02i", startDateTime.day)}${sprintf("%02i", startDateTime.hour)}${sprintf("%02i", startDateTime.minute)}");
-      scheduleModel.endTime = int.parse(
-          "${endDateTime.year}${sprintf("%02i", endDateTime.month)}${sprintf("%02i", endDateTime.day)}${sprintf("%02i", endDateTime.hour)}${sprintf("%02i", endDateTime.minute)}");
+          "${startDateTime.year}${sprintf("%02i", [
+            startDateTime.month
+          ])}${sprintf("%02i", [startDateTime.day])}${sprintf("%02i", [
+            startDateTime.hour
+          ])}${sprintf("%02i", [startDateTime.minute])}");
+      scheduleModel.endTime = int.parse("${endDateTime.year}${sprintf("%02i", [
+            endDateTime.month
+          ])}${sprintf("%02i", [endDateTime.day])}${sprintf("%02i", [
+            endDateTime.hour
+          ])}${sprintf("%02i", [endDateTime.minute])}");
       addScheduleToTargetDaysOnce(scheduleModel);
     }
   }
@@ -113,9 +130,12 @@ class AddScheduleHelper {
     int startDay = int.parse(startTime.substring(6, 8));
 
     String startTimeStr =
-        "$startYear-${sprintf("%02i", startMonth)}-${sprintf("%02i", startDay)} ${startTime.substring(8, 10)}:${startTime.substring(10)}:00";
+        "${startTime.substring(0, 8)} ${startTime.substring(8, 10)}:${startTime.substring(10)}:00";
     DateTime startDateTime = DateTime.parse(startTimeStr);
-    String endTimeStr = "${model.endTime.toString()}:00";
+
+    String endTime = model.endTime.toString();
+    String endTimeStr =
+        "${endTime.substring(0, 8)} ${endTime.substring(8, 10)}:${endTime.substring(10)}:00";
     DateTime endDateTime = DateTime.parse(endTimeStr);
     int daysBetweenStartToEnd = startDateTime.difference(endDateTime).inDays;
 
@@ -148,26 +168,57 @@ class AddScheduleHelper {
 
         if (targetMonth.daysOfMonth.length >= startDay) {
           startTimeStr =
-              "$startYear-${sprintf("%02i", startMonth)}-${sprintf("%02i", startDay)} ${startTime.substring(8, 10)}:${startTime.substring(10)}:00";
+              "$startYear${sprintf("%02i", [startMonth])}${sprintf("%02i", [
+                startDay
+              ])} ${startTime.substring(8, 10)}:${startTime.substring(10)}:00";
+          startDateTime = DateTime.parse(startTimeStr);
+        } else {
+          DayModel lastDay = targetMonth.daysOfMonth.last;
+          DateTime lastDayOfMonthDateTime =
+              DateTime(lastDay.year, lastDay.month, lastDay.dayOfMonth);
+          startDateTime = lastDayOfMonthDateTime
+              .subtract(Duration(days: daysBetweenStartToLastDayOfMonth));
         }
+        endDateTime = startDateTime.add(Duration(days: daysBetweenStartToEnd));
       }
 
       if (endDateTime.compareTo(DateTime.parse(
-                  "${Global.oldYears.last.year}-01-01 00:00:00")) ==
+                  "${Global.oldYears.last.year}0101 00:00:00")) ==
               -1 ||
           model.exceptionTimes.contains(
-              "${startDateTime.year}${sprintf("%02i", startDateTime.month)}${sprintf("%02i", startDateTime.day)}${sprintf("%02i", startDateTime.hour)}${sprintf("%02i", startDateTime.minute)}")) {
+              "${startDateTime.year}${sprintf("%02i", [
+                startDateTime.month
+              ])}${sprintf("%02i", [startDateTime.day])}${sprintf("%02i", [
+                startDateTime.hour
+              ])}${sprintf("%02i", [startDateTime.minute])}")) {
         continue;
       }
 
       if (startDateTime.compareTo(DateTime.parse(
-                  "${Global.newYears.last.year + 1}-01-01 00:00:00")) ==
+                  "${Global.newYears.last.year + 1}0101 00:00:00")) ==
               -1 ||
           model.repeatUntil ==
-              int.parse(
-                  "${startDateTime.year}${sprintf("%02i", startDateTime.month)}${sprintf("%02i", startDateTime.day)}${sprintf("%02i", startDateTime.hour)}${sprintf("%02i", startDateTime.minute)}")) {
+              int.parse("${startDateTime.year}${sprintf("%02i", [
+                    startDateTime.month
+                  ])}${sprintf("%02i", [startDateTime.day])}${sprintf("%02i", [
+                    startDateTime.hour
+                  ])}${sprintf("%02i", [startDateTime.minute])}")) {
         break;
       }
+
+      ScheduleModel scheduleModel = model.copyToScheduleModel();
+      scheduleModel.startTime = int.parse(
+          "${startDateTime.year}${sprintf("%02i", [
+            startDateTime.month
+          ])}${sprintf("%02i", [startDateTime.day])}${sprintf("%02i", [
+            startDateTime.hour
+          ])}${sprintf("%02i", [startDateTime.minute])}");
+      scheduleModel.endTime = int.parse("${endDateTime.year}${sprintf("%02i", [
+            endDateTime.month
+          ])}${sprintf("%02i", [endDateTime.day])}${sprintf("%02i", [
+            endDateTime.hour
+          ])}${sprintf("%02i", [endDateTime.minute])}");
+      addScheduleToTargetDaysOnce(scheduleModel);
     }
   }
 }

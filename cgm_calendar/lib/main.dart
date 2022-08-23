@@ -23,7 +23,9 @@ void main() {
       Global.init();
       DateTime now = DateTime.now();
       await DBManager.db.deleteTimeOutSchedules(int.parse(
-          "${now.year}${sprintf("%02i", now.month)}${sprintf("%02i", now.day)}${sprintf("%02i", now.hour)}${sprintf("%02i", now.minute)}"));
+          "${now.year}${sprintf("%02i", [now.month])}${sprintf("%02i", [
+            now.day
+          ])}${sprintf("%02i", [now.hour])}${sprintf("%02i", [now.minute])}"));
       List<ScheduleDBModel> models = await DBManager.db.getAll();
       for (ScheduleDBModel model in models) {
         AddScheduleHelper.addToCalendar(model);
