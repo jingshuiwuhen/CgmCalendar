@@ -1,21 +1,22 @@
 import 'package:cgm_calendar/global.dart';
+import 'package:cgm_calendar/models/day_model.dart';
 import 'package:cgm_calendar/models/month_model.dart';
-import 'package:cgm_calendar/models/schedule_model.dart';
 import 'package:flutter/material.dart';
 
 class MonthPageViewModel with ChangeNotifier {
   String _title = "";
   PageController? _controller;
-  List<ScheduleModel> _scheduleList = [];
+  late DayModel _day;
 
   MonthPageViewModel(int index) {
     _title = Global.allMonths[index].getYearAndMonthStr();
     _controller = PageController(initialPage: index, keepPage: false);
+    _day = Global.allMonths[index].daysOfMonth[0];
   }
 
   String get title => _title;
   PageController? get controller => _controller;
-  List<ScheduleModel> get scheduleList => _scheduleList;
+  DayModel? get day => _day;
 
   void updateTitle(int index) {
     MonthModel newMonth = Global.allMonths[index];
@@ -42,8 +43,8 @@ class MonthPageViewModel with ChangeNotifier {
     }
   }
 
-  void refreshScheduleList(List<ScheduleModel> list) {
-    _scheduleList = list;
+  void refreshScheduleList(DayModel day) {
+    _day = day;
     notifyListeners();
   }
 }

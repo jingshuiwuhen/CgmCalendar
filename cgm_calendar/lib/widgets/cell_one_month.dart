@@ -1,5 +1,5 @@
+import 'package:cgm_calendar/models/day_model.dart';
 import 'package:cgm_calendar/models/month_model.dart';
-import 'package:cgm_calendar/models/schedule_model.dart';
 import 'package:cgm_calendar/view_models/cell_one_month_view_model.dart';
 import 'package:cgm_calendar/widgets/cell_one_day.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +12,7 @@ class CellOneMonth extends StatelessWidget {
   final double crossAxisSpacing;
   final double? fontSize;
   final EdgeInsetsGeometry? itemMargin;
-  final Function(List<ScheduleModel>)? oneDayClick;
+  final Function(DayModel)? oneDayClick;
 
   const CellOneMonth({
     Key? key,
@@ -72,8 +72,7 @@ class CellOneMonth extends StatelessWidget {
                             if (oneDayClick != null) {
                               oneDayClick!(context
                                   .watch<CellOneMonthViewModel>()
-                                  .daysOfMonth[selectIndex]
-                                  .scheduleList);
+                                  .daysOfMonth[selectIndex]);
                             }
                           },
                           child: CellOneDay(
