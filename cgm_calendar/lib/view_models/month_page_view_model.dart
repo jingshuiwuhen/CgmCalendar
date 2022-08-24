@@ -18,29 +18,11 @@ class MonthPageViewModel with ChangeNotifier {
   PageController? get controller => _controller;
   DayModel get day => _day;
 
-  void updateTitle(int index) {
+  void onPageChanged(int index) {
     MonthModel newMonth = Global.allMonths[index];
     _title = newMonth.getYearAndMonthStr();
+    _day = newMonth.daysOfMonth.first;
     notifyListeners();
-  }
-
-  String weekDayName(int weekday) {
-    switch (weekday) {
-      case 0:
-        return "日";
-      case 1:
-        return "一";
-      case 2:
-        return "二";
-      case 3:
-        return "三";
-      case 4:
-        return "四";
-      case 5:
-        return "五";
-      default:
-        return "六";
-    }
   }
 
   void refreshScheduleList(DayModel day) {

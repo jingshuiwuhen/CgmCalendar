@@ -58,14 +58,6 @@ class YearPage extends StatelessWidget {
               IconButton(
                 onPressed: () {},
                 icon: const Icon(
-                  Icons.menu,
-                  color: Colors.red,
-                ),
-              ),
-              const Spacer(),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(
                   Icons.info_outline,
                   color: Colors.red,
                 ),

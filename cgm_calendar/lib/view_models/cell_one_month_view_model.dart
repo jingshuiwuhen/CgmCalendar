@@ -7,14 +7,12 @@ class CellOneMonthViewModel with ChangeNotifier {
 
   CellOneMonthViewModel(List<DayModel> daysOfMonth) {
     _daysOfMonth = daysOfMonth;
-    _daysOfMonth[_selectingIndex].isSelecting = true;
   }
 
   List<DayModel> get daysOfMonth => _daysOfMonth;
+  int get selectingIndex => _selectingIndex;
 
   void oneDayClick(int index) {
-    _daysOfMonth[_selectingIndex].isSelecting = false;
-    _daysOfMonth[index].isSelecting = true;
     _selectingIndex = index;
     notifyListeners();
   }

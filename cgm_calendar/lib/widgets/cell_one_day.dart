@@ -6,9 +6,14 @@ class CellOneDay extends StatelessWidget {
   final DayModel dayModel;
   final double? fontSize;
   final EdgeInsetsGeometry? itemMargin;
-  const CellOneDay({
+  int selectingIndex;
+  bool clickable;
+
+  CellOneDay({
     Key? key,
     required this.dayModel,
+    required this.selectingIndex,
+    required this.clickable,
     this.fontSize,
     this.itemMargin,
   }) : super(key: key);
@@ -20,7 +25,7 @@ class CellOneDay extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: dayModel.isSelecting
+        color: clickable && (selectingIndex == dayModel.dayOfMonth - 1)
             ? Colors.grey
             : dayModel.isToday()
                 ? Colors.red

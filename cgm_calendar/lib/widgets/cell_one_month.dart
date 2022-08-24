@@ -12,11 +12,13 @@ class CellOneMonth extends StatelessWidget {
   final double crossAxisSpacing;
   final double? fontSize;
   final EdgeInsetsGeometry? itemMargin;
+  bool clickable;
   final Function(DayModel)? oneDayClick;
 
-  const CellOneMonth({
+  CellOneMonth({
     Key? key,
     required this.monthModel,
+    required this.clickable,
     this.showTitle = true,
     this.crossAxisSpacing = 0.0,
     this.fontSize,
@@ -71,13 +73,17 @@ class CellOneMonth extends StatelessWidget {
 
                             if (oneDayClick != null) {
                               oneDayClick!(context
-                                  .watch<CellOneMonthViewModel>()
+                                  .read<CellOneMonthViewModel>()
                                   .daysOfMonth[selectIndex]);
                             }
                           },
                           child: CellOneDay(
                               itemMargin: itemMargin,
                               fontSize: fontSize,
+                              clickable: clickable,
+                              selectingIndex: context
+                                  .watch<CellOneMonthViewModel>()
+                                  .selectingIndex,
                               dayModel: context
                                       .watch<CellOneMonthViewModel>()
                                       .daysOfMonth[

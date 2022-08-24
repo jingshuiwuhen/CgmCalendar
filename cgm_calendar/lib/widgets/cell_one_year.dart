@@ -65,6 +65,7 @@ class CellOneYear extends StatelessWidget {
                             MonthPage(monthModelIndex: monthModelIndex))));
                   },
                   child: CellOneMonth(
+                    clickable: false,
                     monthModel: yearModel.monthsOfYear[index],
                   ),
                 );

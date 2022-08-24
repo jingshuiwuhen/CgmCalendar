@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:cgm_calendar/db/schedule_db_model.dart';
 import 'package:cgm_calendar/db/sql_str.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:path_provider/path_provider.dart';
 
 class DBManager {
   Database? database;
@@ -10,7 +13,16 @@ class DBManager {
   DBManager._();
 
   Future _initDB() async {
-    String directory = await getDatabasesPath();
+    String directory;
+    if (Platform.isAndroid) {
+      directory = await getDatabasesPath();
+    } else if (Platform.isIOS) {
+      Directory dir = await getLibraryDirectory();
+      directory = dir.path;
+    } else {
+      throw Exception("Do not support other platform");
+    }
+
     String path = "$directory/schedule.db";
     debugPrint(path);
     database = await openDatabase(path, version: 1,
