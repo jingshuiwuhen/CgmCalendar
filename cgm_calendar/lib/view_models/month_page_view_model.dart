@@ -16,7 +16,7 @@ class MonthPageViewModel with ChangeNotifier {
 
   String get title => _title;
   PageController? get controller => _controller;
-  DayModel? get day => _day;
+  DayModel get day => _day;
 
   void updateTitle(int index) {
     MonthModel newMonth = Global.allMonths[index];

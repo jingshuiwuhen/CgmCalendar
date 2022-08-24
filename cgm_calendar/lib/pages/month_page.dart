@@ -110,80 +110,102 @@ class MonthPage extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: context
-                        .watch<MonthPageViewModel>()
-                        .day!
-                        .scheduleList
-                        .isEmpty
-                    ? Center(
-                        child: Text(
-                          "没有日程",
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      )
-                    : ListView.builder(
-                        itemCount: context
-                            .watch<MonthPageViewModel>()
-                            .day!
-                            .scheduleList
-                            .length,
-                        itemBuilder: (context, index) {
-                          ScheduleModel model = context
-                              .watch<MonthPageViewModel>()
-                              .day!
-                              .scheduleList[index];
-                          return Padding(
-                            padding: EdgeInsets.only(
-                              top: 3.h,
-                              bottom: 3.h,
+                child:
+                    context.watch<MonthPageViewModel>().day.scheduleList.isEmpty
+                        ? Center(
+                            child: Text(
+                              "没有日程",
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                            child: GestureDetector(
-                              onTap: () {},
-                              child: Row(
-                                children: [
-                                  Container(
-                                    height: 40.h,
-                                    width: 3.w,
-                                    decoration: BoxDecoration(
-                                      color: model.scheduleType ==
-                                              SchedualType.personal.index
-                                          ? Colors.lightBlue
-                                          : Colors.purpleAccent,
-                                      borderRadius:
-                                          BorderRadiusDirectional.circular(
-                                              20.r),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: EdgeInsets.only(
-                                        left: 3.w,
-                                        right: 3.w,
+                          )
+                        : ListView.builder(
+                            itemCount: context
+                                .watch<MonthPageViewModel>()
+                                .day
+                                .scheduleList
+                                .length,
+                            itemBuilder: (context, index) {
+                              ScheduleModel model = context
+                                  .watch<MonthPageViewModel>()
+                                  .day
+                                  .scheduleList[index];
+                              return Padding(
+                                padding: EdgeInsets.only(
+                                  top: 3.h,
+                                  bottom: 3.h,
+                                ),
+                                child: GestureDetector(
+                                  onTap: () {},
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        height: 40.h,
+                                        width: 3.w,
+                                        decoration: BoxDecoration(
+                                          color: model.scheduleType ==
+                                                  SchedualType.personal.index
+                                              ? Colors.lightBlue
+                                              : Colors.purpleAccent,
+                                          borderRadius:
+                                              BorderRadiusDirectional.circular(
+                                                  20.r),
+                                        ),
                                       ),
-                                      child: Column(
+                                      Expanded(
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                            left: 3.w,
+                                            right: 3.w,
+                                          ),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                model.title,
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 16.sp,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              Text(
+                                                model.remarks,
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(
+                                                  color: Colors.grey,
+                                                  fontSize: 14.sp,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             model.title,
                                             maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
                                               color: Colors.black,
-                                              fontSize: 16.sp,
+                                              fontSize: 14.sp,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
                                           Text(
                                             model.remarks,
                                             maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
                                               color: Colors.grey,
                                               fontSize: 14.sp,
@@ -191,37 +213,12 @@ class MonthPage extends StatelessWidget {
                                           ),
                                         ],
                                       ),
-                                    ),
-                                  ),
-                                  Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        model.title,
-                                        maxLines: 1,
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Text(
-                                        model.remarks,
-                                        maxLines: 1,
-                                        style: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 14.sp,
-                                        ),
-                                      ),
                                     ],
                                   ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      ),
+                                ),
+                              );
+                            },
+                          ),
               ),
             ],
           ),
