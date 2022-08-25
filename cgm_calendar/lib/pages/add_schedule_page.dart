@@ -49,9 +49,13 @@ class AddSchedulePage extends StatelessWidget {
                   right: 10.w,
                 ),
                 child: GestureDetector(
-                  onTap: () {
+                  onTap: () async {
                     if (_canAddSchedule(context)) {
-                      Navigator.pop(context);
+                      final navigator = Navigator.of(context);
+                      await context
+                          .read<AddSchedulePageViewModel>()
+                          .addSchedule();
+                      navigator.pop();
                     }
                   },
                   child: Center(

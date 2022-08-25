@@ -17,7 +17,7 @@ class DBManager {
     if (Platform.isAndroid) {
       directory = await getDatabasesPath();
     } else if (Platform.isIOS) {
-      Directory dir = await getLibraryDirectory();
+      Directory dir = await getApplicationDocumentsDirectory();
       directory = dir.path;
     } else {
       throw Exception("Do not support other platform");

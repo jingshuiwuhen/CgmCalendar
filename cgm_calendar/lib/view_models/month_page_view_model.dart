@@ -29,4 +29,8 @@ class MonthPageViewModel with ChangeNotifier {
     _day = day;
     notifyListeners();
   }
+
+  void refreshPage() {
+    notifyListeners();
+  }
 }

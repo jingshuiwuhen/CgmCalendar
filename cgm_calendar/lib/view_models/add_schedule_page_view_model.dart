@@ -116,11 +116,11 @@ class AddSchedulePageViewModel with ChangeNotifier {
   }
 
   Future addSchedule() async {
-    ScheduleDBModel model = await addToDB();
+    ScheduleDBModel model = await _addToDB();
     AddScheduleHelper.addToCalendar(model);
   }
 
-  Future<ScheduleDBModel> addToDB() async {
+  Future<ScheduleDBModel> _addToDB() async {
     ScheduleDBModel model = ScheduleDBModel();
     model.title = _titleEditingController.text;
 

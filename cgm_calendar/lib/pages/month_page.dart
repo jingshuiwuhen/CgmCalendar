@@ -1,6 +1,7 @@
 import 'package:cgm_calendar/global.dart';
 import 'package:cgm_calendar/models/day_model.dart';
 import 'package:cgm_calendar/models/schedule_model.dart';
+import 'package:cgm_calendar/pages/add_schedule_page.dart';
 import 'package:cgm_calendar/view_models/add_schedule_page_view_model.dart';
 import 'package:cgm_calendar/view_models/month_page_view_model.dart';
 import 'package:cgm_calendar/widgets/cell_one_month.dart';
@@ -32,7 +33,12 @@ class MonthPage extends StatelessWidget {
             centerTitle: true,
             actions: [
               IconButton(
-                onPressed: () {},
+                onPressed: () async {
+                  MonthPageViewModel rViewModel =
+                      context.read<MonthPageViewModel>();
+                  await Navigator.of(context).push(_createRoute());
+                  rViewModel.refreshPage();
+                },
                 icon: const Icon(
                   Icons.add,
                 ),
@@ -104,7 +110,6 @@ class MonthPage extends StatelessWidget {
                   clickable: true,
                   monthModel: Global.allMonths[index],
                   showTitle: false,
-                  crossAxisSpacing: 10.h,
                   fontSize: 15.sp,
                   itemMargin: EdgeInsets.fromLTRB(8.w, 8.h, 8.w, 8.h),
                   oneDayClick: (day) => context
@@ -138,16 +143,18 @@ class MonthPage extends StatelessWidget {
                                   .scheduleList[index];
                               return Padding(
                                 padding: EdgeInsets.only(
-                                  top: 3.h,
-                                  bottom: 3.h,
+                                  top: 5.h,
+                                  left: 10.w,
+                                  right: 10.w,
+                                  bottom: 5.h,
                                 ),
                                 child: GestureDetector(
                                   onTap: () {},
                                   child: Row(
                                     children: [
                                       Container(
-                                        height: 40.h,
-                                        width: 3.w,
+                                        height: 50.h,
+                                        width: 6.w,
                                         decoration: BoxDecoration(
                                           color: schedule.scheduleType ==
                                                   SchedualType.personal.index
@@ -161,8 +168,8 @@ class MonthPage extends StatelessWidget {
                                       Expanded(
                                         child: Padding(
                                           padding: EdgeInsets.only(
-                                            left: 3.w,
-                                            right: 3.w,
+                                            left: 6.w,
+                                            right: 6.w,
                                           ),
                                           child: Column(
                                             mainAxisAlignment:
@@ -176,8 +183,7 @@ class MonthPage extends StatelessWidget {
                                                 overflow: TextOverflow.ellipsis,
                                                 style: TextStyle(
                                                   color: Colors.black,
-                                                  fontSize: 16.sp,
-                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 20.sp,
                                                 ),
                                               ),
                                               Text(
@@ -186,7 +192,7 @@ class MonthPage extends StatelessWidget {
                                                 overflow: TextOverflow.ellipsis,
                                                 style: TextStyle(
                                                   color: Colors.grey,
-                                                  fontSize: 14.sp,
+                                                  fontSize: 16.sp,
                                                 ),
                                               ),
                                             ],
@@ -206,7 +212,7 @@ class MonthPage extends StatelessWidget {
                                             ),
                                             style: TextStyle(
                                               color: Colors.black,
-                                              fontSize: 14.sp,
+                                              fontSize: 16.sp,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
@@ -219,7 +225,7 @@ class MonthPage extends StatelessWidget {
                                             ),
                                             style: TextStyle(
                                               color: Colors.grey,
-                                              fontSize: 14.sp,
+                                              fontSize: 16.sp,
                                             ),
                                           ),
                                         ],
@@ -233,6 +239,26 @@ class MonthPage extends StatelessWidget {
               ),
             ],
           ),
+        );
+      },
+    );
+  }
+
+  Route _createRoute() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          const AddSchedulePage(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, 1.0);
+        const end = Offset.zero;
+        const curve = Curves.ease;
+
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
         );
       },
     );
@@ -258,9 +284,9 @@ class MonthPage extends StatelessWidget {
   }
 
   String _startTimeStr(ScheduleModel schedule, DayModel day) {
-    int startDate = (schedule.startTime / 10000) as int;
+    int startDate = schedule.startTime ~/ 10000;
     String startDateStr = schedule.startTime.toString();
-    int endDate = (schedule.endTime / 10000) as int;
+    int endDate = schedule.endTime ~/ 10000;
     int dateOfDay = int.parse("${day.year}${sprintf("%02i", [
           day.month
         ])}${sprintf("%02i", [day.dayOfMonth])}");
@@ -277,7 +303,7 @@ class MonthPage extends StatelessWidget {
   }
 
   String _endTimeStr(ScheduleModel schedule, DayModel day) {
-    int endDate = (schedule.endTime / 10000) as int;
+    int endDate = schedule.endTime ~/ 10000;
     String endDateStr = schedule.endTime.toString();
     int dateOfDay = int.parse("${day.year}${sprintf("%02i", [
           day.month
