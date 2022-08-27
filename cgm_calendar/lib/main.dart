@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import 'generated/l10n.dart';
 
@@ -21,6 +22,7 @@ void main() {
   ).then(
     (_) async {
       Global.init();
+      Global.info = await PackageInfo.fromPlatform();
       YearModel oldestYear = Global.oldYears.last;
       await DBManager.db
           .deleteTimeOutSchedules(int.parse("${oldestYear.year}01010000"));

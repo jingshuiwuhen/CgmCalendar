@@ -34,6 +34,8 @@ class CellOneMonth extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => CellOneMonthViewModel(monthModel.daysOfMonth),
       builder: (context, child) {
+        wViewModel = context.watch<CellOneMonthViewModel>();
+        rViewModel = context.read<CellOneMonthViewModel>();
         return Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,

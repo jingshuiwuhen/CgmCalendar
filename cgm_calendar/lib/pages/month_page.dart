@@ -6,6 +6,7 @@ import 'package:cgm_calendar/pages/schedule_detail_page.dart';
 import 'package:cgm_calendar/view_models/add_schedule_page_view_model.dart';
 import 'package:cgm_calendar/view_models/month_page_view_model.dart';
 import 'package:cgm_calendar/widgets/cell_one_month.dart';
+import 'package:cgm_calendar/widgets/left_drawer.dart';
 import 'package:expandable_page_view/expandable_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -32,6 +33,15 @@ class MonthPage extends StatelessWidget {
             backgroundColor: Colors.white,
             foregroundColor: Colors.red,
             elevation: 1,
+            leading: IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              icon: const Icon(
+                Icons.arrow_back_ios,
+                color: Colors.red,
+              ),
+            ),
             title: Text(
               wViewModel.title,
               style: TextStyle(fontSize: 20.sp),
@@ -69,6 +79,7 @@ class MonthPage extends StatelessWidget {
               ),
             ),
           ),
+          drawer: const LeftDrawer(),
           bottomNavigationBar: Container(
             decoration: const BoxDecoration(
               color: Colors.white,
@@ -91,12 +102,18 @@ class MonthPage extends StatelessWidget {
                     ),
                   ),
                   const Spacer(),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.info_outline,
-                      color: Colors.red,
-                    ),
+                  Builder(
+                    builder: ((context) {
+                      return IconButton(
+                        onPressed: () {
+                          Scaffold.of(context).openDrawer();
+                        },
+                        icon: const Icon(
+                          Icons.settings,
+                          color: Colors.red,
+                        ),
+                      );
+                    }),
                   ),
                 ],
               ),

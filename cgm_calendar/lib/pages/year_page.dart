@@ -1,6 +1,7 @@
 import 'package:cgm_calendar/global.dart';
 import 'package:cgm_calendar/pages/add_schedule_page.dart';
 import 'package:cgm_calendar/widgets/cell_one_year.dart';
+import 'package:cgm_calendar/widgets/left_drawer.dart';
 import 'package:flutter/material.dart';
 
 class YearPage extends StatelessWidget {
@@ -16,6 +17,10 @@ class YearPage extends StatelessWidget {
         backgroundColor: Colors.white,
         foregroundColor: Colors.red,
         elevation: 1,
+        leading: const SizedBox(
+          height: 0,
+          width: 0,
+        ),
         actions: [
           IconButton(
             onPressed: () {
@@ -24,7 +29,7 @@ class YearPage extends StatelessWidget {
             icon: const Icon(
               Icons.add,
             ),
-          )
+          ),
         ],
       ),
       bottomNavigationBar: Container(
@@ -55,17 +60,24 @@ class YearPage extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.info_outline,
-                  color: Colors.red,
-                ),
+              Builder(
+                builder: ((context) {
+                  return IconButton(
+                    onPressed: () {
+                      Scaffold.of(context).openDrawer();
+                    },
+                    icon: const Icon(
+                      Icons.settings,
+                      color: Colors.red,
+                    ),
+                  );
+                }),
               ),
             ],
           ),
         ),
       ),
+      drawer: const LeftDrawer(),
       body: CustomScrollView(
         controller: _scrollController,
         center: _centerKey,

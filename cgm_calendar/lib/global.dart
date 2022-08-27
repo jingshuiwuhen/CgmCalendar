@@ -1,7 +1,9 @@
 import 'package:cgm_calendar/models/month_model.dart';
 import 'package:cgm_calendar/models/year_model.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class Global {
+  static PackageInfo? info;
   static const int _length = 5;
   static final List<YearModel> oldYears = [];
   static final List<YearModel> newYears = [];
