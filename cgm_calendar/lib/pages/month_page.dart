@@ -12,31 +12,34 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:sprintf/sprintf.dart';
 
+// ignore: must_be_immutable
 class MonthPage extends StatelessWidget {
   final int monthModelIndex;
+  late MonthPageViewModel rViewModel;
+  late MonthPageViewModel wViewModel;
 
-  const MonthPage({Key? key, required this.monthModelIndex}) : super(key: key);
+  MonthPage({Key? key, required this.monthModelIndex}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => MonthPageViewModel(monthModelIndex),
       builder: (context, child) {
+        rViewModel = context.read<MonthPageViewModel>();
+        wViewModel = context.watch<MonthPageViewModel>();
         return Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.white,
             foregroundColor: Colors.red,
             elevation: 1,
             title: Text(
-              context.watch<MonthPageViewModel>().title,
+              wViewModel.title,
               style: TextStyle(fontSize: 20.sp),
             ),
             centerTitle: true,
             actions: [
               IconButton(
                 onPressed: () async {
-                  MonthPageViewModel rViewModel =
-                      context.read<MonthPageViewModel>();
                   await Navigator.of(context).push(_addSchedulePageRoute());
                   rViewModel.refreshPage();
                 },
@@ -102,10 +105,10 @@ class MonthPage extends StatelessWidget {
           body: Column(
             children: [
               ExpandablePageView.builder(
-                controller: context.read<MonthPageViewModel>().controller,
+                controller: rViewModel.controller,
                 itemCount: Global.allMonths.length,
                 onPageChanged: (index) {
-                  context.read<MonthPageViewModel>().onPageChanged(index);
+                  rViewModel.onPageChanged(index);
                 },
                 itemBuilder: (context, index) => CellOneMonth(
                   clickable: true,
@@ -113,124 +116,83 @@ class MonthPage extends StatelessWidget {
                   showTitle: false,
                   fontSize: 15.sp,
                   itemMargin: EdgeInsets.fromLTRB(8.w, 8.h, 8.w, 8.h),
-                  oneDayClick: (day) => context
-                      .read<MonthPageViewModel>()
-                      .refreshScheduleList(day),
+                  oneDayClick: (day) => rViewModel.refreshScheduleList(day),
                 ),
               ),
               Expanded(
-                child:
-                    context.watch<MonthPageViewModel>().day.scheduleList.isEmpty
-                        ? Center(
-                            child: Text(
-                              "没有日程",
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 20.sp,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          )
-                        : ListView.builder(
-                            itemCount: context
-                                .watch<MonthPageViewModel>()
-                                .day
-                                .scheduleList
-                                .length,
-                            itemBuilder: (context, index) {
-                              ScheduleModel schedule = context
-                                  .watch<MonthPageViewModel>()
-                                  .day
-                                  .scheduleList[index];
-                              return InkWell(
-                                onTap: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const ScheduleDetailPage(),
-                                    ),
-                                  );
-                                },
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                    top: 5.h,
-                                    left: 10.w,
-                                    right: 10.w,
-                                    bottom: 5.h,
+                child: wViewModel.day.scheduleList.isEmpty
+                    ? Center(
+                        child: Text(
+                          "没有日程",
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 20.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      )
+                    : ListView.builder(
+                        itemCount: wViewModel.day.scheduleList.length,
+                        itemBuilder: (context, index) {
+                          ScheduleModel schedule =
+                              wViewModel.day.scheduleList[index];
+                          return InkWell(
+                            onTap: () async {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => ScheduleDetailPage(
+                                    model: schedule,
                                   ),
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        height: 50.h,
-                                        width: 6.w,
-                                        decoration: BoxDecoration(
-                                          color: schedule.scheduleType ==
-                                                  SchedualType.personal.index
-                                              ? Colors.lightBlue
-                                              : Colors.purpleAccent,
-                                          borderRadius:
-                                              BorderRadiusDirectional.circular(
-                                                  20.r),
-                                        ),
+                                ),
+                              );
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                top: 5.h,
+                                left: 10.w,
+                                right: 10.w,
+                                bottom: 5.h,
+                              ),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    height: 50.h,
+                                    width: 6.w,
+                                    decoration: BoxDecoration(
+                                      color: schedule.scheduleType ==
+                                              SchedualType.personal.index
+                                          ? Colors.lightBlue
+                                          : Colors.purpleAccent,
+                                      borderRadius:
+                                          BorderRadiusDirectional.circular(
+                                              20.r),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                        left: 6.w,
+                                        right: 6.w,
                                       ),
-                                      Expanded(
-                                        child: Padding(
-                                          padding: EdgeInsets.only(
-                                            left: 6.w,
-                                            right: 6.w,
-                                          ),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                schedule.title,
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 20.sp,
-                                                ),
-                                              ),
-                                              Text(
-                                                schedule.remarks,
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: TextStyle(
-                                                  color: Colors.grey,
-                                                  fontSize: 16.sp,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      Column(
+                                      child: Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            _startTimeStr(
-                                              schedule,
-                                              context
-                                                  .read<MonthPageViewModel>()
-                                                  .day,
-                                            ),
+                                            schedule.title,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
                                               color: Colors.black,
-                                              fontSize: 16.sp,
-                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20.sp,
                                             ),
                                           ),
                                           Text(
-                                            _endTimeStr(
-                                              schedule,
-                                              context
-                                                  .read<MonthPageViewModel>()
-                                                  .day,
-                                            ),
+                                            schedule.remarks,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
                                               color: Colors.grey,
                                               fontSize: 16.sp,
@@ -238,12 +200,41 @@ class MonthPage extends StatelessWidget {
                                           ),
                                         ],
                                       ),
+                                    ),
+                                  ),
+                                  Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        _startTimeStr(
+                                          schedule,
+                                          rViewModel.day,
+                                        ),
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16.sp,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Text(
+                                        _endTimeStr(
+                                          schedule,
+                                          rViewModel.day,
+                                        ),
+                                        style: TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 16.sp,
+                                        ),
+                                      ),
                                     ],
                                   ),
-                                ),
-                              );
-                            },
-                          ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
               ),
             ],
           ),
@@ -255,7 +246,7 @@ class MonthPage extends StatelessWidget {
   Route _addSchedulePageRoute() {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) =>
-          const AddSchedulePage(),
+          AddSchedulePage(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(0.0, 1.0);
         const end = Offset.zero;

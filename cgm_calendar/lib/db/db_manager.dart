@@ -17,7 +17,7 @@ class DBManager {
     if (Platform.isAndroid) {
       directory = await getDatabasesPath();
     } else if (Platform.isIOS) {
-      Directory dir = await getApplicationDocumentsDirectory();
+      Directory dir = await getApplicationSupportDirectory();
       directory = dir.path;
     } else {
       throw Exception("Do not support other platform");
@@ -84,5 +84,27 @@ class DBManager {
       }
     }
     return datas;
+  }
+
+  Future<ScheduleDBModel> getOneSchedule(int id) async {
+    await _checkDB();
+    List<Map<String, Object?>>? maps = await database?.query(
+      tableName,
+      columns: [
+        columnId,
+        columnTitle,
+        columnStartTime,
+        columnEndTime,
+        columnExceptionTimes,
+        columnRepeatUntil,
+        columnRepeatType,
+        columnScheduleType,
+        columnRemarks,
+      ],
+      where: "columnId = ?",
+      whereArgs: [id],
+    );
+
+    return ScheduleDBModel.fromMap(maps!.first);
   }
 }

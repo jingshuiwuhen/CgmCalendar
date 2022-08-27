@@ -36,19 +36,17 @@ class AddSchedulePageViewModel with ChangeNotifier {
     });
     _titleFocus = FocusNode();
 
-    _startDate = formatDate(DateTime.now(), [yyyy, '/', mm, '/', dd]);
-    _startTime =
-        "${formatDate(DateTime.now().add(const Duration(hours: 1)), [HH])}:00";
+    DateTime now = DateTime.now();
+    _startDate = formatDate(now, [yyyy, '/', mm, '/', dd]);
+    DateTime oneHourFromNow = now.add(const Duration(hours: 1));
+    _startTime = "${formatDate(oneHourFromNow, [HH])}:00";
 
-    _endDate = formatDate(
-        DateTime.now().add(const Duration(hours: 2)), [yyyy, '/', mm, '/', dd]);
-    _endTime =
-        "${formatDate(DateTime.now().add(const Duration(hours: 2)), [HH])}:00";
+    DateTime twoHoursFromNow = oneHourFromNow.add(const Duration(hours: 1));
+    _endDate = formatDate(twoHoursFromNow, [yyyy, '/', mm, '/', dd]);
+    _endTime = "${formatDate(twoHoursFromNow, [HH])}:00";
 
     _repeatType = RepeatType.none;
-
     _scheduleType = SchedualType.personal;
-
     _isNotRightTime = false;
 
     _remarksEditingController = TextEditingController(text: "");
