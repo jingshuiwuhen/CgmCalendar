@@ -80,7 +80,7 @@ class AddScheduleHelper {
     for (var i = 0;; i++) {
       if (i != 0) {
         startDateTime = startDateTime.add(Duration(days: isEveryDay ? 1 : 7));
-        startDateTime = endDateTime.add(Duration(days: isEveryDay ? 1 : 7));
+        endDateTime = endDateTime.add(Duration(days: isEveryDay ? 1 : 7));
       }
 
       if (endDateTime.compareTo(DateTime.parse(
@@ -96,8 +96,8 @@ class AddScheduleHelper {
       }
 
       if (startDateTime.compareTo(DateTime.parse(
-                  "${Global.newYears.last.year + 1}0101 00:00:00")) ==
-              -1 ||
+                  "${Global.newYears.last.year}1231 23:59:59")) ==
+              1 ||
           model.repeatUntil ==
               int.parse("${startDateTime.year}${sprintf("%02i", [
                     startDateTime.month
@@ -195,8 +195,8 @@ class AddScheduleHelper {
       }
 
       if (startDateTime.compareTo(DateTime.parse(
-                  "${Global.newYears.last.year + 1}0101 00:00:00")) ==
-              -1 ||
+                  "${Global.newYears.last.year + 1}1231 23:59:59")) ==
+              1 ||
           model.repeatUntil ==
               int.parse("${startDateTime.year}${sprintf("%02i", [
                     startDateTime.month

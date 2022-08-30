@@ -13,18 +13,25 @@ class DBManager {
   DBManager._();
 
   Future _initDB() async {
-    String directory;
-    if (Platform.isAndroid) {
-      directory = await getDatabasesPath();
-    } else if (Platform.isIOS) {
-      Directory dir = await getApplicationSupportDirectory();
-      directory = dir.path;
-    } else {
-      throw Exception("Do not support other platform");
-    }
+    String directory = await getDatabasesPath();
+    // String directory;
+    // if (Platform.isAndroid) {
+    //   directory = await getDatabasesPath();
+    // } else if (Platform.isIOS) {
+    //   Directory dir = await getApplicationSupportDirectory();
+    //   directory = dir.path;
+    // } else {
+    //   throw Exception("Do not support other platform");
+    // }
 
     String path = "$directory/schedule.db";
     debugPrint(path);
+    try {
+      Directory dic = await Directory(path).create(recursive: true);
+    } catch (_) {
+      throw Exception("Do not support this platform");
+    }
+
     database = await openDatabase(path, version: 1,
         onCreate: (Database db, int v) async {
       await db.execute(SQLStr.createTableSchedule);

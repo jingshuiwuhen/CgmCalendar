@@ -32,8 +32,8 @@ class CellOneYear extends StatelessWidget {
               bottom: 6.h,
             ),
             child: const Divider(
-              color: Colors.black,
-              thickness: 2,
+              color: Colors.grey,
+              thickness: 1,
             ),
           ),
           GridView.builder(
