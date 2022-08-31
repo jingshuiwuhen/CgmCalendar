@@ -2,6 +2,7 @@ import 'package:cgm_calendar/models/schedule_model.dart';
 import 'package:cgm_calendar/pages/common_string.dart';
 import 'package:cgm_calendar/view_models/add_schedule_page_view_model.dart';
 import 'package:cgm_calendar/view_models/schedule_detail_page_view_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +11,7 @@ import 'package:provider/provider.dart';
 class ScheduleDetailPage extends StatelessWidget {
   final ScheduleModel model;
   late ScheduleDetailPageViewModel wViewModel;
+  late ScheduleDetailPageViewModel rViewModel;
 
   ScheduleDetailPage({
     Key? key,
@@ -22,6 +24,7 @@ class ScheduleDetailPage extends StatelessWidget {
       create: (_) => ScheduleDetailPageViewModel(model),
       builder: (context, child) {
         wViewModel = context.watch<ScheduleDetailPageViewModel>();
+        rViewModel = context.read<ScheduleDetailPageViewModel>();
         return Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.white,
@@ -71,7 +74,16 @@ class ScheduleDetailPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () async {
+                    if (model.repeatType == RepeatType.none.index) {
+                      final navigator = Navigator.of(context);
+                      await rViewModel.deleteNoRepeatSchedule();
+                      navigator.pop();
+                      return;
+                    }
+
+                    _showSelector(context);
+                  },
                   child: Text(
                     "删除日程",
                     style: TextStyle(
@@ -251,6 +263,40 @@ class ScheduleDetailPage extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  void _showSelector<T>(BuildContext pContext) {
+    showCupertinoModalPopup<void>(
+      context: pContext,
+      builder: (context) => CupertinoActionSheet(
+        actions: [
+          CupertinoActionSheetAction(
+            isDestructiveAction: true,
+            onPressed: () async {
+              final navigator = Navigator.of(context);
+              await rViewModel.deleteRepeatSchedule(DeleteType.thisOnly);
+              navigator.popUntil(ModalRoute.withName("MonthPage"));
+            },
+            child: const Text("仅针对此日程"),
+          ),
+          CupertinoActionSheetAction(
+            isDestructiveAction: true,
+            onPressed: () async {
+              final navigator = Navigator.of(context);
+              await rViewModel
+                  .deleteRepeatSchedule(DeleteType.futureContainsThis);
+              navigator.pop();
+            },
+            child: const Text("针对将来日程"),
+          ),
+        ],
+        cancelButton: CupertinoActionSheetAction(
+          isDestructiveAction: true,
+          onPressed: () => Navigator.pop(context),
+          child: const Text("取消"),
+        ),
+      ),
     );
   }
 }

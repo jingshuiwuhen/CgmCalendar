@@ -300,9 +300,14 @@ class AddSchedulePage extends StatelessWidget {
   void _showSelector<T>(BuildContext pContext, List<T> typeValues) {
     showCupertinoModalPopup<void>(
       context: pContext,
-      builder: ((context) => CupertinoActionSheet(
-            actions: _actionList<T>(pContext, typeValues),
-          )),
+      builder: (context) => CupertinoActionSheet(
+        actions: _actionList<T>(pContext, typeValues),
+        cancelButton: CupertinoActionSheetAction(
+          isDestructiveAction: true,
+          onPressed: () => Navigator.pop(context),
+          child: const Text("取消"),
+        ),
+      ),
     );
   }
 

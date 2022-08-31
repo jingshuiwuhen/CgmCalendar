@@ -49,6 +49,10 @@ class AddScheduleHelper {
       MonthModel targetMonth = targetYear.monthsOfYear[startMonth - 1];
       DayModel targetDay = targetMonth.daysOfMonth[startDay - 1];
       targetDay.addScheduleAndSort(model);
+      if (Global.idScheduleMap[model.id] == null) {
+        Global.idScheduleMap[model.id] = List.empty(growable: true);
+      }
+      Global.idScheduleMap[model.id]!.add(targetDay);
 
       if (targetMonth.daysOfMonth.indexOf(targetDay) ==
           (targetMonth.daysOfMonth.length - 1)) {
@@ -137,15 +141,17 @@ class AddScheduleHelper {
     String endTimeStr =
         "${endTime.substring(0, 8)} ${endTime.substring(8, 10)}:${endTime.substring(10)}:00";
     DateTime endDateTime = DateTime.parse(endTimeStr);
-    int daysBetweenStartToEnd = startDateTime.difference(endDateTime).inDays;
+    int daysBetweenStartToEnd = endDateTime.difference(startDateTime).inDays;
 
     DateTime tempLastDayOfMonthDateTime = DateTime.parse(startTimeStr);
     do {
-      tempLastDayOfMonthDateTime.add(const Duration(days: 1));
+      tempLastDayOfMonthDateTime =
+          tempLastDayOfMonthDateTime.add(const Duration(days: 1));
     } while (tempLastDayOfMonthDateTime.month == startMonth);
-    tempLastDayOfMonthDateTime.subtract(const Duration(days: 1));
+    tempLastDayOfMonthDateTime =
+        tempLastDayOfMonthDateTime.subtract(const Duration(days: 1));
     int daysBetweenStartToLastDayOfMonth =
-        startDateTime.difference(tempLastDayOfMonthDateTime).inDays;
+        tempLastDayOfMonthDateTime.difference(startDateTime).inDays;
 
     int thisYear = Global.newYears.first.year;
     for (var i = 0;; i++) {
@@ -159,11 +165,14 @@ class AddScheduleHelper {
 
         MonthModel targetMonth;
         if (thisYear <= startYear) {
-          targetMonth =
-              Global.newYears[startYear - thisYear].monthsOfYear[startMonth];
+          if (startYear - thisYear >= Global.newYears.length) {
+            break;
+          }
+          targetMonth = Global
+              .newYears[startYear - thisYear].monthsOfYear[startMonth - 1];
         } else {
           targetMonth = Global
-              .oldYears[thisYear - startYear - 1].monthsOfYear[startMonth];
+              .oldYears[thisYear - startYear - 1].monthsOfYear[startMonth - 1];
         }
 
         if (targetMonth.daysOfMonth.length >= startDay) {

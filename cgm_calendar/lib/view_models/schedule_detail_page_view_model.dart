@@ -1,6 +1,16 @@
+import 'package:cgm_calendar/add_schedule_helper.dart';
+import 'package:cgm_calendar/db/db_manager.dart';
+import 'package:cgm_calendar/db/schedule_db_model.dart';
+import 'package:cgm_calendar/global.dart';
+import 'package:cgm_calendar/models/day_model.dart';
 import 'package:cgm_calendar/models/schedule_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
+
+enum DeleteType {
+  thisOnly,
+  futureContainsThis,
+}
 
 class ScheduleDetailPageViewModel with ChangeNotifier {
   late ScheduleModel _model;
@@ -36,7 +46,7 @@ class ScheduleDetailPageViewModel with ChangeNotifier {
     int endDate = _model.endTime ~/ 10000;
     if (startDate == endDate) {
       DateTime time = DateTime.parse(startDate.toString());
-      _timeStr1 = DateFormat.yMMMMEEEEd().format(time);
+      _timeStr1 = DateFormat.yMMMMEEEEd(Global.localeStr()).format(time);
       String startTimeStr = _model.startTime.toString().substring(8);
       String endTimeStr = _model.endTime.toString().substring(8);
       _timeStr2 =
@@ -45,12 +55,46 @@ class ScheduleDetailPageViewModel with ChangeNotifier {
       String startTimeStr = _model.startTime.toString().substring(8);
       DateTime start = DateTime.parse(
           "${startDate.toString()} ${startTimeStr.substring(8, 10)}:${startTimeStr.substring(10)}:00");
-      _timeStr1 = "开始 : ${DateFormat.yMMMMEEEEd().add_Hm().format(start)}";
+      _timeStr1 =
+          "开始 : ${DateFormat.yMMMMEEEEd(Global.localeStr()).add_Hm().format(start)}";
 
       String endTimeStr = _model.endTime.toString().substring(8);
       DateTime end = DateTime.parse(
           "${endDate.toString()} ${endTimeStr.substring(8, 10)}:${endTimeStr.substring(10)}:00");
-      _timeStr2 = "结束 : ${DateFormat.yMMMMEEEEd().add_Hm().format(end)}";
+      _timeStr2 =
+          "结束 : ${DateFormat.yMMMMEEEEd(Global.localeStr()).add_Hm().format(end)}";
+    }
+  }
+
+  Future deleteNoRepeatSchedule() async {
+    await DBManager.db.delete(_model.id);
+    _deleteLocalSchedule(_model.id);
+  }
+
+  Future deleteRepeatSchedule(DeleteType deleteType) async {
+    ScheduleDBModel dbModel = await DBManager.db.getOneSchedule(_model.id);
+    if (deleteType == DeleteType.thisOnly) {
+      dbModel.exceptionTimes = "${dbModel.exceptionTimes}${_model.startTime},";
+    } else {
+      dbModel.repeatUntil = _model.startTime;
+    }
+    await DBManager.db.update(dbModel);
+    _deleteLocalSchedule(_model.id);
+    AddScheduleHelper.addToCalendar(dbModel);
+  }
+
+  void _deleteLocalSchedule(int id) {
+    List<DayModel>? days = Global.idScheduleMap[_model.id];
+    if (days == null) {
+      return;
+    }
+    for (var day in days) {
+      for (var schedule in day.scheduleList) {
+        if (schedule.id == _model.id) {
+          day.scheduleList.remove(schedule);
+          break;
+        }
+      }
     }
   }
 }

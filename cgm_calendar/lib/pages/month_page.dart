@@ -95,7 +95,9 @@ class MonthPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      rViewModel.controller.jumpToPage(monthModelIndex);
+                    },
                     icon: const Icon(
                       Icons.calendar_today,
                       color: Colors.red,
@@ -155,13 +157,16 @@ class MonthPage extends StatelessWidget {
                               wViewModel.day.scheduleList[index];
                           return InkWell(
                             onTap: () async {
-                              Navigator.of(context).push(
+                              await Navigator.of(context).push(
                                 MaterialPageRoute(
+                                  settings:
+                                      const RouteSettings(name: "MonthPage"),
                                   builder: (context) => ScheduleDetailPage(
                                     model: schedule,
                                   ),
                                 ),
                               );
+                              rViewModel.refreshPage();
                             },
                             child: Padding(
                               padding: EdgeInsets.only(
@@ -231,7 +236,6 @@ class MonthPage extends StatelessWidget {
                                         style: TextStyle(
                                           color: Colors.black,
                                           fontSize: 16.sp,
-                                          fontWeight: FontWeight.bold,
                                         ),
                                       ),
                                       Text(

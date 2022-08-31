@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class MonthPageViewModel with ChangeNotifier {
   String _title = "";
-  PageController? _controller;
+  late PageController _controller;
   late DayModel _day;
 
   MonthPageViewModel(int index) {
@@ -15,7 +15,7 @@ class MonthPageViewModel with ChangeNotifier {
   }
 
   String get title => _title;
-  PageController? get controller => _controller;
+  PageController get controller => _controller;
   DayModel get day => _day;
 
   void onPageChanged(int index) {

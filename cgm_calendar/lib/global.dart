@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:cgm_calendar/models/day_model.dart';
 import 'package:cgm_calendar/models/month_model.dart';
 import 'package:cgm_calendar/models/year_model.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -8,6 +11,7 @@ class Global {
   static final List<YearModel> oldYears = [];
   static final List<YearModel> newYears = [];
   static final List<MonthModel> allMonths = [];
+  static final Map<int, List<DayModel>> idScheduleMap = {};
 
   static init() {
     int lastYear = DateTime.now().year - 1;
@@ -36,6 +40,19 @@ class Global {
     for (var i = 0; i < newYears.length; i++) {
       YearModel year = newYears[i];
       allMonths.addAll(year.monthsOfYear);
+    }
+  }
+
+  static String localeStr() {
+    String locale = Platform.localeName;
+    if (locale.substring(0, 2).compareTo("zh") == 0) {
+      return "zh_CN";
+    } else if (locale.substring(0, 2).compareTo("ja") == 0) {
+      return "ja_JP";
+    } else if (locale.substring(0, 2).compareTo("vi") == 0) {
+      return "vi_VN";
+    } else {
+      return "en_US";
     }
   }
 }

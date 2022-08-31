@@ -1,10 +1,7 @@
-import 'dart:io';
-
 import 'package:cgm_calendar/db/schedule_db_model.dart';
 import 'package:cgm_calendar/db/sql_str.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:path_provider/path_provider.dart';
 
 class DBManager {
   Database? database;
@@ -13,26 +10,9 @@ class DBManager {
   DBManager._();
 
   Future _initDB() async {
-    String directory = await getDatabasesPath();
-    // String directory;
-    // if (Platform.isAndroid) {
-    //   directory = await getDatabasesPath();
-    // } else if (Platform.isIOS) {
-    //   Directory dir = await getApplicationSupportDirectory();
-    //   directory = dir.path;
-    // } else {
-    //   throw Exception("Do not support other platform");
-    // }
-
-    String path = "$directory/schedule.db";
-    debugPrint(path);
-    try {
-      Directory dic = await Directory(path).create(recursive: true);
-    } catch (_) {
-      throw Exception("Do not support this platform");
-    }
-
-    database = await openDatabase(path, version: 1,
+    String directory = "${await getDatabasesPath()}/schedule.db";
+    debugPrint(directory);
+    database = await openDatabase(directory, version: 1,
         onCreate: (Database db, int v) async {
       await db.execute(SQLStr.createTableSchedule);
     });
@@ -59,8 +39,8 @@ class DBManager {
     await _checkDB();
     await database?.delete(tableName,
         where:
-            "($columnRepeatType = ? and $columnEndTime <= ?) or ($columnRepeatType <> ? and $columnRepeatUntil <= ?)",
-        whereArgs: [0, time, 0, time]);
+            "($columnRepeatType = ? and $columnEndTime <= ?) or ($columnRepeatType <> ? and ($columnRepeatUntil <= ? and $columnRepeatUntil > ?))",
+        whereArgs: [0, time, 0, time, 0]);
   }
 
   Future update(ScheduleDBModel model) async {
@@ -108,7 +88,7 @@ class DBManager {
         columnScheduleType,
         columnRemarks,
       ],
-      where: "columnId = ?",
+      where: "$columnId = ?",
       whereArgs: [id],
     );
 
