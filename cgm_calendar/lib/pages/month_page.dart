@@ -1,9 +1,9 @@
 import 'package:cgm_calendar/global.dart';
 import 'package:cgm_calendar/models/day_model.dart';
 import 'package:cgm_calendar/models/schedule_model.dart';
-import 'package:cgm_calendar/pages/add_schedule_page.dart';
+import 'package:cgm_calendar/pages/set_schedule_page.dart';
 import 'package:cgm_calendar/pages/schedule_detail_page.dart';
-import 'package:cgm_calendar/view_models/add_schedule_page_view_model.dart';
+import 'package:cgm_calendar/view_models/set_schedule_page_view_model.dart';
 import 'package:cgm_calendar/view_models/month_page_view_model.dart';
 import 'package:cgm_calendar/widgets/cell_one_month.dart';
 import 'package:cgm_calendar/widgets/left_drawer.dart';
@@ -159,8 +159,6 @@ class MonthPage extends StatelessWidget {
                             onTap: () async {
                               await Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  settings:
-                                      const RouteSettings(name: "MonthPage"),
                                   builder: (context) => ScheduleDetailPage(
                                     model: schedule,
                                   ),
@@ -267,7 +265,7 @@ class MonthPage extends StatelessWidget {
   Route _addSchedulePageRoute() {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) =>
-          AddSchedulePage(),
+          SetSchedulePage(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(0.0, 1.0);
         const end = Offset.zero;

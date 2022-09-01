@@ -1,5 +1,5 @@
 import 'package:cgm_calendar/global.dart';
-import 'package:cgm_calendar/pages/add_schedule_page.dart';
+import 'package:cgm_calendar/pages/set_schedule_page.dart';
 import 'package:cgm_calendar/widgets/cell_one_year.dart';
 import 'package:cgm_calendar/widgets/left_drawer.dart';
 import 'package:flutter/material.dart';
@@ -111,7 +111,7 @@ class YearPage extends StatelessWidget {
   Route _createRoute() {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) =>
-          AddSchedulePage(),
+          SetSchedulePage(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(0.0, 1.0);
         const end = Offset.zero;

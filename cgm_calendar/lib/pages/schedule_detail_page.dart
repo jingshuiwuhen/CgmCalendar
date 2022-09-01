@@ -1,6 +1,6 @@
 import 'package:cgm_calendar/models/schedule_model.dart';
 import 'package:cgm_calendar/pages/common_string.dart';
-import 'package:cgm_calendar/view_models/add_schedule_page_view_model.dart';
+import 'package:cgm_calendar/view_models/set_schedule_page_view_model.dart';
 import 'package:cgm_calendar/view_models/schedule_detail_page_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -78,7 +78,7 @@ class ScheduleDetailPage extends StatelessWidget {
                     if (model.repeatType == RepeatType.none.index) {
                       final navigator = Navigator.of(context);
                       await rViewModel.deleteNoRepeatSchedule();
-                      navigator.pop();
+                      navigator.popUntil(ModalRoute.withName("MonthPage"));
                       return;
                     }
 
@@ -286,7 +286,7 @@ class ScheduleDetailPage extends StatelessWidget {
               final navigator = Navigator.of(context);
               await rViewModel
                   .deleteRepeatSchedule(DeleteType.futureContainsThis);
-              navigator.pop();
+              navigator.popUntil(ModalRoute.withName("MonthPage"));
             },
             child: const Text("针对将来日程"),
           ),

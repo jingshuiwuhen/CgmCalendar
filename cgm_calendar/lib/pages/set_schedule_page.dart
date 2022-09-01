@@ -1,5 +1,6 @@
+import 'package:cgm_calendar/models/schedule_model.dart';
 import 'package:cgm_calendar/pages/common_string.dart';
-import 'package:cgm_calendar/view_models/add_schedule_page_view_model.dart';
+import 'package:cgm_calendar/view_models/set_schedule_page_view_model.dart';
 import 'package:cgm_calendar/widgets/cell_date_time_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,19 +8,23 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
-class AddSchedulePage extends StatelessWidget {
-  late AddSchedulePageViewModel wViewModel;
-  late AddSchedulePageViewModel rViewModel;
+class SetSchedulePage extends StatelessWidget {
+  ScheduleModel? scheduleModel;
+  late SetSchedulePageViewModel wViewModel;
+  late SetSchedulePageViewModel rViewModel;
 
-  AddSchedulePage({Key? key}) : super(key: key);
+  SetSchedulePage({
+    Key? key,
+    this.scheduleModel,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => AddSchedulePageViewModel(),
+      create: (_) => SetSchedulePageViewModel(scheduleModel),
       builder: (context, child) {
-        wViewModel = context.watch<AddSchedulePageViewModel>();
-        rViewModel = context.read<AddSchedulePageViewModel>();
+        wViewModel = context.watch<SetSchedulePageViewModel>();
+        rViewModel = context.read<SetSchedulePageViewModel>();
         return Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.grey[200],
@@ -42,7 +47,7 @@ class AddSchedulePage extends StatelessWidget {
               ),
             ),
             title: Text(
-              "新建日程",
+              scheduleModel == null ? "新建日程" : "编辑日程",
               style: TextStyle(
                 fontSize: 20.sp,
                 color: Colors.black,
@@ -65,7 +70,7 @@ class AddSchedulePage extends StatelessWidget {
                   },
                   child: Center(
                     child: Text(
-                      "添加",
+                      scheduleModel == null ? "添加" : "完成",
                       style: TextStyle(
                         fontSize: 20.sp,
                         color: _canAddSchedule(context) ? null : Colors.grey,

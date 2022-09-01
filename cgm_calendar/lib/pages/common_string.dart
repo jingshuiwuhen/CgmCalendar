@@ -1,4 +1,4 @@
-import 'package:cgm_calendar/view_models/add_schedule_page_view_model.dart';
+import 'package:cgm_calendar/view_models/set_schedule_page_view_model.dart';
 
 class CommonString {
   static String getRepeatStr(RepeatType repeatType) {

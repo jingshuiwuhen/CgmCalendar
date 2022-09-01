@@ -1,6 +1,7 @@
 import 'package:cgm_calendar/add_schedule_helper.dart';
 import 'package:cgm_calendar/db/db_manager.dart';
 import 'package:cgm_calendar/db/schedule_db_model.dart';
+import 'package:cgm_calendar/models/schedule_model.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,7 @@ enum SchedualType {
   work,
 }
 
-class AddSchedulePageViewModel with ChangeNotifier {
+class SetSchedulePageViewModel with ChangeNotifier {
   late TextEditingController _titleEditingController;
   late FocusNode _titleFocus;
   late String _startDate;
@@ -28,28 +29,49 @@ class AddSchedulePageViewModel with ChangeNotifier {
   late bool _isNotRightTime;
   late TextEditingController _remarksEditingController;
   late FocusNode _remarksFocus;
+  ScheduleModel? _oldSchedule;
+  ScheduleModel? _newSchedule;
 
-  AddSchedulePageViewModel() {
-    _titleEditingController = TextEditingController(text: "");
+  SetSchedulePageViewModel(ScheduleModel? schedule) {
+    _oldSchedule = schedule;
+    _newSchedule = _oldSchedule?.copy();
+
+    _titleEditingController = TextEditingController(
+        text: _newSchedule == null ? "" : _newSchedule!.title);
     _titleEditingController.addListener(() {
       notifyListeners();
     });
     _titleFocus = FocusNode();
 
-    DateTime now = DateTime.now();
-    _startDate = formatDate(now, [yyyy, '/', mm, '/', dd]);
-    DateTime oneHourFromNow = now.add(const Duration(hours: 1));
-    _startTime = "${formatDate(oneHourFromNow, [HH])}:00";
+    if (_newSchedule == null) {
+      DateTime now = DateTime.now();
+      _startDate = formatDate(now, [yyyy, '/', mm, '/', dd]);
+      DateTime oneHourFromNow = now.add(const Duration(hours: 1));
+      _startTime = "${formatDate(oneHourFromNow, [HH])}:00";
 
-    DateTime twoHoursFromNow = oneHourFromNow.add(const Duration(hours: 1));
-    _endDate = formatDate(twoHoursFromNow, [yyyy, '/', mm, '/', dd]);
-    _endTime = "${formatDate(twoHoursFromNow, [HH])}:00";
+      DateTime twoHoursFromNow = oneHourFromNow.add(const Duration(hours: 1));
+      _endDate = formatDate(twoHoursFromNow, [yyyy, '/', mm, '/', dd]);
+      _endTime = "${formatDate(twoHoursFromNow, [HH])}:00";
+    } else {
+      String start = _newSchedule!.startTime.toString();
+      _startDate =
+          "${start.substring(0, 4)}/${start.substring(4, 6)}/${start.substring(6, 8)}";
+      _startTime = "${start.substring(8, 10)}:${start.substring(10)}";
 
-    _repeatType = RepeatType.none;
-    _scheduleType = SchedualType.personal;
+      String end = _newSchedule!.endTime.toString();
+      _endDate =
+          "${end.substring(0, 4)}/${end.substring(4, 6)}/${end.substring(6, 8)}";
+      _endTime = "${end.substring(8, 10)}:${end.substring(10)}";
+    }
+
+    _repeatType =
+        RepeatType.values[_newSchedule == null ? 0 : _newSchedule!.repeatType];
+    _scheduleType = SchedualType
+        .values[_newSchedule == null ? 0 : _newSchedule!.scheduleType];
     _isNotRightTime = false;
 
-    _remarksEditingController = TextEditingController(text: "");
+    _remarksEditingController = TextEditingController(
+        text: _newSchedule == null ? "" : _newSchedule!.remarks);
     _remarksFocus = FocusNode();
   }
 

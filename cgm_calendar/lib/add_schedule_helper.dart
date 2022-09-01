@@ -4,7 +4,7 @@ import 'package:cgm_calendar/models/day_model.dart';
 import 'package:cgm_calendar/models/month_model.dart';
 import 'package:cgm_calendar/models/schedule_model.dart';
 import 'package:cgm_calendar/models/year_model.dart';
-import 'package:cgm_calendar/view_models/add_schedule_page_view_model.dart';
+import 'package:cgm_calendar/view_models/set_schedule_page_view_model.dart';
 import 'package:sprintf/sprintf.dart';
 
 class AddScheduleHelper {

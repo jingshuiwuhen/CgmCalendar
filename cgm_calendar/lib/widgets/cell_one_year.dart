@@ -61,6 +61,7 @@ class CellOneYear extends StatelessWidget {
                               index;
                     }
                     Navigator.of(context).push(MaterialPageRoute(
+                        settings: const RouteSettings(name: "MonthPage"),
                         builder: ((context) =>
                             MonthPage(monthModelIndex: monthModelIndex))));
                   },

@@ -54,13 +54,13 @@ class ScheduleDetailPageViewModel with ChangeNotifier {
     } else {
       String startTimeStr = _model.startTime.toString().substring(8);
       DateTime start = DateTime.parse(
-          "${startDate.toString()} ${startTimeStr.substring(8, 10)}:${startTimeStr.substring(10)}:00");
+          "${startDate.toString()} ${startTimeStr.substring(0, 2)}:${startTimeStr.substring(2)}:00");
       _timeStr1 =
           "开始 : ${DateFormat.yMMMMEEEEd(Global.localeStr()).add_Hm().format(start)}";
 
       String endTimeStr = _model.endTime.toString().substring(8);
       DateTime end = DateTime.parse(
-          "${endDate.toString()} ${endTimeStr.substring(8, 10)}:${endTimeStr.substring(10)}:00");
+          "${endDate.toString()} ${endTimeStr.substring(0, 2)}:${endTimeStr.substring(2)}:00");
       _timeStr2 =
           "结束 : ${DateFormat.yMMMMEEEEd(Global.localeStr()).add_Hm().format(end)}";
     }
@@ -78,7 +78,13 @@ class ScheduleDetailPageViewModel with ChangeNotifier {
     } else {
       dbModel.repeatUntil = _model.startTime;
     }
-    await DBManager.db.update(dbModel);
+
+    if (dbModel.repeatUntil == dbModel.startTime) {
+      await DBManager.db.delete(_model.id);
+    } else {
+      await DBManager.db.update(dbModel);
+    }
+
     _deleteLocalSchedule(_model.id);
     AddScheduleHelper.addToCalendar(dbModel);
   }
