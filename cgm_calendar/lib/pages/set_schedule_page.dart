@@ -62,18 +62,36 @@ class SetSchedulePage extends StatelessWidget {
                 ),
                 child: GestureDetector(
                   onTap: () async {
-                    if (_canAddSchedule(context)) {
-                      final navigator = Navigator.of(context);
-                      await rViewModel.addSchedule();
-                      navigator.pop();
+                    if (!rViewModel.canAddSchedule()) {
+                      return;
                     }
+
+                    final navigator = Navigator.of(context);
+                    if (scheduleModel == null) {
+                      await rViewModel.addNewSchedule();
+                      navigator.popUntil(ModalRoute.withName("MonthPage"));
+                      return;
+                    }
+
+                    if (!rViewModel.isChanged()) {
+                      navigator.popUntil(ModalRoute.withName("MonthPage"));
+                      return;
+                    }
+
+                    if (scheduleModel!.repeatType == RepeatType.none.index) {
+                      await rViewModel.editNoRepeatSchedule();
+                      navigator.popUntil(ModalRoute.withName("MonthPage"));
+                      return;
+                    }
+
+                    _showEditSelector(context);
                   },
                   child: Center(
                     child: Text(
                       scheduleModel == null ? "添加" : "完成",
                       style: TextStyle(
                         fontSize: 20.sp,
-                        color: _canAddSchedule(context) ? null : Colors.grey,
+                        color: rViewModel.canAddSchedule() ? null : Colors.grey,
                       ),
                     ),
                   ),
@@ -341,8 +359,36 @@ class SetSchedulePage extends StatelessWidget {
     return list;
   }
 
-  bool _canAddSchedule(BuildContext context) {
-    return !rViewModel.isNotRightTime &&
-        rViewModel.titleEditingController.text.isNotEmpty;
+  void _showEditSelector<T>(BuildContext pContext) {
+    showCupertinoModalPopup<void>(
+      context: pContext,
+      builder: (context) => CupertinoActionSheet(
+        actions: [
+          CupertinoActionSheetAction(
+            isDestructiveAction: true,
+            onPressed: () async {
+              final navigator = Navigator.of(context);
+              await rViewModel.editRepeatSchedule(EditType.thisOnly);
+              navigator.popUntil(ModalRoute.withName("MonthPage"));
+            },
+            child: const Text("仅针对此日程"),
+          ),
+          CupertinoActionSheetAction(
+            isDestructiveAction: true,
+            onPressed: () async {
+              final navigator = Navigator.of(context);
+              await rViewModel.editRepeatSchedule(EditType.futureContainsThis);
+              navigator.popUntil(ModalRoute.withName("MonthPage"));
+            },
+            child: const Text("针对将来日程"),
+          ),
+        ],
+        cancelButton: CupertinoActionSheetAction(
+          isDestructiveAction: true,
+          onPressed: () => Navigator.pop(context),
+          child: const Text("取消"),
+        ),
+      ),
+    );
   }
 }

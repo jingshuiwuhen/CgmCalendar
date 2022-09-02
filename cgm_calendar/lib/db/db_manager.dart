@@ -43,6 +43,11 @@ class DBManager {
         whereArgs: [0, time, 0, time, 0]);
   }
 
+  Future deleteAll() async {
+    await _checkDB();
+    await database?.delete(tableName);
+  }
+
   Future update(ScheduleDBModel model) async {
     await _checkDB();
     await database?.update(tableName, model.toMap(),

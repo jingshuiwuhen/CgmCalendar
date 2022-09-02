@@ -66,4 +66,13 @@ class ScheduleDBModel {
     scheduleModel.remarks = remarks;
     return scheduleModel;
   }
+
+  void copyFromScheduleModel(ScheduleModel model) {
+    title = model.title;
+    startTime = model.startTime;
+    endTime = model.endTime;
+    repeatType = model.repeatType;
+    scheduleType = model.scheduleType;
+    remarks = model.remarks;
+  }
 }

@@ -1,9 +1,15 @@
+import 'package:cgm_calendar/db/db_manager.dart';
 import 'package:cgm_calendar/global.dart';
+import 'package:cgm_calendar/models/day_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LeftDrawer extends StatelessWidget {
-  const LeftDrawer({Key? key}) : super(key: key);
+  final Function()? clean;
+  const LeftDrawer({
+    Key? key,
+    this.clean,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -60,23 +66,34 @@ class LeftDrawer extends StatelessWidget {
                           fontSize: 20.sp,
                         ),
                       ),
+                      onTap: () async {
+                        await DBManager.db.deleteAll();
+                        Global.idScheduleMap.forEach((id, days) {
+                          for (DayModel day in days) {
+                            day.scheduleList.clear();
+                          }
+                        });
+                        if (clean != null) {
+                          clean!();
+                        }
+                      },
                     ),
-                    ListTile(
-                      contentPadding: EdgeInsets.symmetric(
-                        horizontal: 20.w,
-                      ),
-                      leading: Icon(
-                        Icons.info_outline_rounded,
-                        size: 24.sp,
-                      ),
-                      title: Text(
-                        "关于我们",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20.sp,
-                        ),
-                      ),
-                    ),
+                    // ListTile(
+                    //   contentPadding: EdgeInsets.symmetric(
+                    //     horizontal: 20.w,
+                    //   ),
+                    //   leading: Icon(
+                    //     Icons.info_outline_rounded,
+                    //     size: 24.sp,
+                    //   ),
+                    //   title: Text(
+                    //     "关于我们",
+                    //     style: TextStyle(
+                    //       color: Colors.black,
+                    //       fontSize: 20.sp,
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ).toList(),
               ),

@@ -79,7 +79,9 @@ class MonthPage extends StatelessWidget {
               ),
             ),
           ),
-          drawer: const LeftDrawer(),
+          drawer: LeftDrawer(
+            clean: () => rViewModel.refreshPage(),
+          ),
           bottomNavigationBar: Container(
             decoration: const BoxDecoration(
               color: Colors.white,
