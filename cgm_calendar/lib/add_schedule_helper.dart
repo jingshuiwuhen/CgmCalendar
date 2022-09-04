@@ -102,12 +102,15 @@ class AddScheduleHelper {
       if (startDateTime.compareTo(DateTime.parse(
                   "${Global.newYears.last.year}1231 23:59:59")) ==
               1 ||
-          model.repeatUntil ==
-              int.parse("${startDateTime.year}${sprintf("%02i", [
-                    startDateTime.month
-                  ])}${sprintf("%02i", [startDateTime.day])}${sprintf("%02i", [
-                    startDateTime.hour
-                  ])}${sprintf("%02i", [startDateTime.minute])}")) {
+          (model.repeatUntil > 0 &&
+              model.repeatUntil <=
+                  int.parse("${startDateTime.year}${sprintf("%02i", [
+                        startDateTime.month
+                      ])}${sprintf("%02i", [
+                        startDateTime.day
+                      ])}${sprintf("%02i", [
+                        startDateTime.hour
+                      ])}${sprintf("%02i", [startDateTime.minute])}"))) {
         break;
       }
 
@@ -206,12 +209,15 @@ class AddScheduleHelper {
       if (startDateTime.compareTo(DateTime.parse(
                   "${Global.newYears.last.year + 1}1231 23:59:59")) ==
               1 ||
-          model.repeatUntil ==
-              int.parse("${startDateTime.year}${sprintf("%02i", [
-                    startDateTime.month
-                  ])}${sprintf("%02i", [startDateTime.day])}${sprintf("%02i", [
-                    startDateTime.hour
-                  ])}${sprintf("%02i", [startDateTime.minute])}")) {
+          (model.repeatUntil > 0 &&
+              model.repeatUntil <=
+                  int.parse("${startDateTime.year}${sprintf("%02i", [
+                        startDateTime.month
+                      ])}${sprintf("%02i", [
+                        startDateTime.day
+                      ])}${sprintf("%02i", [
+                        startDateTime.hour
+                      ])}${sprintf("%02i", [startDateTime.minute])}"))) {
         break;
       }
 

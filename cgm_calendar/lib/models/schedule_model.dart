@@ -14,12 +14,14 @@ class ScheduleModel {
     String startDateStr = formatDate(now, [yyyy, '/', mm, '/', dd]);
     DateTime oneHourFromNow = now.add(const Duration(hours: 1));
     String startTimeStr = "${formatDate(oneHourFromNow, [HH])}:00";
-    startTime = int.parse("$startDateStr$startTimeStr");
+    startTime = int.parse(
+        "${startDateStr.replaceAll(RegExp(r'/'), "")}${startTimeStr.replaceAll(RegExp(r':'), "")}");
 
     DateTime twoHoursFromNow = oneHourFromNow.add(const Duration(hours: 1));
     String endDateStr = formatDate(twoHoursFromNow, [yyyy, '/', mm, '/', dd]);
     String endTimeStr = "${formatDate(twoHoursFromNow, [HH])}:00";
-    endTime = int.parse("$endDateStr$endTimeStr");
+    endTime = int.parse(
+        "${endDateStr.replaceAll(RegExp(r'/'), "")}${endTimeStr.replaceAll(RegExp(r':'), "")}");
   }
 
   ScheduleModel copy() {

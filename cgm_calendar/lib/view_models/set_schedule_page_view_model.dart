@@ -206,12 +206,7 @@ class SetSchedulePageViewModel with ChangeNotifier {
     }
 
     for (DayModel day in days) {
-      for (ScheduleModel schedule in day.scheduleList) {
-        if (schedule.id == id) {
-          day.scheduleList.remove(schedule);
-          break;
-        }
-      }
+      day.scheduleList.removeWhere((element) => element.id == id);
     }
   }
 

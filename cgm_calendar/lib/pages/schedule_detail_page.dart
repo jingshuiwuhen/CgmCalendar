@@ -1,5 +1,6 @@
 import 'package:cgm_calendar/models/schedule_model.dart';
 import 'package:cgm_calendar/pages/common_string.dart';
+import 'package:cgm_calendar/pages/set_schedule_page.dart';
 import 'package:cgm_calendar/view_models/set_schedule_page_view_model.dart';
 import 'package:cgm_calendar/view_models/schedule_detail_page_view_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -45,7 +46,14 @@ class ScheduleDetailPage extends StatelessWidget {
                   right: 10.w,
                 ),
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            SetSchedulePage(scheduleModel: model),
+                      ),
+                    );
+                  },
                   child: Center(
                     child: Text(
                       "编辑",
@@ -76,13 +84,11 @@ class ScheduleDetailPage extends StatelessWidget {
                 GestureDetector(
                   onTap: () async {
                     if (model.repeatType == RepeatType.none.index) {
-                      final navigator = Navigator.of(context);
-                      await rViewModel.deleteNoRepeatSchedule();
-                      navigator.popUntil(ModalRoute.withName("MonthPage"));
+                      _showDeleteConfirmSelector(context);
                       return;
                     }
 
-                    _showSelector(context);
+                    _showDeleteSelector(context);
                   },
                   child: Text(
                     "删除日程",
@@ -266,7 +272,7 @@ class ScheduleDetailPage extends StatelessWidget {
     );
   }
 
-  void _showSelector<T>(BuildContext pContext) {
+  void _showDeleteSelector<T>(BuildContext pContext) {
     showCupertinoModalPopup<void>(
       context: pContext,
       builder: (context) => CupertinoActionSheet(
@@ -289,6 +295,36 @@ class ScheduleDetailPage extends StatelessWidget {
               navigator.popUntil(ModalRoute.withName("MonthPage"));
             },
             child: const Text("针对将来日程"),
+          ),
+        ],
+        cancelButton: CupertinoActionSheetAction(
+          isDestructiveAction: true,
+          onPressed: () => Navigator.pop(context),
+          child: const Text("取消"),
+        ),
+      ),
+    );
+  }
+
+  void _showDeleteConfirmSelector<T>(BuildContext pContext) {
+    showCupertinoModalPopup<void>(
+      context: pContext,
+      builder: (context) => CupertinoActionSheet(
+        title: const Text(
+          "您确定要删除此日程吗？",
+          style: TextStyle(
+            color: Colors.grey,
+          ),
+        ),
+        actions: [
+          CupertinoActionSheetAction(
+            isDestructiveAction: true,
+            onPressed: () async {
+              final navigator = Navigator.of(context);
+              await rViewModel.deleteNoRepeatSchedule();
+              navigator.popUntil(ModalRoute.withName("MonthPage"));
+            },
+            child: const Text("删除日程"),
           ),
         ],
         cancelButton: CupertinoActionSheetAction(

@@ -79,7 +79,7 @@ class ScheduleDetailPageViewModel with ChangeNotifier {
       dbModel.repeatUntil = _model.startTime;
     }
 
-    if (dbModel.repeatUntil == dbModel.startTime) {
+    if (dbModel.repeatUntil > 0 && dbModel.repeatUntil <= dbModel.startTime) {
       await DBManager.db.delete(_model.id);
     } else {
       await DBManager.db.update(dbModel);
@@ -95,12 +95,7 @@ class ScheduleDetailPageViewModel with ChangeNotifier {
       return;
     }
     for (var day in days) {
-      for (var schedule in day.scheduleList) {
-        if (schedule.id == _model.id) {
-          day.scheduleList.remove(schedule);
-          break;
-        }
-      }
+      day.scheduleList.removeWhere((element) => element.id == _model.id);
     }
   }
 }

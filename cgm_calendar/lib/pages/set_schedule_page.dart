@@ -69,12 +69,12 @@ class SetSchedulePage extends StatelessWidget {
                     final navigator = Navigator.of(context);
                     if (scheduleModel == null) {
                       await rViewModel.addNewSchedule();
-                      navigator.popUntil(ModalRoute.withName("MonthPage"));
+                      navigator.pop();
                       return;
                     }
 
                     if (!rViewModel.isChanged()) {
-                      navigator.popUntil(ModalRoute.withName("MonthPage"));
+                      navigator.pop();
                       return;
                     }
 
