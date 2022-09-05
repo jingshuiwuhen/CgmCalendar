@@ -1,3 +1,4 @@
+import 'package:cgm_calendar/generated/l10n.dart';
 import 'package:cgm_calendar/models/schedule_model.dart';
 import 'package:cgm_calendar/pages/common_string.dart';
 import 'package:cgm_calendar/view_models/set_schedule_page_view_model.dart';
@@ -30,24 +31,24 @@ class SetSchedulePage extends StatelessWidget {
             backgroundColor: Colors.grey[200],
             foregroundColor: Colors.red,
             elevation: 0,
-            leading: Padding(
-              padding: EdgeInsets.only(
-                left: 10.w,
-              ),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Center(
-                  child: Text(
-                    "取消",
-                    style: TextStyle(fontSize: 20.sp),
-                  ),
+            leadingWidth: 0.2.sw,
+            leading: GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Container(
+                alignment: Alignment.centerLeft,
+                margin: EdgeInsets.only(left: 10.w),
+                child: Text(
+                  S.of(context).cancel,
+                  style: TextStyle(fontSize: 20.sp),
                 ),
               ),
             ),
             title: Text(
-              scheduleModel == null ? "新建日程" : "编辑日程",
+              scheduleModel == null
+                  ? S.of(context).new_schedule
+                  : S.of(context).edit_schedule,
               style: TextStyle(
                 fontSize: 20.sp,
                 color: Colors.black,
@@ -88,7 +89,9 @@ class SetSchedulePage extends StatelessWidget {
                   },
                   child: Center(
                     child: Text(
-                      scheduleModel == null ? "添加" : "完成",
+                      scheduleModel == null
+                          ? S.of(context).add
+                          : S.of(context).done,
                       style: TextStyle(
                         fontSize: 20.sp,
                         color: rViewModel.canAddSchedule() ? null : Colors.grey,
@@ -127,7 +130,7 @@ class SetSchedulePage extends StatelessWidget {
                     ),
                     decoration: InputDecoration(
                       border: InputBorder.none,
-                      hintText: "标题",
+                      hintText: S.of(context).title,
                       hintStyle: TextStyle(
                         color: Colors.grey,
                         fontSize: 18.sp,
@@ -149,7 +152,7 @@ class SetSchedulePage extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       CellDateTimePicker(
-                        title: "开始",
+                        title: S.of(context).start,
                         date: wViewModel.startDate,
                         time: wViewModel.startTime,
                         onDateChanged: (date) =>
@@ -162,7 +165,7 @@ class SetSchedulePage extends StatelessWidget {
                         height: 2.h,
                       ),
                       CellDateTimePicker(
-                        title: "结束",
+                        title: S.of(context).end,
                         isNotRightTime: wViewModel.isNotRightTime,
                         date: wViewModel.endDate,
                         time: wViewModel.endTime,
@@ -176,7 +179,7 @@ class SetSchedulePage extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            "重复",
+                            S.of(context).repeat,
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 18.sp,
@@ -203,7 +206,7 @@ class SetSchedulePage extends StatelessWidget {
                                     ),
                                     child: Text(
                                       CommonString.getRepeatStr(
-                                          wViewModel.repeatType),
+                                          context, wViewModel.repeatType),
                                       style: TextStyle(
                                         color: Colors.grey,
                                         fontSize: 15.sp,
@@ -235,7 +238,7 @@ class SetSchedulePage extends StatelessWidget {
                         child: Row(
                           children: [
                             Text(
-                              "类型",
+                              S.of(context).type,
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 18.sp,
@@ -261,7 +264,7 @@ class SetSchedulePage extends StatelessWidget {
                                     ),
                                     child: Text(
                                       CommonString.getScheduleStr(
-                                          wViewModel.scheduleType),
+                                          context, wViewModel.scheduleType),
                                       style: TextStyle(
                                         color: Colors.grey,
                                         fontSize: 15.sp,
@@ -300,7 +303,7 @@ class SetSchedulePage extends StatelessWidget {
                         color: Colors.black,
                         fontSize: 18.sp,
                       ),
-                      hintText: "备注",
+                      hintText: S.of(context).notes,
                       border: InputBorder.none,
                       hintStyle: TextStyle(
                         color: Colors.grey,
@@ -328,7 +331,7 @@ class SetSchedulePage extends StatelessWidget {
         cancelButton: CupertinoActionSheetAction(
           isDestructiveAction: true,
           onPressed: () => Navigator.pop(context),
-          child: const Text("取消"),
+          child: Text(S.of(context).cancel),
         ),
       ),
     );
@@ -351,8 +354,8 @@ class SetSchedulePage extends StatelessWidget {
         },
         child: Text(
           type is RepeatType
-              ? CommonString.getRepeatStr(type)
-              : CommonString.getScheduleStr((type as SchedualType)),
+              ? CommonString.getRepeatStr(context, type)
+              : CommonString.getScheduleStr(context, (type as SchedualType)),
         ),
       ));
     }
@@ -360,33 +363,41 @@ class SetSchedulePage extends StatelessWidget {
   }
 
   void _showEditSelector<T>(BuildContext pContext) {
+    List<CupertinoActionSheetAction> actions = List.empty(growable: true);
+    if (!rViewModel.isRepeatChanged()) {
+      actions.add(
+        CupertinoActionSheetAction(
+          isDestructiveAction: true,
+          onPressed: () async {
+            final navigator = Navigator.of(pContext);
+            await rViewModel.editRepeatSchedule(EditType.thisOnly);
+            navigator.popUntil(ModalRoute.withName("MonthPage"));
+          },
+          child: Text(S.of(pContext).for_this_schedule_only),
+        ),
+      );
+    }
+
+    actions.add(
+      CupertinoActionSheetAction(
+        isDestructiveAction: true,
+        onPressed: () async {
+          final navigator = Navigator.of(pContext);
+          await rViewModel.editRepeatSchedule(EditType.futureContainsThis);
+          navigator.popUntil(ModalRoute.withName("MonthPage"));
+        },
+        child: Text(S.of(pContext).for_future_schedule),
+      ),
+    );
+
     showCupertinoModalPopup<void>(
       context: pContext,
       builder: (context) => CupertinoActionSheet(
-        actions: [
-          CupertinoActionSheetAction(
-            isDestructiveAction: true,
-            onPressed: () async {
-              final navigator = Navigator.of(context);
-              await rViewModel.editRepeatSchedule(EditType.thisOnly);
-              navigator.popUntil(ModalRoute.withName("MonthPage"));
-            },
-            child: const Text("仅针对此日程"),
-          ),
-          CupertinoActionSheetAction(
-            isDestructiveAction: true,
-            onPressed: () async {
-              final navigator = Navigator.of(context);
-              await rViewModel.editRepeatSchedule(EditType.futureContainsThis);
-              navigator.popUntil(ModalRoute.withName("MonthPage"));
-            },
-            child: const Text("针对将来日程"),
-          ),
-        ],
+        actions: actions,
         cancelButton: CupertinoActionSheetAction(
           isDestructiveAction: true,
           onPressed: () => Navigator.pop(context),
-          child: const Text("取消"),
+          child: Text(S.of(context).cancel),
         ),
       ),
     );

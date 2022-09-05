@@ -1,3 +1,4 @@
+import 'package:cgm_calendar/generated/l10n.dart';
 import 'package:cgm_calendar/global.dart';
 import 'package:cgm_calendar/models/day_model.dart';
 import 'package:cgm_calendar/models/schedule_model.dart';
@@ -71,7 +72,7 @@ class MonthPage extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return Center(
                     child: Text(
-                      _weekDayName(index),
+                      _weekDayName(context, index),
                       style: TextStyle(color: Colors.black, fontSize: 10.sp),
                     ),
                   );
@@ -144,7 +145,7 @@ class MonthPage extends StatelessWidget {
                 child: wViewModel.day.scheduleList.isEmpty
                     ? Center(
                         child: Text(
-                          "没有日程",
+                          S.of(context).schedule_not_exist,
                           style: TextStyle(
                             color: Colors.grey,
                             fontSize: 20.sp,
@@ -230,6 +231,7 @@ class MonthPage extends StatelessWidget {
                                     children: [
                                       Text(
                                         _startTimeStr(
+                                          context,
                                           schedule,
                                           rViewModel.day,
                                         ),
@@ -284,26 +286,27 @@ class MonthPage extends StatelessWidget {
     );
   }
 
-  String _weekDayName(int weekday) {
+  String _weekDayName(BuildContext context, int weekday) {
     switch (weekday) {
       case 0:
-        return "日";
+        return S.of(context).sunday;
       case 1:
-        return "一";
+        return S.of(context).monday;
       case 2:
-        return "二";
+        return S.of(context).tuesday;
       case 3:
-        return "三";
+        return S.of(context).wedsday;
       case 4:
-        return "四";
+        return S.of(context).thursday;
       case 5:
-        return "五";
+        return S.of(context).friday;
       default:
-        return "六";
+        return S.of(context).saturday;
     }
   }
 
-  String _startTimeStr(ScheduleModel schedule, DayModel day) {
+  String _startTimeStr(
+      BuildContext context, ScheduleModel schedule, DayModel day) {
     int startDate = schedule.startTime ~/ 10000;
     String startDateStr = schedule.startTime.toString();
     int endDate = schedule.endTime ~/ 10000;
@@ -316,10 +319,10 @@ class MonthPage extends StatelessWidget {
     }
 
     if (endDate == dateOfDay) {
-      return "结束";
+      return S.of(context).end;
     }
 
-    return "全天";
+    return S.of(context).all_day;
   }
 
   String _endTimeStr(ScheduleModel schedule, DayModel day) {

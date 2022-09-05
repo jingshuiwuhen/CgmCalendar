@@ -1,3 +1,4 @@
+import 'package:cgm_calendar/generated/l10n.dart';
 import 'package:cgm_calendar/models/schedule_model.dart';
 import 'package:cgm_calendar/pages/common_string.dart';
 import 'package:cgm_calendar/pages/set_schedule_page.dart';
@@ -32,7 +33,7 @@ class ScheduleDetailPage extends StatelessWidget {
             foregroundColor: Colors.red,
             elevation: 1,
             title: Text(
-              "日程详细",
+              S.of(context).schedule_detail,
               style: TextStyle(
                 fontSize: 20.sp,
                 color: Colors.black,
@@ -56,7 +57,7 @@ class ScheduleDetailPage extends StatelessWidget {
                   },
                   child: Center(
                     child: Text(
-                      "编辑",
+                      S.of(context).edit,
                       style: TextStyle(
                         fontSize: 20.sp,
                       ),
@@ -91,7 +92,7 @@ class ScheduleDetailPage extends StatelessWidget {
                     _showDeleteSelector(context);
                   },
                   child: Text(
-                    "删除日程",
+                    S.of(context).delete_schedule,
                     style: TextStyle(
                       fontSize: 20.sp,
                       color: Colors.red,
@@ -166,7 +167,7 @@ class ScheduleDetailPage extends StatelessWidget {
                   child: Row(
                     children: [
                       Text(
-                        "重复",
+                        S.of(context).repeat,
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 20.sp,
@@ -175,7 +176,7 @@ class ScheduleDetailPage extends StatelessWidget {
                       const Spacer(),
                       Text(
                         CommonString.getRepeatStr(
-                            RepeatType.values[wViewModel.repeatType]),
+                            context, RepeatType.values[wViewModel.repeatType]),
                         style: TextStyle(
                           color: Colors.grey,
                           fontSize: 20.sp,
@@ -201,7 +202,7 @@ class ScheduleDetailPage extends StatelessWidget {
                   child: Row(
                     children: [
                       Text(
-                        "类型",
+                        S.of(context).type,
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 20.sp,
@@ -223,7 +224,7 @@ class ScheduleDetailPage extends StatelessWidget {
                               left: 10.w,
                             ),
                             child: Text(
-                              CommonString.getScheduleStr(
+                              CommonString.getScheduleStr(context,
                                   SchedualType.values[wViewModel.scheduleType]),
                               style: TextStyle(
                                 color: Colors.grey,
@@ -247,7 +248,7 @@ class ScheduleDetailPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "备注",
+                          S.of(context).notes,
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 20.sp,
@@ -284,7 +285,7 @@ class ScheduleDetailPage extends StatelessWidget {
               await rViewModel.deleteRepeatSchedule(DeleteType.thisOnly);
               navigator.popUntil(ModalRoute.withName("MonthPage"));
             },
-            child: const Text("仅针对此日程"),
+            child: Text(S.of(context).for_this_schedule_only),
           ),
           CupertinoActionSheetAction(
             isDestructiveAction: true,
@@ -294,13 +295,13 @@ class ScheduleDetailPage extends StatelessWidget {
                   .deleteRepeatSchedule(DeleteType.futureContainsThis);
               navigator.popUntil(ModalRoute.withName("MonthPage"));
             },
-            child: const Text("针对将来日程"),
+            child: Text(S.of(context).for_future_schedule),
           ),
         ],
         cancelButton: CupertinoActionSheetAction(
           isDestructiveAction: true,
           onPressed: () => Navigator.pop(context),
-          child: const Text("取消"),
+          child: Text(S.of(context).cancel),
         ),
       ),
     );
@@ -310,9 +311,9 @@ class ScheduleDetailPage extends StatelessWidget {
     showCupertinoModalPopup<void>(
       context: pContext,
       builder: (context) => CupertinoActionSheet(
-        title: const Text(
-          "您确定要删除此日程吗？",
-          style: TextStyle(
+        title: Text(
+          S.of(context).wish_to_delete,
+          style: const TextStyle(
             color: Colors.grey,
           ),
         ),
@@ -324,13 +325,13 @@ class ScheduleDetailPage extends StatelessWidget {
               await rViewModel.deleteNoRepeatSchedule();
               navigator.popUntil(ModalRoute.withName("MonthPage"));
             },
-            child: const Text("删除日程"),
+            child: Text(S.of(context).delete_schedule),
           ),
         ],
         cancelButton: CupertinoActionSheetAction(
           isDestructiveAction: true,
           onPressed: () => Navigator.pop(context),
-          child: const Text("取消"),
+          child: Text(S.of(context).cancel),
         ),
       ),
     );

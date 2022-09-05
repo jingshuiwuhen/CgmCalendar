@@ -1,4 +1,7 @@
+import 'package:cgm_calendar/global.dart';
 import 'package:cgm_calendar/models/day_model.dart';
+import 'package:intl/intl.dart';
+import 'package:sprintf/sprintf.dart';
 
 class MonthModel {
   int year;
@@ -27,10 +30,14 @@ class MonthModel {
   }
 
   String getYearAndMonthStr() {
-    return "$year年$month月";
+    String dateStr = "$year${sprintf("%02i", [month])}01";
+    DateTime dateTime = DateTime.parse(dateStr);
+    return DateFormat.yMMMM(Global.localeStr()).format(dateTime);
   }
 
   String getMonthStr() {
-    return "$month月";
+    String dateStr = "$year${sprintf("%02i", [month])}01";
+    DateTime dateTime = DateTime.parse(dateStr);
+    return DateFormat.MMM(Global.localeStr()).format(dateTime);
   }
 }

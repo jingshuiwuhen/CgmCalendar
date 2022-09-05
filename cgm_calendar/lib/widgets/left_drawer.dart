@@ -1,4 +1,5 @@
 import 'package:cgm_calendar/db/db_manager.dart';
+import 'package:cgm_calendar/generated/l10n.dart';
 import 'package:cgm_calendar/global.dart';
 import 'package:cgm_calendar/models/day_model.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,7 @@ class LeftDrawer extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "设定",
+                    S.of(context).Setting,
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 30.sp,
@@ -37,7 +38,7 @@ class LeftDrawer extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "版本: ${Global.info?.version}(${Global.info?.buildNumber})",
+                    "${S.of(context).version}: ${Global.info?.version}(${Global.info?.buildNumber})",
                     style: TextStyle(
                       color: Colors.grey,
                       fontSize: 20.sp,
@@ -60,13 +61,14 @@ class LeftDrawer extends StatelessWidget {
                         size: 24.sp,
                       ),
                       title: Text(
-                        "清空数据",
+                        S.of(context).clear_all_data,
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 20.sp,
                         ),
                       ),
                       onTap: () async {
+                        final navigator = Navigator.of(context);
                         await DBManager.db.deleteAll();
                         Global.idScheduleMap.forEach((id, days) {
                           for (DayModel day in days) {
@@ -76,6 +78,7 @@ class LeftDrawer extends StatelessWidget {
                         if (clean != null) {
                           clean!();
                         }
+                        navigator.pop();
                       },
                     ),
                     // ListTile(

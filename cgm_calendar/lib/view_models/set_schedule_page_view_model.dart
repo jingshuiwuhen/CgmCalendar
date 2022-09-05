@@ -145,6 +145,10 @@ class SetSchedulePageViewModel with ChangeNotifier {
     return _newSchedule.isDifferent(_oldSchedule);
   }
 
+  bool isRepeatChanged() {
+    return _newSchedule.repeatType != _oldSchedule!.repeatType;
+  }
+
   void _setStartTimeToNewSchedule() {
     String startTimeStr = _startDate.replaceAll(RegExp(r'/'), "") +
         _startTime.replaceAll(RegExp(r':'), "");
@@ -179,6 +183,15 @@ class SetSchedulePageViewModel with ChangeNotifier {
 
   Future editRepeatSchedule(EditType type) async {
     ScheduleDBModel model = await DBManager.db.getOneSchedule(_oldSchedule!.id);
+
+    ScheduleDBModel newModel = ScheduleDBModel();
+    newModel.copyFromScheduleModel(_newSchedule);
+    newModel.exceptionTimes = model.exceptionTimes;
+    newModel.repeatUntil = model.repeatUntil;
+    newModel = await DBManager.db.insert(newModel);
+    AddScheduleHelper.addToCalendar(newModel);
+    await _deleteUnuseScheduleDBData(newModel.id!);
+
     if (type == EditType.thisOnly) {
       model.exceptionTimes =
           "${model.exceptionTimes}${_oldSchedule!.startTime},";
@@ -189,14 +202,6 @@ class SetSchedulePageViewModel with ChangeNotifier {
     _deleteSchedules(model.id!);
     AddScheduleHelper.addToCalendar(model);
     await _deleteUnuseScheduleDBData(model.id!);
-
-    ScheduleDBModel newModel = ScheduleDBModel();
-    newModel.copyFromScheduleModel(_newSchedule);
-    newModel.exceptionTimes = model.exceptionTimes;
-    newModel.repeatUntil = model.repeatUntil;
-    newModel = await DBManager.db.insert(newModel);
-    AddScheduleHelper.addToCalendar(newModel);
-    await _deleteUnuseScheduleDBData(newModel.id!);
   }
 
   void _deleteSchedules(int id) {

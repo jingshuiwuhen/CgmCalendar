@@ -1,4 +1,6 @@
+import 'package:cgm_calendar/global.dart';
 import 'package:cgm_calendar/models/month_model.dart';
+import 'package:intl/intl.dart';
 
 class YearModel {
   int year;
@@ -20,6 +22,8 @@ class YearModel {
   }
 
   String getYearStr() {
-    return "$year年";
+    String dateStr = "${year}0101";
+    DateTime dateTime = DateTime.parse(dateStr);
+    return DateFormat.y(Global.localeStr()).format(dateTime);
   }
 }
