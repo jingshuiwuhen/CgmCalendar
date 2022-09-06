@@ -133,12 +133,9 @@ class MonthPage extends StatelessWidget {
                   rViewModel.onPageChanged(index);
                 },
                 itemBuilder: (context, index) => CellOneMonth(
-                  clickable: true,
                   monthModel: Global.allMonths[index],
-                  showTitle: false,
-                  fontSize: 15.sp,
-                  itemMargin: EdgeInsets.fromLTRB(8.w, 8.h, 8.w, 8.h),
-                  oneDayClick: (day) => rViewModel.refreshScheduleList(day),
+
+                  // oneDayClick: (day) => rViewModel.refreshScheduleList(day),
                 ),
               ),
               Expanded(

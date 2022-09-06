@@ -40,4 +40,8 @@ class MonthModel {
     DateTime dateTime = DateTime.parse(dateStr);
     return DateFormat.MMM(Global.localeStr()).format(dateTime);
   }
+
+  bool isHighLight() {
+    return daysOfMonth.any((element) => element.isHighLight());
+  }
 }

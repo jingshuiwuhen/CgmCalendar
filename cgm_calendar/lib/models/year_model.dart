@@ -26,4 +26,8 @@ class YearModel {
     DateTime dateTime = DateTime.parse(dateStr);
     return DateFormat.y(Global.localeStr()).format(dateTime);
   }
+
+  bool isHighLight() {
+    return monthsOfYear.any((element) => element.isHighLight());
+  }
 }

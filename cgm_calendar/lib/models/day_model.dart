@@ -32,4 +32,9 @@ class DayModel {
         (now.month == month) &&
         (now.day == dayOfMonth);
   }
+
+  bool isHighLight() {
+    var now = DateTime.now();
+    return now.year <= year || scheduleList.isNotEmpty;
+  }
 }
