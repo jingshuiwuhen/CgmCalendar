@@ -31,7 +31,7 @@ class SetSchedulePage extends StatelessWidget {
             backgroundColor: Colors.grey[200],
             foregroundColor: Colors.red,
             elevation: 0,
-            leadingWidth: 0.2.sw,
+            leadingWidth: 0.25.sw,
             leading: GestureDetector(
               onTap: () {
                 Navigator.pop(context);
@@ -41,7 +41,7 @@ class SetSchedulePage extends StatelessWidget {
                 margin: EdgeInsets.only(left: 10.w),
                 child: Text(
                   S.of(context).cancel,
-                  style: TextStyle(fontSize: 20.sp),
+                  style: TextStyle(fontSize: 18.sp),
                 ),
               ),
             ),
@@ -93,7 +93,7 @@ class SetSchedulePage extends StatelessWidget {
                           ? S.of(context).add
                           : S.of(context).done,
                       style: TextStyle(
-                        fontSize: 20.sp,
+                        fontSize: 18.sp,
                         color: rViewModel.canAddSchedule() ? null : Colors.grey,
                       ),
                     ),

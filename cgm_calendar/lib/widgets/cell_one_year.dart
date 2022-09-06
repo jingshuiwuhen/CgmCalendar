@@ -5,12 +5,15 @@ import 'package:cgm_calendar/widgets/cell_one_month.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+// ignore: must_be_immutable
 class CellOneYear extends StatelessWidget {
   final YearModel yearModel;
+  void Function()? oneYearClick;
 
-  const CellOneYear({
+  CellOneYear({
     Key? key,
     required this.yearModel,
+    this.oneYearClick,
   }) : super(key: key);
 
   @override
@@ -55,7 +58,7 @@ class CellOneYear extends StatelessWidget {
             ),
             itemBuilder: (context, index) {
               return GestureDetector(
-                onTap: () {
+                onTap: () async {
                   if (!yearModel.isHighLight()) {
                     return;
                   }
@@ -71,10 +74,16 @@ class CellOneYear extends StatelessWidget {
                         (yearModel.year - Global.newYears.first.year) * 12 +
                             index;
                   }
-                  Navigator.of(context).push(MaterialPageRoute(
+                  await Navigator.of(context).push(
+                    MaterialPageRoute(
                       settings: const RouteSettings(name: "MonthPage"),
-                      builder: ((context) =>
-                          MonthPage(monthModelIndex: monthModelIndex))));
+                      builder: (context) =>
+                          MonthPage(monthModelIndex: monthModelIndex),
+                    ),
+                  );
+                  if (oneYearClick != null) {
+                    oneYearClick!();
+                  }
                 },
                 child: CellOneMonth(
                   monthModel: yearModel.monthsOfYear[index],
