@@ -42,7 +42,10 @@ class CellOneMonth extends StatelessWidget {
             ),
             itemBuilder: (context, index) {
               if (index < (monthModel.daysOfMonth[0].dayOfWeek % 7)) {
-                return const Spacer();
+                return const SizedBox(
+                  height: 0,
+                  width: 0,
+                );
               } else {
                 return CellOneDay(
                   dayModel: monthModel.daysOfMonth[

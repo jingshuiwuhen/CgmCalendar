@@ -1,4 +1,3 @@
-import 'package:cgm_calendar/global.dart';
 import 'package:cgm_calendar/pages/set_schedule_page.dart';
 import 'package:cgm_calendar/view_models/year_page_view_model.dart';
 import 'package:cgm_calendar/widgets/cell_one_year.dart';
@@ -6,6 +5,7 @@ import 'package:cgm_calendar/widgets/left_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+// ignore: must_be_immutable
 class YearPage extends StatelessWidget {
   final Key _centerKey = const ValueKey("second-sliver-list");
   final ScrollController _scrollController = ScrollController();
@@ -26,7 +26,10 @@ class YearPage extends StatelessWidget {
             backgroundColor: Colors.white,
             foregroundColor: Colors.red,
             elevation: 1,
-            leading: const Spacer(),
+            leading: const SizedBox(
+              height: 0,
+              width: 0,
+            ),
             actions: [
               IconButton(
                 onPressed: () async {

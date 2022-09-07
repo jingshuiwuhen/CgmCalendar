@@ -24,12 +24,13 @@ class CellPageView extends StatelessWidget {
       primary: false,
       shrinkWrap: true,
       itemCount: gridViewItemCount,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 7,
+        childAspectRatio: 0.67,
       ),
       itemBuilder: (context, index) {
         if (index < (monthModel.daysOfMonth[0].dayOfWeek % 7)) {
-          return const Spacer();
+          return Container();
         } else {
           return CellOneDayPageView(
             dayModel: monthModel

@@ -1,5 +1,6 @@
 import 'package:cgm_calendar/models/day_model.dart';
 import 'package:cgm_calendar/view_models/set_schedule_page_view_model.dart';
+import 'package:cgm_calendar/widgets/right_bottom_corner_triangle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -20,8 +21,9 @@ class CellOneDayPageView extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         border: Border.all(
-          color:
-              selectIndex == dayModel.dayOfMonth - 1 ? Colors.red : Colors.grey,
+          color: selectIndex == dayModel.dayOfMonth - 1
+              ? Colors.red
+              : Colors.transparent,
           width: selectIndex == dayModel.dayOfMonth - 1 ? 2 : 1,
         ),
       ),
@@ -36,9 +38,9 @@ class CellOneDayPageView extends StatelessWidget {
                   2.w,
                   2.h,
                   2.w,
-                  1.h,
+                  0,
                 ),
-                padding: EdgeInsets.all(2.h),
+                padding: EdgeInsets.all(3.h),
                 decoration: BoxDecoration(
                   color: dayModel.isToday() ? Colors.red : Colors.transparent,
                   shape: BoxShape.circle,
@@ -46,7 +48,7 @@ class CellOneDayPageView extends StatelessWidget {
                 child: Text(
                   "${dayModel.dayOfMonth}",
                   style: TextStyle(
-                    fontSize: 14.sp,
+                    fontSize: 10.sp,
                     color: dayModel.isToday()
                         ? Colors.white
                         : dayModel.isHighLight()
@@ -55,90 +57,111 @@ class CellOneDayPageView extends StatelessWidget {
                   ),
                 ),
               ),
-              Container(
-                margin: EdgeInsets.fromLTRB(
-                  2.w,
-                  1.h,
-                  2.w,
-                  1.h,
-                ),
-                color: dayModel.scheduleList[0].scheduleType ==
-                        SchedualType.personal.index
-                    ? Colors.lightBlue
-                    : Colors.purpleAccent,
-                padding: EdgeInsets.fromLTRB(
-                  2.w,
-                  2.h,
-                  2.w,
-                  2.h,
-                ),
-                child: Text(
-                  dayModel.scheduleList[0].title,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 14.sp,
-                  ),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.fromLTRB(
-                  2.w,
-                  1.h,
-                  2.w,
-                  1.h,
-                ),
-                color: dayModel.scheduleList[1].scheduleType ==
-                        SchedualType.personal.index
-                    ? Colors.lightBlue
-                    : Colors.purpleAccent,
-                padding: EdgeInsets.fromLTRB(
-                  2.w,
-                  2.h,
-                  2.w,
-                  2.h,
-                ),
-                child: Text(
-                  dayModel.scheduleList[1].title,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 14.sp,
-                  ),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.fromLTRB(
-                  2.w,
-                  1.h,
-                  2.w,
-                  2.h,
-                ),
-                color: dayModel.scheduleList[2].scheduleType ==
-                        SchedualType.personal.index
-                    ? Colors.lightBlue
-                    : Colors.purpleAccent,
-                padding: EdgeInsets.fromLTRB(
-                  2.w,
-                  2.h,
-                  2.w,
-                  2.h,
-                ),
-                child: Text(
-                  dayModel.scheduleList[2].title,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 14.sp,
-                  ),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(
+                        left: 2.w,
+                        right: 2.w,
+                      ),
+                      color: dayModel.scheduleList.isEmpty
+                          ? null
+                          : dayModel.scheduleList[0].scheduleType ==
+                                  SchedualType.personal.index
+                              ? Colors.lightBlue
+                              : Colors.purpleAccent,
+                      padding: EdgeInsets.fromLTRB(
+                        1.w,
+                        1.h,
+                        1.w,
+                        1.h,
+                      ),
+                      child: Text(
+                        dayModel.scheduleList.isEmpty
+                            ? ""
+                            : dayModel.scheduleList[0].title,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 10.sp,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(
+                        left: 2.w,
+                        right: 2.w,
+                      ),
+                      color: dayModel.scheduleList.length < 2
+                          ? null
+                          : dayModel.scheduleList[1].scheduleType ==
+                                  SchedualType.personal.index
+                              ? Colors.lightBlue
+                              : Colors.purpleAccent,
+                      padding: EdgeInsets.fromLTRB(
+                        1.w,
+                        1.h,
+                        1.w,
+                        1.h,
+                      ),
+                      child: Text(
+                        dayModel.scheduleList.length < 2
+                            ? ""
+                            : dayModel.scheduleList[1].title,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 10.sp,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(
+                        left: 2.w,
+                        right: 2.w,
+                      ),
+                      color: dayModel.scheduleList.length < 3
+                          ? null
+                          : dayModel.scheduleList[2].scheduleType ==
+                                  SchedualType.personal.index
+                              ? Colors.lightBlue
+                              : Colors.purpleAccent,
+                      padding: EdgeInsets.fromLTRB(
+                        1.w,
+                        1.h,
+                        1.w,
+                        1.h,
+                      ),
+                      child: Text(
+                        dayModel.scheduleList.length < 3
+                            ? ""
+                            : dayModel.scheduleList[2].title,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 10.sp,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
-          Container(
-            alignment: Alignment.bottomRight,
-            decoration: BoxDecoration(
-              color: Colors.red,
-              border: Border(),
+          CustomPaint(
+            painter: RightBottomCornerTriangle(),
+            child: Container(
+              alignment: Alignment.bottomRight,
+              width: double.infinity,
+              height: double.infinity,
+              child: Text(
+                "+5",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 10.sp,
+                ),
+              ),
             ),
-          )
+          ),
         ],
       ),
     );
