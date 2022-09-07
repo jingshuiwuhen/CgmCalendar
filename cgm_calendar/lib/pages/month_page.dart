@@ -6,7 +6,7 @@ import 'package:cgm_calendar/pages/set_schedule_page.dart';
 import 'package:cgm_calendar/pages/schedule_detail_page.dart';
 import 'package:cgm_calendar/view_models/set_schedule_page_view_model.dart';
 import 'package:cgm_calendar/view_models/month_page_view_model.dart';
-import 'package:cgm_calendar/widgets/cell_one_month.dart';
+import 'package:cgm_calendar/widgets/cell_page_view.dart';
 import 'package:cgm_calendar/widgets/left_drawer.dart';
 import 'package:expandable_page_view/expandable_page_view.dart';
 import 'package:flutter/material.dart';
@@ -126,16 +126,19 @@ class MonthPage extends StatelessWidget {
           ),
           body: Column(
             children: [
-              ExpandablePageView.builder(
-                controller: rViewModel.controller,
-                itemCount: Global.allMonths.length,
-                onPageChanged: (index) {
-                  rViewModel.onPageChanged(index);
-                },
-                itemBuilder: (context, index) => CellOneMonth(
-                  monthModel: Global.allMonths[index],
-
-                  // oneDayClick: (day) => rViewModel.refreshScheduleList(day),
+              Container(
+                color: Colors.grey[200],
+                child: ExpandablePageView.builder(
+                  controller: rViewModel.controller,
+                  itemCount: Global.allMonths.length,
+                  onPageChanged: (index) {
+                    rViewModel.onPageChanged(index);
+                  },
+                  itemBuilder: (context, index) => CellPageView(
+                    monthModel: Global.allMonths[index],
+                    oneDayClicked: (day) => rViewModel.refreshScheduleList(day),
+                    selectIndex: wViewModel.selectIndex,
+                  ),
                 ),
               ),
               Expanded(

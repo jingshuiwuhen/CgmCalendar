@@ -7,6 +7,7 @@ class MonthPageViewModel with ChangeNotifier {
   String _title = "";
   late PageController _controller;
   late DayModel _day;
+  int _selectIndex = 0;
 
   MonthPageViewModel(int index) {
     _title = Global.allMonths[index].getYearAndMonthStr();
@@ -17,15 +18,18 @@ class MonthPageViewModel with ChangeNotifier {
   String get title => _title;
   PageController get controller => _controller;
   DayModel get day => _day;
+  int get selectIndex => _selectIndex;
 
   void onPageChanged(int index) {
     MonthModel newMonth = Global.allMonths[index];
     _title = newMonth.getYearAndMonthStr();
     _day = newMonth.daysOfMonth.first;
+    _selectIndex = 0;
     notifyListeners();
   }
 
   void refreshScheduleList(DayModel day) {
+    _selectIndex = day.dayOfMonth - 1;
     _day = day;
     notifyListeners();
   }
