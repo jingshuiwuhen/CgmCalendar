@@ -8,25 +8,20 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class CellOneDayPageView extends StatelessWidget {
   final DayModel dayModel;
   int selectIndex = 0;
+  final bool isLastDay;
 
   CellOneDayPageView({
     Key? key,
     required this.dayModel,
     this.selectIndex = 0,
+    required this.isLastDay,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: selectIndex == dayModel.dayOfMonth - 1
-              ? Colors.red
-              : Colors.transparent,
-          width: selectIndex == dayModel.dayOfMonth - 1 ? 2 : 1,
-        ),
-      ),
+      decoration: setBorder(),
       child: Stack(
         children: [
           Column(
@@ -147,17 +142,20 @@ class CellOneDayPageView extends StatelessWidget {
               ),
             ],
           ),
-          CustomPaint(
-            painter: RightBottomCornerTriangle(),
-            child: Container(
-              alignment: Alignment.bottomRight,
-              width: double.infinity,
-              height: double.infinity,
-              child: Text(
-                "+5",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 10.sp,
+          Visibility(
+            visible: dayModel.scheduleList.length > 3,
+            child: CustomPaint(
+              painter: RightBottomCornerTriangle(),
+              child: Container(
+                alignment: Alignment.bottomRight,
+                width: double.infinity,
+                height: double.infinity,
+                child: Text(
+                  setMoreStr(),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 10.sp,
+                  ),
                 ),
               ),
             ),
@@ -165,5 +163,45 @@ class CellOneDayPageView extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  BoxDecoration setBorder() {
+    if (selectIndex == dayModel.dayOfMonth - 1) {
+      return BoxDecoration(
+        border: Border.all(
+          color: Colors.red,
+          width: 2,
+        ),
+      );
+    }
+
+    return BoxDecoration(
+      border: Border(
+        bottom: const BorderSide(
+          color: Color(0xffd6d6d6),
+        ),
+        left: const BorderSide(
+          color: Color(0xffd6d6d6),
+        ),
+        right: isLastDay
+            ? const BorderSide(
+                color: Color(0xffd6d6d6),
+              )
+            : BorderSide.none,
+      ),
+    );
+  }
+
+  String setMoreStr() {
+    int count = dayModel.scheduleList.length;
+    if (count <= 3) {
+      return "";
+    }
+
+    if (count > 3 && count < 13) {
+      return "+${count - 3}";
+    }
+
+    return "9+";
   }
 }

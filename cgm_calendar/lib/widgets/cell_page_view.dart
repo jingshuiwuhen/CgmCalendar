@@ -24,17 +24,32 @@ class CellPageView extends StatelessWidget {
       primary: false,
       shrinkWrap: true,
       itemCount: gridViewItemCount,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 7,
-        childAspectRatio: 0.67,
+        childAspectRatio: 0.69,
       ),
       itemBuilder: (context, index) {
         if (index < (monthModel.daysOfMonth[0].dayOfWeek % 7)) {
-          return Container();
+          return Container(
+            height: double.infinity,
+            decoration: const BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  color: Color(0xffd6d6d6),
+                ),
+              ),
+            ),
+          );
         } else {
-          return CellOneDayPageView(
-            dayModel: monthModel
-                .daysOfMonth[index - (monthModel.daysOfMonth[0].dayOfWeek % 7)],
+          DayModel dayModel = monthModel
+              .daysOfMonth[index - (monthModel.daysOfMonth[0].dayOfWeek % 7)];
+          return GestureDetector(
+            onTap: () => oneDayClicked(dayModel),
+            child: CellOneDayPageView(
+              dayModel: dayModel,
+              selectIndex: selectIndex,
+              isLastDay: index == gridViewItemCount - 1,
+            ),
           );
         }
       },
