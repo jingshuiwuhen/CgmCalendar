@@ -33,5 +33,9 @@
     "start": "开始",
     "Setting": "设定",
     "clear_all_data": "清空数据",
-    "version": "版本"
+    "version": "版本",
+    "login": "登录",
+    "register": "注册",
+    "db_error": "系统错误。请联系客服",
+    "token_verify_failed": "请重新登录"
 }

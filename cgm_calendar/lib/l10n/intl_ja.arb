@@ -33,5 +33,9 @@
     "start": "開始",
     "Setting": "設定",
     "clear_all_data": "データを削除する",
-    "version": "バージョン"
+    "version": "バージョン",
+    "login": "ログイン",
+    "register": "サインアップ",
+    "db_error": "システムエラーが発生しました。サポートと連絡してください。",
+    "token_verify_failed": "再登録する必要があります"
 }

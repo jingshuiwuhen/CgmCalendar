@@ -2,10 +2,10 @@ import 'package:cgm_calendar/generated/l10n.dart';
 import 'package:cgm_calendar/global.dart';
 import 'package:cgm_calendar/models/day_model.dart';
 import 'package:cgm_calendar/models/schedule_model.dart';
-import 'package:cgm_calendar/pages/set_schedule_page.dart';
 import 'package:cgm_calendar/pages/schedule_detail_page.dart';
-import 'package:cgm_calendar/view_models/set_schedule_page_view_model.dart';
+import 'package:cgm_calendar/pages/set_schedule_page.dart';
 import 'package:cgm_calendar/view_models/month_page_view_model.dart';
+import 'package:cgm_calendar/view_models/set_schedule_page_view_model.dart';
 import 'package:cgm_calendar/widgets/cell_page_view.dart';
 import 'package:cgm_calendar/widgets/left_drawer.dart';
 import 'package:expandable_page_view/expandable_page_view.dart';
@@ -154,6 +154,7 @@ class MonthPage extends StatelessWidget {
                         ),
                       )
                     : ListView.builder(
+                        primary: false,
                         itemCount: wViewModel.day.scheduleList.length,
                         itemBuilder: (context, index) {
                           ScheduleModel schedule =
@@ -178,53 +179,6 @@ class MonthPage extends StatelessWidget {
                               ),
                               child: Row(
                                 children: [
-                                  Container(
-                                    height: 50.h,
-                                    width: 6.w,
-                                    decoration: BoxDecoration(
-                                      color: schedule.scheduleType ==
-                                              SchedualType.personal.index
-                                          ? Colors.lightBlue
-                                          : Colors.purpleAccent,
-                                      borderRadius:
-                                          BorderRadiusDirectional.circular(
-                                              20.r),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: EdgeInsets.only(
-                                        left: 6.w,
-                                        right: 6.w,
-                                      ),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            schedule.title,
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 20.sp,
-                                            ),
-                                          ),
-                                          Text(
-                                            schedule.remarks,
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                              color: Colors.grey,
-                                              fontSize: 16.sp,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
                                   Column(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -237,7 +191,7 @@ class MonthPage extends StatelessWidget {
                                         ),
                                         style: TextStyle(
                                           color: Colors.black,
-                                          fontSize: 16.sp,
+                                          fontSize: 14.sp,
                                         ),
                                       ),
                                       Text(
@@ -247,10 +201,56 @@ class MonthPage extends StatelessWidget {
                                         ),
                                         style: TextStyle(
                                           color: Colors.grey,
-                                          fontSize: 16.sp,
+                                          fontSize: 14.sp,
                                         ),
                                       ),
                                     ],
+                                  ),
+                                  Container(
+                                    height: 40.h,
+                                    width: 6.w,
+                                    margin: EdgeInsets.only(
+                                      left: 6.w,
+                                      right: 6.w,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: schedule.scheduleType ==
+                                              SchedualType.personal.index
+                                          ? Colors.lightBlue[100]
+                                          : Colors.purpleAccent[100],
+                                      borderRadius:
+                                          BorderRadiusDirectional.circular(
+                                        20.r,
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          schedule.title,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 20.sp,
+                                          ),
+                                        ),
+                                        Text(
+                                          schedule.remarks,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            color: Colors.grey,
+                                            fontSize: 16.sp,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),

@@ -35,7 +35,7 @@ class CellOneDayPageView extends StatelessWidget {
                   2.w,
                   0,
                 ),
-                padding: EdgeInsets.all(3.h),
+                padding: EdgeInsets.all(2.h),
                 decoration: BoxDecoration(
                   color: dayModel.isToday() ? Colors.red : Colors.transparent,
                   shape: BoxShape.circle,
@@ -43,7 +43,7 @@ class CellOneDayPageView extends StatelessWidget {
                 child: Text(
                   "${dayModel.dayOfMonth}",
                   style: TextStyle(
-                    fontSize: 10.sp,
+                    fontSize: 12.sp,
                     color: dayModel.isToday()
                         ? Colors.white
                         : dayModel.isHighLight()
@@ -54,6 +54,7 @@ class CellOneDayPageView extends StatelessWidget {
               ),
               Expanded(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Container(
@@ -65,8 +66,8 @@ class CellOneDayPageView extends StatelessWidget {
                           ? null
                           : dayModel.scheduleList[0].scheduleType ==
                                   SchedualType.personal.index
-                              ? Colors.lightBlue
-                              : Colors.purpleAccent,
+                              ? Colors.lightBlue[100]
+                              : Colors.purpleAccent[100],
                       padding: EdgeInsets.fromLTRB(
                         1.w,
                         1.h,
@@ -77,9 +78,10 @@ class CellOneDayPageView extends StatelessWidget {
                         dayModel.scheduleList.isEmpty
                             ? ""
                             : dayModel.scheduleList[0].title,
+                        maxLines: 1,
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 10.sp,
+                          fontSize: 9.sp,
                         ),
                       ),
                     ),
@@ -92,8 +94,8 @@ class CellOneDayPageView extends StatelessWidget {
                           ? null
                           : dayModel.scheduleList[1].scheduleType ==
                                   SchedualType.personal.index
-                              ? Colors.lightBlue
-                              : Colors.purpleAccent,
+                              ? Colors.lightBlue[100]
+                              : Colors.purpleAccent[100],
                       padding: EdgeInsets.fromLTRB(
                         1.w,
                         1.h,
@@ -104,9 +106,10 @@ class CellOneDayPageView extends StatelessWidget {
                         dayModel.scheduleList.length < 2
                             ? ""
                             : dayModel.scheduleList[1].title,
+                        maxLines: 1,
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 10.sp,
+                          fontSize: 9.sp,
                         ),
                       ),
                     ),
@@ -119,8 +122,8 @@ class CellOneDayPageView extends StatelessWidget {
                           ? null
                           : dayModel.scheduleList[2].scheduleType ==
                                   SchedualType.personal.index
-                              ? Colors.lightBlue
-                              : Colors.purpleAccent,
+                              ? Colors.lightBlue[100]
+                              : Colors.purpleAccent[100],
                       padding: EdgeInsets.fromLTRB(
                         1.w,
                         1.h,
@@ -131,9 +134,10 @@ class CellOneDayPageView extends StatelessWidget {
                         dayModel.scheduleList.length < 3
                             ? ""
                             : dayModel.scheduleList[2].title,
+                        maxLines: 1,
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 10.sp,
+                          fontSize: 9.sp,
                         ),
                       ),
                     ),
@@ -154,7 +158,7 @@ class CellOneDayPageView extends StatelessWidget {
                   setMoreStr(),
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 10.sp,
+                    fontSize: 9.sp,
                   ),
                 ),
               ),

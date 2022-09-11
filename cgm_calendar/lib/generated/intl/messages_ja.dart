@@ -27,6 +27,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "all_day": MessageLookupByLibrary.simpleMessage("終日"),
         "cancel": MessageLookupByLibrary.simpleMessage("キャンセル"),
         "clear_all_data": MessageLookupByLibrary.simpleMessage("データを削除する"),
+        "db_error": MessageLookupByLibrary.simpleMessage(
+            "システムエラーが発生しました。サポートと連絡してください。"),
         "delete_schedule": MessageLookupByLibrary.simpleMessage("スゲジュール削除"),
         "done": MessageLookupByLibrary.simpleMessage("完了"),
         "edit": MessageLookupByLibrary.simpleMessage("編集"),
@@ -37,9 +39,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "for_this_schedule_only":
             MessageLookupByLibrary.simpleMessage("このスゲジュールのみ"),
         "friday": MessageLookupByLibrary.simpleMessage("金"),
+        "login": MessageLookupByLibrary.simpleMessage("ログイン"),
         "monday": MessageLookupByLibrary.simpleMessage("月"),
         "new_schedule": MessageLookupByLibrary.simpleMessage("新規スゲジュール"),
         "notes": MessageLookupByLibrary.simpleMessage("備考"),
+        "register": MessageLookupByLibrary.simpleMessage("サインアップ"),
         "repeat": MessageLookupByLibrary.simpleMessage("繰り返し"),
         "repeat_type_every_day": MessageLookupByLibrary.simpleMessage("毎日"),
         "repeat_type_every_month": MessageLookupByLibrary.simpleMessage("毎月"),
@@ -54,6 +58,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "sunday": MessageLookupByLibrary.simpleMessage("日"),
         "thursday": MessageLookupByLibrary.simpleMessage("木"),
         "title": MessageLookupByLibrary.simpleMessage("タイトル"),
+        "token_verify_failed":
+            MessageLookupByLibrary.simpleMessage("再登録する必要があります"),
         "tuesday": MessageLookupByLibrary.simpleMessage("火"),
         "type": MessageLookupByLibrary.simpleMessage("種類"),
         "version": MessageLookupByLibrary.simpleMessage("バージョン"),

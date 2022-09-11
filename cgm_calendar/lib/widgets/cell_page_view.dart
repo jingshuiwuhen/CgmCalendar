@@ -26,7 +26,7 @@ class CellPageView extends StatelessWidget {
       itemCount: gridViewItemCount,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 7,
-        childAspectRatio: 0.69,
+        childAspectRatio: 0.75,
       ),
       itemBuilder: (context, index) {
         if (index < (monthModel.daysOfMonth[0].dayOfWeek % 7)) {

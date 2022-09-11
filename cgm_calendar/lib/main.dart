@@ -1,8 +1,10 @@
 import 'package:cgm_calendar/add_schedule_helper.dart';
+import 'package:cgm_calendar/app_shared_pref.dart';
 import 'package:cgm_calendar/db/db_manager.dart';
 import 'package:cgm_calendar/db/schedule_db_model.dart';
 import 'package:cgm_calendar/global.dart';
 import 'package:cgm_calendar/models/year_model.dart';
+import 'package:cgm_calendar/pages/welcome_page.dart';
 import 'package:cgm_calendar/pages/year_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -23,6 +25,7 @@ void main() {
     (_) async {
       Global.init();
       Global.info = await PackageInfo.fromPlatform();
+
       YearModel oldestYear = Global.oldYears.last;
       await DBManager.db
           .deleteTimeOutSchedules(int.parse("${oldestYear.year}01010000"));
@@ -30,13 +33,23 @@ void main() {
       for (ScheduleDBModel model in models) {
         AddScheduleHelper.addToCalendar(model);
       }
-      runApp(const CgmCalanderApp());
+
+      String token = await AppSharedPref.loadAccessToken();
+      runApp(
+        CgmCalanderApp(
+          token: token,
+        ),
+      );
     },
   );
 }
 
 class CgmCalanderApp extends StatelessWidget {
-  const CgmCalanderApp({Key? key}) : super(key: key);
+  final String token;
+  const CgmCalanderApp({
+    Key? key,
+    required this.token,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +64,9 @@ class CgmCalanderApp extends StatelessWidget {
       supportedLocales: S.delegate.supportedLocales,
       home: ScreenUtilInit(
         designSize: const Size(414, 896),
-        builder: (context, child) => YearPage(),
+        builder: (context, child) => WelcomePage(
+          token: token,
+        ),
       ),
     );
   }

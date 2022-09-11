@@ -399,6 +399,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Login`
+  String get login {
+    return Intl.message(
+      'Login',
+      name: 'login',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Register`
+  String get register {
+    return Intl.message(
+      'Register',
+      name: 'register',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `System error. Please call to support.`
+  String get db_error {
+    return Intl.message(
+      'System error. Please call to support.',
+      name: 'db_error',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please login again`
+  String get token_verify_failed {
+    return Intl.message(
+      'Please login again',
+      name: 'token_verify_failed',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

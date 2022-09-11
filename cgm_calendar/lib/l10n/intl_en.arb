@@ -33,5 +33,9 @@
     "start": "Start",
     "Setting": "Setting",
     "clear_all_data": "Clear All Data",
-    "version": "Version"
+    "version": "Version",
+    "login": "Login",
+    "register": "Register",
+    "db_error": "System error. Please call to support.",
+    "token_verify_failed": "Please login again"
 }

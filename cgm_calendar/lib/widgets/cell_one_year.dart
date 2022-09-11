@@ -59,14 +59,14 @@ class CellOneYear extends StatelessWidget {
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () async {
-                  if (!yearModel.isHighLight()) {
+                  if (!yearModel.monthsOfYear[index].isHighLight()) {
                     return;
                   }
 
                   var monthModelIndex = 0;
                   if (yearModel.year < Global.newYears.first.year) {
                     monthModelIndex =
-                        (Global.oldYears.last.year - yearModel.year) * 12 +
+                        (yearModel.year - Global.oldYears.last.year) * 12 +
                             index;
                   } else {
                     monthModelIndex += Global.oldYears.length * 12;

@@ -215,8 +215,8 @@ class ScheduleDetailPage extends StatelessWidget {
                           CircleAvatar(
                             backgroundColor: wViewModel.scheduleType ==
                                     SchedualType.personal.index
-                                ? Colors.lightBlue
-                                : Colors.purpleAccent,
+                                ? Colors.lightBlue[100]
+                                : Colors.purpleAccent[100],
                             radius: 3.r,
                           ),
                           Padding(

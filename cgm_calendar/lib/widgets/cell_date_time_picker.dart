@@ -32,7 +32,7 @@ class CellDateTimePicker extends StatelessWidget {
           title,
           style: TextStyle(
             color: Colors.black,
-            fontSize: 18.sp,
+            fontSize: 20.sp,
           ),
         ),
         Expanded(
@@ -58,8 +58,8 @@ class CellDateTimePicker extends StatelessWidget {
                 },
                 child: Container(
                   margin: EdgeInsets.only(
-                    top: 5.h,
-                    bottom: 5.h,
+                    top: 8.h,
+                    bottom: 8.h,
                   ),
                   decoration: BoxDecoration(
                     color: Colors.grey[200],
@@ -77,7 +77,7 @@ class CellDateTimePicker extends StatelessWidget {
                       color: isNotRightTime ? Colors.grey : Colors.black,
                       decoration:
                           isNotRightTime ? TextDecoration.lineThrough : null,
-                      fontSize: 15.sp,
+                      fontSize: 18.sp,
                     ),
                   ),
                 ),
@@ -100,9 +100,9 @@ class CellDateTimePicker extends StatelessWidget {
                 },
                 child: Container(
                   margin: EdgeInsets.only(
-                    top: 5.h,
-                    bottom: 5.h,
-                    left: 5.w,
+                    top: 8.h,
+                    bottom: 8.h,
+                    left: 8.w,
                   ),
                   decoration: BoxDecoration(
                     color: Colors.grey[200],
@@ -120,7 +120,7 @@ class CellDateTimePicker extends StatelessWidget {
                       color: isNotRightTime ? Colors.grey : Colors.black,
                       decoration:
                           isNotRightTime ? TextDecoration.lineThrough : null,
-                      fontSize: 15.sp,
+                      fontSize: 18.sp,
                     ),
                   ),
                 ),

@@ -28,6 +28,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "clear_all_data":
             MessageLookupByLibrary.simpleMessage("Clear All Data"),
+        "db_error": MessageLookupByLibrary.simpleMessage(
+            "System error. Please call to support."),
         "delete_schedule":
             MessageLookupByLibrary.simpleMessage("Delete Schedule"),
         "done": MessageLookupByLibrary.simpleMessage("Done"),
@@ -39,9 +41,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "for_this_schedule_only":
             MessageLookupByLibrary.simpleMessage("For this schedule only"),
         "friday": MessageLookupByLibrary.simpleMessage("Fri"),
+        "login": MessageLookupByLibrary.simpleMessage("Login"),
         "monday": MessageLookupByLibrary.simpleMessage("Mon"),
         "new_schedule": MessageLookupByLibrary.simpleMessage("New Schedule"),
         "notes": MessageLookupByLibrary.simpleMessage("Notes"),
+        "register": MessageLookupByLibrary.simpleMessage("Register"),
         "repeat": MessageLookupByLibrary.simpleMessage("Repeat"),
         "repeat_type_every_day":
             MessageLookupByLibrary.simpleMessage("Every Day"),
@@ -62,6 +66,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "sunday": MessageLookupByLibrary.simpleMessage("Sun"),
         "thursday": MessageLookupByLibrary.simpleMessage("Thu"),
         "title": MessageLookupByLibrary.simpleMessage("Title"),
+        "token_verify_failed":
+            MessageLookupByLibrary.simpleMessage("Please login again"),
         "tuesday": MessageLookupByLibrary.simpleMessage("Tue"),
         "type": MessageLookupByLibrary.simpleMessage("Type"),
         "version": MessageLookupByLibrary.simpleMessage("Version"),
