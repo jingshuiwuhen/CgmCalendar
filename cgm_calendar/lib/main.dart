@@ -5,7 +5,6 @@ import 'package:cgm_calendar/db/schedule_db_model.dart';
 import 'package:cgm_calendar/global.dart';
 import 'package:cgm_calendar/models/year_model.dart';
 import 'package:cgm_calendar/pages/welcome_page.dart';
-import 'package:cgm_calendar/pages/year_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';

@@ -14,14 +14,14 @@ class RemoteApi {
     // return Login.fromJson(_data);
   }
 
-  Future<void> requestEmailAuthCode(
-      BuildContext context, String email, bool isNeedCheckEmailExist) async {
+  Future<void> requestEmailAuthCode(BuildContext context, String email) async {
     _dio.context = context;
-    Map<String, dynamic> _dataMap = {};
-    _dataMap['email'] = email;
-    _dataMap['check_email_exist'] = isNeedCheckEmailExist;
-    await _dio.post("/app/open/email_auth/request_email_auth_code",
-        data: _dataMap);
+    Map<String, dynamic> dataMap = {};
+    dataMap['email'] = email;
+    await _dio.post(
+      "/app/open/email_auth/request_email_auth_code",
+      data: dataMap,
+    );
   }
 
   Future<void> authEmailCode(

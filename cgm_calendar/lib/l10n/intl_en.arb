@@ -37,5 +37,13 @@
     "login": "Login",
     "register": "Register",
     "db_error": "System error. Please call to support.",
-    "token_verify_failed": "Please login again"
+    "token_verify_failed": "Please login again",
+    "email": "Email",
+    "verification_code": "Verification Code",
+    "password": "Password",
+    "get_code": "Get Code",
+    "second": "s",
+    "input_email": "Please input email",
+    "not_email": "This is not email",
+    "email_exist": "Email has ben registed"
 }

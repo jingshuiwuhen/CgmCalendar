@@ -1,21 +1,16 @@
 import 'dart:async';
 import 'package:cgm_calendar/generated/l10n.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // ignore: must_be_immutable
 class InputAreaAuth extends StatefulWidget {
   InputAreaAuth({
     Key? key,
-    this.title = '',
-    this.errorText,
     this.controller,
     this.onPressed,
   }) : super(key: key);
 
-  final String title;
-  final String? errorText;
   final TextEditingController? controller;
   bool isBtnEnable = true;
   final Future<bool> Function()? onPressed;
@@ -50,20 +45,13 @@ class _InputAreaAuthState extends State<InputAreaAuth> {
             maxLines: 1,
             decoration: InputDecoration(
               isDense: true,
-              errorText: widget.errorText,
-              errorStyle: TextStyle(
-                fontSize: 14.sp,
-                color: Colors.red,
-              ),
-              hintText: widget.hintText,
+              hintText: S.of(context).verification_code,
               hintStyle: TextStyle(
                 fontSize: 16.sp,
                 color: Colors.grey,
               ),
+              border: InputBorder.none,
             ),
-            inputFormatters: [
-              LengthLimitingTextInputFormatter(6),
-            ],
             controller: widget.controller,
           ),
         ),
@@ -84,9 +72,9 @@ class _InputAreaAuthState extends State<InputAreaAuth> {
           style: ButtonStyle(
             padding: MaterialStateProperty.all(
               EdgeInsets.fromLTRB(
-                ScreenUtil().setWidth(8),
+                5.w,
                 0,
-                ScreenUtil().setWidth(8),
+                5.w,
                 0,
               ),
             ),
@@ -100,7 +88,7 @@ class _InputAreaAuthState extends State<InputAreaAuth> {
             _setAuthGetBtnString(context),
             style: TextStyle(
               color: widget.isBtnEnable ? Colors.blue : Colors.grey,
-              fontSize: 16.sp,
+              fontSize: 14.sp,
             ),
           ),
         ),
@@ -123,11 +111,9 @@ class _InputAreaAuthState extends State<InputAreaAuth> {
 
   String _setAuthGetBtnString(BuildContext context) {
     if (_countDownTime == -1) {
-      return S.of(context).get_auth_code;
-    } else if (_countDownTime == 0) {
-      return S.of(context).get_auth_code_again;
+      return S.of(context).get_code;
     } else {
-      return "$_countDownTime${S.of(context).get_auth_code_after_second}";
+      return "$_countDownTime${S.of(context).second}";
     }
   }
 }

@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:cgm_calendar/models/day_model.dart';
 import 'package:cgm_calendar/models/month_model.dart';
 import 'package:cgm_calendar/models/year_model.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class Global {
@@ -54,5 +56,17 @@ class Global {
     } else {
       return "en_US";
     }
+  }
+
+  static void showToast(String msg) {
+    Fluttertoast.showToast(
+      msg: msg,
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 5,
+      backgroundColor: Colors.black,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
   }
 }

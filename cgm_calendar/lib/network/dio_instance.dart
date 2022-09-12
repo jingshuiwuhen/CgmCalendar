@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:cgm_calendar/generated/l10n.dart';
+import 'package:cgm_calendar/global.dart';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class DioInstance with DioMixin implements Dio {
   late BuildContext _context;
@@ -58,7 +58,7 @@ class DioInstance with DioMixin implements Dio {
           }
 
           error.type = DioErrorType.response;
-          showToast(message);
+          Global.showToast(message);
           handler.next(error);
         },
       ),
@@ -86,10 +86,10 @@ class DioInstance with DioMixin implements Dio {
       case "070000":
       case "080000":
       case "080001":
-        showToast(S.of(_context).db_error);
+        Global.showToast(S.of(_context).db_error);
         break;
       default:
-        showToast('errorCode : $errorCode');
+        Global.showToast('errorCode : $errorCode');
         break;
     }
   }
@@ -106,22 +106,10 @@ class DioInstance with DioMixin implements Dio {
 
   bool _tokenMsgError(String errorCode) {
     if (errorCode == "030000") {
-      showToast(S.of(_context).token_verify_failed);
+      Global.showToast(S.of(_context).token_verify_failed);
       return true;
     }
     return false;
-  }
-
-  void showToast(String msg) {
-    Fluttertoast.showToast(
-      msg: msg,
-      toastLength: Toast.LENGTH_LONG,
-      gravity: ToastGravity.BOTTOM,
-      timeInSecForIosWeb: 5,
-      backgroundColor: Colors.black,
-      textColor: Colors.white,
-      fontSize: 16.0,
-    );
   }
 
   static Dio getInstance() => DioInstance._();

@@ -439,6 +439,86 @@ class S {
       args: [],
     );
   }
+
+  /// `Email`
+  String get email {
+    return Intl.message(
+      'Email',
+      name: 'email',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verification Code`
+  String get verification_code {
+    return Intl.message(
+      'Verification Code',
+      name: 'verification_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password`
+  String get password {
+    return Intl.message(
+      'Password',
+      name: 'password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Get Code`
+  String get get_code {
+    return Intl.message(
+      'Get Code',
+      name: 'get_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `s`
+  String get second {
+    return Intl.message(
+      's',
+      name: 'second',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please input email`
+  String get input_email {
+    return Intl.message(
+      'Please input email',
+      name: 'input_email',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This is not email`
+  String get not_email {
+    return Intl.message(
+      'This is not email',
+      name: 'not_email',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email has ben registed`
+  String get email_exist {
+    return Intl.message(
+      'Email has ben registed',
+      name: 'email_exist',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

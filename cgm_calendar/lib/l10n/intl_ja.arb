@@ -37,5 +37,13 @@
     "login": "ログイン",
     "register": "サインアップ",
     "db_error": "システムエラーが発生しました。サポートと連絡してください。",
-    "token_verify_failed": "再登録する必要があります"
+    "token_verify_failed": "再登録する必要があります",
+    "email": "メールアドレス",
+    "verification_code": "認証コード",
+    "password": "パスワード",
+    "get_code": "コード取得",
+    "second": "秒",
+    "input_email": "メールアドレスを入力してください",
+    "not_email": "メールアドレスではありません",
+    "email_exist": "メールアドレスが既に存在しました"
 }

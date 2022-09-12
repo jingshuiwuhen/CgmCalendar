@@ -35,16 +35,24 @@ class MessageLookup extends MessageLookupByLibrary {
         "done": MessageLookupByLibrary.simpleMessage("Done"),
         "edit": MessageLookupByLibrary.simpleMessage("Edit"),
         "edit_schedule": MessageLookupByLibrary.simpleMessage("Edit Schedule"),
+        "email": MessageLookupByLibrary.simpleMessage("Email"),
+        "email_exist":
+            MessageLookupByLibrary.simpleMessage("Email has ben registed"),
         "end": MessageLookupByLibrary.simpleMessage("End"),
         "for_future_schedule":
             MessageLookupByLibrary.simpleMessage("For future schedule"),
         "for_this_schedule_only":
             MessageLookupByLibrary.simpleMessage("For this schedule only"),
         "friday": MessageLookupByLibrary.simpleMessage("Fri"),
+        "get_code": MessageLookupByLibrary.simpleMessage("Get Code"),
+        "input_email":
+            MessageLookupByLibrary.simpleMessage("Please input email"),
         "login": MessageLookupByLibrary.simpleMessage("Login"),
         "monday": MessageLookupByLibrary.simpleMessage("Mon"),
         "new_schedule": MessageLookupByLibrary.simpleMessage("New Schedule"),
+        "not_email": MessageLookupByLibrary.simpleMessage("This is not email"),
         "notes": MessageLookupByLibrary.simpleMessage("Notes"),
+        "password": MessageLookupByLibrary.simpleMessage("Password"),
         "register": MessageLookupByLibrary.simpleMessage("Register"),
         "repeat": MessageLookupByLibrary.simpleMessage("Repeat"),
         "repeat_type_every_day":
@@ -62,6 +70,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "schedule_type_personal":
             MessageLookupByLibrary.simpleMessage("Personal"),
         "schedule_type_work": MessageLookupByLibrary.simpleMessage("Work"),
+        "second": MessageLookupByLibrary.simpleMessage("s"),
         "start": MessageLookupByLibrary.simpleMessage("Start"),
         "sunday": MessageLookupByLibrary.simpleMessage("Sun"),
         "thursday": MessageLookupByLibrary.simpleMessage("Thu"),
@@ -70,6 +79,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Please login again"),
         "tuesday": MessageLookupByLibrary.simpleMessage("Tue"),
         "type": MessageLookupByLibrary.simpleMessage("Type"),
+        "verification_code":
+            MessageLookupByLibrary.simpleMessage("Verification Code"),
         "version": MessageLookupByLibrary.simpleMessage("Version"),
         "wedsday": MessageLookupByLibrary.simpleMessage("Wed"),
         "wish_to_delete": MessageLookupByLibrary.simpleMessage(
