@@ -421,10 +421,10 @@ class S {
   }
 
   /// `System error. Please call to support.`
-  String get db_error {
+  String get system_error {
     return Intl.message(
       'System error. Please call to support.',
-      name: 'db_error',
+      name: 'system_error',
       desc: '',
       args: [],
     );
@@ -460,10 +460,10 @@ class S {
     );
   }
 
-  /// `Password`
+  /// `At least 6 digit password. Only number and letter`
   String get password {
     return Intl.message(
-      'Password',
+      'At least 6 digit password. Only number and letter',
       name: 'password',
       desc: '',
       args: [],
@@ -515,6 +515,76 @@ class S {
     return Intl.message(
       'Email has ben registed',
       name: 'email_exist',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please input password`
+  String get input_password {
+    return Intl.message(
+      'Please input password',
+      name: 'input_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This is not password`
+  String get not_password {
+    return Intl.message(
+      'This is not password',
+      name: 'not_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please input verification code`
+  String get input_verification_code {
+    return Intl.message(
+      'Please input verification code',
+      name: 'input_verification_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verification code is not right`
+  String get auth_code_wrong {
+    return Intl.message(
+      'Verification code is not right',
+      name: 'auth_code_wrong',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verification code has expired`
+  String get auth_code_expired {
+    return Intl.message(
+      'Verification code has expired',
+      name: 'auth_code_expired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account is not existed`
+  String get email_not_exist {
+    return Intl.message(
+      'Account is not existed',
+      name: 'email_not_exist',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password is not right`
+  String get password_wrong {
+    return Intl.message(
+      'Password is not right',
+      name: 'password_wrong',
       desc: '',
       args: [],
     );

@@ -1,4 +1,5 @@
 import 'package:cgm_calendar/generated/l10n.dart';
+import 'package:cgm_calendar/pages/year_page.dart';
 import 'package:cgm_calendar/view_models/input_page_view_model.dart';
 import 'package:cgm_calendar/widgets/input_area_auth.dart';
 import 'package:flutter/material.dart';
@@ -135,7 +136,25 @@ class Inputpage extends StatelessWidget {
                     top: 0.1.sh,
                   ),
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      if (!rViewModel.checkParam(isLogin)) {
+                        return;
+                      }
+
+                      if (isLogin) {
+                        return;
+                      }
+
+                      if (await rViewModel.register()) {
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => YearPage(),
+                          ),
+                          (route) => false,
+                        );
+                      }
+                    },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(
                         isLogin ? Colors.blue[200] : Colors.green[200],

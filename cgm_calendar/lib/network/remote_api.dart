@@ -1,11 +1,14 @@
+import 'dart:convert';
+
 import 'package:cgm_calendar/network/dio_instance.dart';
 import 'package:flutter/widgets.dart';
 
 class RemoteApi {
   late final DioInstance _dio;
 
-  RemoteApi() {
+  RemoteApi(BuildContext context) {
     _dio = DioInstance.getInstance() as DioInstance;
+    _dio.context = context;
   }
 
   Future refreshToken() async {
@@ -14,8 +17,7 @@ class RemoteApi {
     // return Login.fromJson(_data);
   }
 
-  Future<void> requestEmailAuthCode(BuildContext context, String email) async {
-    _dio.context = context;
+  Future requestEmailAuthCode(String email) async {
     Map<String, dynamic> dataMap = {};
     dataMap['email'] = email;
     await _dio.post(
@@ -24,35 +26,32 @@ class RemoteApi {
     );
   }
 
-  Future<void> authEmailCode(
-      BuildContext context, String email, String authCode) async {
-    _dio.context = context;
+  Future authEmailCode(String email, String authCode) async {
     Map<String, dynamic> dataMap = {};
     dataMap['email'] = email;
     dataMap['email_auth_code'] = authCode;
     await _dio.post("/app/open/email_auth/auth_email_code", data: dataMap);
   }
 
-  Future<void> registry(
-    BuildContext context,
+  Future registry(
     String email,
     String password,
   ) async {
-    _dio.context = context;
     Map<String, dynamic> dataMap = {};
     dataMap['email'] = email;
     dataMap['password'] = password;
     await _dio.post("/app/open/user/registry", data: dataMap);
   }
 
-  Future login(BuildContext context, String email, String password) async {
-    _dio.context = context;
-    // Map<String, dynamic> _dataMap = Map();
-    // _dataMap['id'] = await DeviceInfoUtil.getUniqueId();
-    // _dataMap['email'] = email;
-    // _dataMap['password'] = password;
-    // var _result = await _dio.post("/app/open/user/login", data: _dataMap);
-    // var _data = json.decode(_result.toString());
-    // return Login.fromJson(_data);
+  Future login(String email, String password) async {
+    Map<String, dynamic> dataMap = {};
+    dataMap['email'] = email;
+    dataMap['password'] = password;
+    var result = await _dio.post("/app/open/user/login", data: dataMap);
+    return json.decode(result.toString());
+  }
+
+  void updateTokenToHeader(String token) {
+    _dio.updateToken(token);
   }
 }

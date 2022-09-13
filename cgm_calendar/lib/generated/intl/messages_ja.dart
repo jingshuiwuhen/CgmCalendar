@@ -25,16 +25,18 @@ class MessageLookup extends MessageLookupByLibrary {
         "Setting": MessageLookupByLibrary.simpleMessage("設定"),
         "add": MessageLookupByLibrary.simpleMessage("追加"),
         "all_day": MessageLookupByLibrary.simpleMessage("終日"),
+        "auth_code_expired":
+            MessageLookupByLibrary.simpleMessage("認証コードが締切でした"),
+        "auth_code_wrong": MessageLookupByLibrary.simpleMessage("認証コードが間違いました"),
         "cancel": MessageLookupByLibrary.simpleMessage("キャンセル"),
         "clear_all_data": MessageLookupByLibrary.simpleMessage("データを削除する"),
-        "db_error": MessageLookupByLibrary.simpleMessage(
-            "システムエラーが発生しました。サポートと連絡してください。"),
         "delete_schedule": MessageLookupByLibrary.simpleMessage("スゲジュール削除"),
         "done": MessageLookupByLibrary.simpleMessage("完了"),
         "edit": MessageLookupByLibrary.simpleMessage("編集"),
         "edit_schedule": MessageLookupByLibrary.simpleMessage("スゲジュール編集"),
         "email": MessageLookupByLibrary.simpleMessage("メールアドレス"),
         "email_exist": MessageLookupByLibrary.simpleMessage("メールアドレスが既に存在しました"),
+        "email_not_exist": MessageLookupByLibrary.simpleMessage("アカウントが存在しません"),
         "end": MessageLookupByLibrary.simpleMessage("終了"),
         "for_future_schedule":
             MessageLookupByLibrary.simpleMessage("今後の全スゲジュール"),
@@ -43,12 +45,18 @@ class MessageLookup extends MessageLookupByLibrary {
         "friday": MessageLookupByLibrary.simpleMessage("金"),
         "get_code": MessageLookupByLibrary.simpleMessage("コード取得"),
         "input_email": MessageLookupByLibrary.simpleMessage("メールアドレスを入力してください"),
+        "input_password":
+            MessageLookupByLibrary.simpleMessage("パスワードを入力してください"),
+        "input_verification_code":
+            MessageLookupByLibrary.simpleMessage("認証コードを入力してください"),
         "login": MessageLookupByLibrary.simpleMessage("ログイン"),
         "monday": MessageLookupByLibrary.simpleMessage("月"),
         "new_schedule": MessageLookupByLibrary.simpleMessage("新規スゲジュール"),
         "not_email": MessageLookupByLibrary.simpleMessage("メールアドレスではありません"),
+        "not_password": MessageLookupByLibrary.simpleMessage("パスワードではありません"),
         "notes": MessageLookupByLibrary.simpleMessage("備考"),
-        "password": MessageLookupByLibrary.simpleMessage("パスワード"),
+        "password": MessageLookupByLibrary.simpleMessage("最短6位のパスワード。数字と文字のみ"),
+        "password_wrong": MessageLookupByLibrary.simpleMessage("パスワードが間違いました"),
         "register": MessageLookupByLibrary.simpleMessage("サインアップ"),
         "repeat": MessageLookupByLibrary.simpleMessage("繰り返し"),
         "repeat_type_every_day": MessageLookupByLibrary.simpleMessage("毎日"),
@@ -63,6 +71,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "second": MessageLookupByLibrary.simpleMessage("秒"),
         "start": MessageLookupByLibrary.simpleMessage("開始"),
         "sunday": MessageLookupByLibrary.simpleMessage("日"),
+        "system_error": MessageLookupByLibrary.simpleMessage(
+            "システムエラーが発生しました。サポートと連絡してください。"),
         "thursday": MessageLookupByLibrary.simpleMessage("木"),
         "title": MessageLookupByLibrary.simpleMessage("タイトル"),
         "token_verify_failed":

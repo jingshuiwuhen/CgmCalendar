@@ -110,7 +110,7 @@ class _InputAreaAuthState extends State<InputAreaAuth> {
   }
 
   String _setAuthGetBtnString(BuildContext context) {
-    if (_countDownTime == -1) {
+    if (_countDownTime <= 0) {
       return S.of(context).get_code;
     } else {
       return "$_countDownTime${S.of(context).second}";

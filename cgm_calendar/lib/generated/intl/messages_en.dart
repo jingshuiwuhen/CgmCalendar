@@ -25,11 +25,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "Setting": MessageLookupByLibrary.simpleMessage("Setting"),
         "add": MessageLookupByLibrary.simpleMessage("Add"),
         "all_day": MessageLookupByLibrary.simpleMessage("All Day"),
+        "auth_code_expired": MessageLookupByLibrary.simpleMessage(
+            "Verification code has expired"),
+        "auth_code_wrong": MessageLookupByLibrary.simpleMessage(
+            "Verification code is not right"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "clear_all_data":
             MessageLookupByLibrary.simpleMessage("Clear All Data"),
-        "db_error": MessageLookupByLibrary.simpleMessage(
-            "System error. Please call to support."),
         "delete_schedule":
             MessageLookupByLibrary.simpleMessage("Delete Schedule"),
         "done": MessageLookupByLibrary.simpleMessage("Done"),
@@ -38,6 +40,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "email": MessageLookupByLibrary.simpleMessage("Email"),
         "email_exist":
             MessageLookupByLibrary.simpleMessage("Email has ben registed"),
+        "email_not_exist":
+            MessageLookupByLibrary.simpleMessage("Account is not existed"),
         "end": MessageLookupByLibrary.simpleMessage("End"),
         "for_future_schedule":
             MessageLookupByLibrary.simpleMessage("For future schedule"),
@@ -47,12 +51,21 @@ class MessageLookup extends MessageLookupByLibrary {
         "get_code": MessageLookupByLibrary.simpleMessage("Get Code"),
         "input_email":
             MessageLookupByLibrary.simpleMessage("Please input email"),
+        "input_password":
+            MessageLookupByLibrary.simpleMessage("Please input password"),
+        "input_verification_code": MessageLookupByLibrary.simpleMessage(
+            "Please input verification code"),
         "login": MessageLookupByLibrary.simpleMessage("Login"),
         "monday": MessageLookupByLibrary.simpleMessage("Mon"),
         "new_schedule": MessageLookupByLibrary.simpleMessage("New Schedule"),
         "not_email": MessageLookupByLibrary.simpleMessage("This is not email"),
+        "not_password":
+            MessageLookupByLibrary.simpleMessage("This is not password"),
         "notes": MessageLookupByLibrary.simpleMessage("Notes"),
-        "password": MessageLookupByLibrary.simpleMessage("Password"),
+        "password": MessageLookupByLibrary.simpleMessage(
+            "At least 6 digit password. Only number and letter"),
+        "password_wrong":
+            MessageLookupByLibrary.simpleMessage("Password is not right"),
         "register": MessageLookupByLibrary.simpleMessage("Register"),
         "repeat": MessageLookupByLibrary.simpleMessage("Repeat"),
         "repeat_type_every_day":
@@ -73,6 +86,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "second": MessageLookupByLibrary.simpleMessage("s"),
         "start": MessageLookupByLibrary.simpleMessage("Start"),
         "sunday": MessageLookupByLibrary.simpleMessage("Sun"),
+        "system_error": MessageLookupByLibrary.simpleMessage(
+            "System error. Please call to support."),
         "thursday": MessageLookupByLibrary.simpleMessage("Thu"),
         "title": MessageLookupByLibrary.simpleMessage("Title"),
         "token_verify_failed":

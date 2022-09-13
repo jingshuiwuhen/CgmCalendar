@@ -10,8 +10,8 @@ class DioInstance with DioMixin implements Dio {
   late BuildContext _context;
   DioInstance._([BaseOptions? options]) {
     options = BaseOptions(
-      baseUrl: "http://3.18.239.29",
-      // baseUrl: "http://192.168.0.6:3000",
+      // baseUrl: "http://3.18.239.29",
+      baseUrl: "http://192.168.100.159:3000",
       contentType: 'application/json',
       connectTimeout: 10000,
       sendTimeout: 10000,
@@ -26,17 +26,6 @@ class DioInstance with DioMixin implements Dio {
           var data = json.decode(response.toString());
           if (data['error'] != null) {
             String errorCode = data['error']['error_code'];
-            if (_notToastMsgError(errorCode) || _tokenMsgError(errorCode)) {
-              return handler.reject(
-                DioError(
-                  requestOptions: response.requestOptions,
-                  response: Response(
-                    requestOptions: response.requestOptions,
-                    data: data['error']['error_code'],
-                  ),
-                ),
-              );
-            }
             _showToastMsgError(errorCode);
             return handler
                 .reject(DioError(requestOptions: response.requestOptions));
@@ -77,39 +66,41 @@ class DioInstance with DioMixin implements Dio {
 
   void _showToastMsgError(String errorCode) {
     switch (errorCode) {
+      case "000000":
       case "010000":
       case "020000":
-      case "040000":
-      case "040001":
-      case "050000":
-      case "060000":
-      case "070000":
-      case "080000":
-      case "080001":
-        Global.showToast(S.of(_context).db_error);
+        Global.showToast(S.of(_context).system_error);
+        break;
+      case "000001":
+        Global.showToast(S.of(_context).not_email);
+        break;
+      case "000002":
+      case "010001":
+      case "010003":
+        Global.showToast(S.of(_context).auth_code_wrong);
+        break;
+      case "000003":
+        Global.showToast(S.of(_context).not_password);
+        break;
+      case "010002":
+        Global.showToast(S.of(_context).auth_code_expired);
+        break;
+      case "010004":
+        Global.showToast(S.of(_context).email_exist);
+        break;
+      case "020001":
+        Global.showToast(S.of(_context).email_not_exist);
+        break;
+      case "020002":
+        Global.showToast(S.of(_context).password_wrong);
+        break;
+      case "030000":
+        Global.showToast(S.of(_context).token_verify_failed);
         break;
       default:
         Global.showToast('errorCode : $errorCode');
         break;
     }
-  }
-
-  bool _notToastMsgError(String errorCode) {
-    return errorCode == "010001" ||
-        errorCode == "010002" ||
-        errorCode == "010003" ||
-        errorCode == "010004" ||
-        errorCode == "010005" ||
-        errorCode == "020001" ||
-        errorCode == "020002";
-  }
-
-  bool _tokenMsgError(String errorCode) {
-    if (errorCode == "030000") {
-      Global.showToast(S.of(_context).token_verify_failed);
-      return true;
-    }
-    return false;
   }
 
   static Dio getInstance() => DioInstance._();
