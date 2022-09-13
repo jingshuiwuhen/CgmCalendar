@@ -2,7 +2,6 @@ import 'package:cgm_calendar/app_shared_pref.dart';
 import 'package:cgm_calendar/generated/l10n.dart';
 import 'package:cgm_calendar/global.dart';
 import 'package:cgm_calendar/network/remote_api.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
 import 'package:one_context/one_context.dart';
 
@@ -98,8 +97,8 @@ class InputPageViewModel with ChangeNotifier {
   }
 
   Future<bool> register() async {
-    OneContext().context = context;
     final remoteApi = RemoteApi(context);
+    OneContext().context = context;
     await OneContext().showProgressIndicator();
 
     try {
@@ -113,6 +112,26 @@ class InputPageViewModel with ChangeNotifier {
         _passwordEditingController.text,
       );
 
+      Map<String, dynamic> login = await remoteApi.login(
+        _emailEditingController.text,
+        _passwordEditingController.text,
+      );
+      AppSharedPref.saveAccessToken(login["token"]);
+      AppSharedPref.saveUid(login["uid"]);
+      remoteApi.updateTokenToHeader(login["token"]);
+      return Future.value(true);
+    } catch (e) {
+      return Future.value(false);
+    } finally {
+      OneContext().hideProgressIndicator();
+    }
+  }
+
+  Future<bool> login() async {
+    final remoteApi = RemoteApi(context);
+    OneContext().context = context;
+    await OneContext().showProgressIndicator();
+    try {
       Map<String, dynamic> login = await remoteApi.login(
         _emailEditingController.text,
         _passwordEditingController.text,

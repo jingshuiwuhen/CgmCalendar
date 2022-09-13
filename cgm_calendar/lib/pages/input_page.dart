@@ -142,6 +142,15 @@ class Inputpage extends StatelessWidget {
                       }
 
                       if (isLogin) {
+                        if (await rViewModel.login()) {
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => YearPage(),
+                            ),
+                            (route) => false,
+                          );
+                        }
                         return;
                       }
 

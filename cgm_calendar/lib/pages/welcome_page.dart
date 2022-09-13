@@ -1,18 +1,14 @@
 import 'package:cgm_calendar/generated/l10n.dart';
 import 'package:cgm_calendar/pages/input_page.dart';
+import 'package:cgm_calendar/pages/year_page.dart';
 import 'package:cgm_calendar/view_models/welcome_page_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-// ignore: must_be_immutable
 class WelcomePage extends StatelessWidget {
-  late String _token;
-  late WelcomePageViewModel _rViewModel;
-  late WelcomePageViewModel _wViewModel;
-  WelcomePage({
+  const WelcomePage({
     Key? key,
-    required String token,
   }) : super(key: key);
 
   @override
@@ -20,9 +16,18 @@ class WelcomePage extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => WelcomePageViewModel(),
       builder: (context, child) {
-        _rViewModel = context.read<WelcomePageViewModel>();
-        _wViewModel = context.watch<WelcomePageViewModel>();
-        _rViewModel.init(context);
+        WelcomePageViewModel rViewModel = context.read<WelcomePageViewModel>();
+        WelcomePageViewModel wViewModel = context.watch<WelcomePageViewModel>();
+        rViewModel.init(context);
+        if (wViewModel.signState == SignState.gotoHome) {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => YearPage(),
+            ),
+            (route) => false,
+          );
+        }
         return Container(
           color: Colors.white,
           child: Column(
@@ -36,7 +41,7 @@ class WelcomePage extends StatelessWidget {
                 ),
               ),
               Visibility(
-                visible: _wViewModel.signState == SignState.idle,
+                visible: wViewModel.signState == SignState.idle,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [

@@ -12,9 +12,8 @@ class RemoteApi {
   }
 
   Future refreshToken() async {
-    // var _response = await _dio.get("/app/limit/user/refreshToken");
-    // var _data = json.decode(_response.toString());
-    // return Login.fromJson(_data);
+    var response = await _dio.get("/app/limit/user/refreshToken");
+    return json.decode(response.toString());
   }
 
   Future requestEmailAuthCode(String email) async {

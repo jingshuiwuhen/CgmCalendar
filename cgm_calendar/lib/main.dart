@@ -1,5 +1,4 @@
 import 'package:cgm_calendar/add_schedule_helper.dart';
-import 'package:cgm_calendar/app_shared_pref.dart';
 import 'package:cgm_calendar/db/db_manager.dart';
 import 'package:cgm_calendar/db/schedule_db_model.dart';
 import 'package:cgm_calendar/global.dart';
@@ -33,21 +32,16 @@ void main() {
         AddScheduleHelper.addToCalendar(model);
       }
 
-      String token = await AppSharedPref.loadAccessToken();
       runApp(
-        CgmCalanderApp(
-          token: token,
-        ),
+        const CgmCalanderApp(),
       );
     },
   );
 }
 
 class CgmCalanderApp extends StatelessWidget {
-  final String token;
   const CgmCalanderApp({
     Key? key,
-    required this.token,
   }) : super(key: key);
 
   @override
@@ -63,9 +57,7 @@ class CgmCalanderApp extends StatelessWidget {
       supportedLocales: S.delegate.supportedLocales,
       home: ScreenUtilInit(
         designSize: const Size(414, 896),
-        builder: (context, child) => WelcomePage(
-          token: token,
-        ),
+        builder: (context, child) => const WelcomePage(),
       ),
     );
   }
