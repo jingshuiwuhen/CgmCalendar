@@ -57,7 +57,7 @@ class CgmCalanderApp extends StatelessWidget {
       supportedLocales: S.delegate.supportedLocales,
       home: ScreenUtilInit(
         designSize: const Size(414, 896),
-        builder: (context, child) => const WelcomePage(),
+        builder: (context, child) => WelcomePage(),
       ),
     );
   }

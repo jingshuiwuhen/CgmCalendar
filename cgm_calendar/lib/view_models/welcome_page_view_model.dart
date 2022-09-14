@@ -6,7 +6,6 @@ import 'package:one_context/one_context.dart';
 enum SignState {
   idle,
   loading,
-  gotoHome,
 }
 
 class WelcomePageViewModel with ChangeNotifier {
@@ -14,7 +13,7 @@ class WelcomePageViewModel with ChangeNotifier {
 
   SignState get signState => _signState;
 
-  Future init(BuildContext context) async {
+  Future init(BuildContext context, Function() success) async {
     final remoteApi = RemoteApi(context);
     String token = await AppSharedPref.loadAccessToken();
     if (token == "") {
@@ -30,14 +29,14 @@ class WelcomePageViewModel with ChangeNotifier {
       Map<String, dynamic> data = await remoteApi.refreshToken();
       AppSharedPref.saveAccessToken(data["token"]);
       remoteApi.updateTokenToHeader(data["token"]);
-      _signState = SignState.gotoHome;
+      success();
     } catch (e) {
       AppSharedPref.saveAccessToken("");
       remoteApi.updateTokenToHeader("");
       _signState = SignState.idle;
+      notifyListeners();
     } finally {
       OneContext().hideProgressIndicator();
-      notifyListeners();
     }
   }
 }

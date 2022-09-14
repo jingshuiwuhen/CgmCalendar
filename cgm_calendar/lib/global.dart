@@ -9,7 +9,8 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 class Global {
   static PackageInfo? info;
-  static const int _length = 5;
+  static const int _oldYearsCount = 5;
+  static const int _newYearsCount = 10;
   static final List<YearModel> oldYears = [];
   static final List<YearModel> newYears = [];
   static final List<MonthModel> allMonths = [];
@@ -20,7 +21,7 @@ class Global {
     if (oldYears.isNotEmpty) {
       lastYear = oldYears.last.year - 1;
     }
-    for (var i = 0; i < _length; i++) {
+    for (var i = 0; i < _oldYearsCount; i++) {
       var dateModel = YearModel(lastYear - i);
       oldYears.add(dateModel);
     }
@@ -29,7 +30,7 @@ class Global {
     if (newYears.isNotEmpty) {
       beginYear = newYears.last.year + 1;
     }
-    for (var i = 0; i < _length; i++) {
+    for (var i = 0; i < _newYearsCount; i++) {
       var dateModel = YearModel(beginYear + i);
       newYears.add(dateModel);
     }

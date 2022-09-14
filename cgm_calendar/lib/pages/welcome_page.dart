@@ -6,8 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
+// ignore: must_be_immutable
 class WelcomePage extends StatelessWidget {
-  const WelcomePage({
+  bool _isFirst = true;
+  late WelcomePageViewModel wViewModel;
+  WelcomePage({
     Key? key,
   }) : super(key: key);
 
@@ -16,18 +19,22 @@ class WelcomePage extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => WelcomePageViewModel(),
       builder: (context, child) {
-        WelcomePageViewModel rViewModel = context.read<WelcomePageViewModel>();
-        WelcomePageViewModel wViewModel = context.watch<WelcomePageViewModel>();
-        rViewModel.init(context);
-        if (wViewModel.signState == SignState.gotoHome) {
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-              builder: (context) => YearPage(),
-            ),
-            (route) => false,
-          );
+        if (_isFirst) {
+          WelcomePageViewModel rViewModel =
+              context.read<WelcomePageViewModel>();
+          wViewModel = context.watch<WelcomePageViewModel>();
+          rViewModel.init(context, () {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) => YearPage(),
+              ),
+              (route) => false,
+            );
+          });
+          _isFirst = false;
         }
+
         return Container(
           color: Colors.white,
           child: Column(
