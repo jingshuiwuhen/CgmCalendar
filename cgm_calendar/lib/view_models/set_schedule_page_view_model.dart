@@ -32,6 +32,7 @@ class SetSchedulePageViewModel with ChangeNotifier {
   late String _endDate;
   late String _endTime;
   late RepeatType _repeatType;
+  int _repeatUntil = 0;
   late SchedualType _scheduleType;
   late bool _isNotRightTime;
   late TextEditingController _remarksEditingController;
@@ -65,6 +66,7 @@ class SetSchedulePageViewModel with ChangeNotifier {
     _endTime = "${end.substring(8, 10)}:${end.substring(10)}";
 
     _repeatType = RepeatType.values[_newSchedule.repeatType];
+    _repeatUntil = _newSchedule.repeatUntil;
     _scheduleType = SchedualType.values[_newSchedule.scheduleType];
     _isNotRightTime = false;
 
@@ -84,6 +86,7 @@ class SetSchedulePageViewModel with ChangeNotifier {
   String get endTime => _endTime;
   RepeatType get repeatType => _repeatType;
   SchedualType get scheduleType => _scheduleType;
+  int get repeatUntil => _repeatUntil;
   bool get isNotRightTime => _isNotRightTime;
   TextEditingController? get remarksEditingController =>
       _remarksEditingController;
@@ -123,10 +126,21 @@ class SetSchedulePageViewModel with ChangeNotifier {
     _newSchedule.repeatType = repeatType.index;
   }
 
+  void updateRepeatUntil(int repeatUntil) {
+    _repeatUntil = repeatUntil;
+    notifyListeners();
+    _newSchedule.repeatUntil = repeatUntil;
+  }
+
   void updateScheduleType(SchedualType scheduleType) {
     _scheduleType = scheduleType;
     notifyListeners();
     _newSchedule.scheduleType = scheduleType.index;
+  }
+
+  DateTime getInitialDateTimeOfRepeatUntil() {
+    int repeatUntilDate = _oldSchedule!.repeatUntil ~/ 10000;
+    return DateTime.parse(repeatUntilDate.toString());
   }
 
   bool _checkTime() {
@@ -147,6 +161,10 @@ class SetSchedulePageViewModel with ChangeNotifier {
 
   bool isRepeatChanged() {
     return _newSchedule.repeatType != _oldSchedule!.repeatType;
+  }
+
+  bool isRepeatUntilChanged() {
+    return _newSchedule.repeatUntil != _oldSchedule!.repeatUntil;
   }
 
   void _setStartTimeToNewSchedule() {
@@ -187,7 +205,6 @@ class SetSchedulePageViewModel with ChangeNotifier {
     ScheduleDBModel newModel = ScheduleDBModel();
     newModel.copyFromScheduleModel(_newSchedule);
     newModel.exceptionTimes = model.exceptionTimes;
-    newModel.repeatUntil = model.repeatUntil;
     newModel = await DBManager.db.insert(newModel);
     AddScheduleHelper.addToCalendar(newModel);
     await _deleteUnuseScheduleDBData(newModel.id!);

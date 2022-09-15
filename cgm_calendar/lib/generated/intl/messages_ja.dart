@@ -63,6 +63,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "repeat_type_every_month": MessageLookupByLibrary.simpleMessage("毎月"),
         "repeat_type_every_week": MessageLookupByLibrary.simpleMessage("毎週"),
         "repeat_type_none": MessageLookupByLibrary.simpleMessage("しない"),
+        "repeat_until": MessageLookupByLibrary.simpleMessage("繰り返し終了"),
+        "repeat_until_none": MessageLookupByLibrary.simpleMessage("しない"),
         "saturday": MessageLookupByLibrary.simpleMessage("土"),
         "schedule_detail": MessageLookupByLibrary.simpleMessage("スゲジュール詳細"),
         "schedule_not_exist": MessageLookupByLibrary.simpleMessage("スゲジュール無し"),

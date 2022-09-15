@@ -19,6 +19,8 @@
     "edit": "編集",
     "delete_schedule": "スゲジュール削除",
     "repeat": "繰り返し",
+    "repeat_until": "繰り返し終了",
+    "repeat_until_none": "しない",
     "type": "種類",
     "notes": "備考",
     "for_this_schedule_only": "このスゲジュールのみ",

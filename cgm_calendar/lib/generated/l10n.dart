@@ -250,6 +250,26 @@ class S {
     );
   }
 
+  /// `Repeat Until`
+  String get repeat_until {
+    return Intl.message(
+      'Repeat Until',
+      name: 'repeat_until',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Never`
+  String get repeat_until_none {
+    return Intl.message(
+      'Never',
+      name: 'repeat_until_none',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Type`
   String get type {
     return Intl.message(

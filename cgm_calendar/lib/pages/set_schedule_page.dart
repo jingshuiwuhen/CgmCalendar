@@ -1,4 +1,5 @@
 import 'package:cgm_calendar/generated/l10n.dart';
+import 'package:cgm_calendar/global.dart';
 import 'package:cgm_calendar/models/schedule_model.dart';
 import 'package:cgm_calendar/pages/common_string.dart';
 import 'package:cgm_calendar/view_models/set_schedule_page_view_model.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:sprintf/sprintf.dart';
 
 // ignore: must_be_immutable
 class SetSchedulePage extends StatelessWidget {
@@ -224,6 +226,65 @@ class SetSchedulePage extends StatelessWidget {
                           ),
                         ],
                       ),
+                      Visibility(
+                        visible: scheduleModel != null &&
+                            scheduleModel!.repeatType != RepeatType.none.index,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Divider(
+                              height: 2.h,
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  S.of(context).repeat_until,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18.sp,
+                                  ),
+                                ),
+                                Expanded(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      rViewModel.cancelFocus();
+                                      _showRepeatUntilSelector(context);
+                                    },
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.fromLTRB(
+                                            10.w,
+                                            11.h,
+                                            5.w,
+                                            11.h,
+                                          ),
+                                          child: Text(
+                                            CommonString.getRepeatUntilStr(
+                                              context,
+                                              wViewModel.repeatUntil,
+                                            ),
+                                            style: TextStyle(
+                                              color: Colors.grey,
+                                              fontSize: 15.sp,
+                                            ),
+                                          ),
+                                        ),
+                                        Icon(
+                                          Icons.arrow_forward_ios,
+                                          size: 12.sp,
+                                          color: Colors.grey,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                       Divider(
                         height: 2.h,
                       ),
@@ -331,7 +392,9 @@ class SetSchedulePage extends StatelessWidget {
         cancelButton: CupertinoActionSheetAction(
           isDestructiveAction: true,
           onPressed: () => Navigator.pop(context),
-          child: Text(S.of(context).cancel),
+          child: Text(
+            S.of(context).cancel,
+          ),
         ),
       ),
     );
@@ -364,7 +427,7 @@ class SetSchedulePage extends StatelessWidget {
 
   void _showEditSelector<T>(BuildContext pContext) {
     List<CupertinoActionSheetAction> actions = List.empty(growable: true);
-    if (!rViewModel.isRepeatChanged()) {
+    if (!rViewModel.isRepeatChanged() || !rViewModel.isRepeatUntilChanged()) {
       actions.add(
         CupertinoActionSheetAction(
           isDestructiveAction: true,
@@ -398,6 +461,53 @@ class SetSchedulePage extends StatelessWidget {
           isDestructiveAction: true,
           onPressed: () => Navigator.pop(context),
           child: Text(S.of(context).cancel),
+        ),
+      ),
+    );
+  }
+
+  void _showRepeatUntilSelector(BuildContext pContext) {
+    showCupertinoModalPopup<void>(
+      context: pContext,
+      builder: (context) => CupertinoActionSheet(
+        actions: [
+          CupertinoActionSheetAction(
+            isDestructiveAction: true,
+            onPressed: () {
+              Navigator.pop(pContext);
+              rViewModel.updateRepeatUntil(0);
+            },
+            child: Text(S.of(pContext).repeat_until_none),
+          ),
+          CupertinoActionSheetAction(
+            isDestructiveAction: true,
+            onPressed: () {
+              Navigator.pop(pContext);
+              showModalBottomSheet(
+                context: context,
+                builder: (context) => CupertinoDatePicker(
+                  mode: CupertinoDatePickerMode.date,
+                  initialDateTime: rViewModel.getInitialDateTimeOfRepeatUntil(),
+                  minimumDate: rViewModel.getInitialDateTimeOfRepeatUntil(),
+                  maximumYear: Global.newYears.last.year,
+                  onDateTimeChanged: (value) {
+                    String date = "${value.year}${sprintf("%02i", [
+                          value.month
+                        ])}${sprintf("%02i", [value.day])}";
+                    rViewModel.updateRepeatUntil(int.parse(date) * 10000);
+                  },
+                ),
+              );
+            },
+            child: Text(S.of(pContext).edit),
+          ),
+        ],
+        cancelButton: CupertinoActionSheetAction(
+          isDestructiveAction: true,
+          onPressed: () => Navigator.pop(context),
+          child: Text(
+            S.of(context).cancel,
+          ),
         ),
       ),
     );

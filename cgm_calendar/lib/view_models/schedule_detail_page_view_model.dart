@@ -4,7 +4,6 @@ import 'package:cgm_calendar/db/schedule_db_model.dart';
 import 'package:cgm_calendar/global.dart';
 import 'package:cgm_calendar/models/day_model.dart';
 import 'package:cgm_calendar/models/schedule_model.dart';
-import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 
 enum DeleteType {
@@ -12,13 +11,14 @@ enum DeleteType {
   futureContainsThis,
 }
 
-class ScheduleDetailPageViewModel with ChangeNotifier {
+class ScheduleDetailPageViewModel {
   late ScheduleModel _model;
   String _title = "";
   String _timeStr1 = "";
   String _timeStr2 = "";
   int _repeatType = 0;
   int _scheduleType = 0;
+  int _repeatUntil = 0;
   String _remarks = "";
 
   ScheduleDetailPageViewModel(ScheduleModel model) {
@@ -31,6 +31,7 @@ class ScheduleDetailPageViewModel with ChangeNotifier {
   String get timeStr2 => _timeStr2;
   int get repeatType => _repeatType;
   int get scheduleType => _scheduleType;
+  int get repeatUntil => _repeatUntil;
   String get remarks => _remarks;
 
   void _setParams() {
@@ -39,6 +40,7 @@ class ScheduleDetailPageViewModel with ChangeNotifier {
     _repeatType = _model.repeatType;
     _scheduleType = _model.scheduleType;
     _remarks = _model.remarks;
+    _repeatUntil = _model.repeatUntil;
   }
 
   void _makeTimeStr() {

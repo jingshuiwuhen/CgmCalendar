@@ -7,6 +7,7 @@ class ScheduleModel {
   int endTime = 0;
   int repeatType = 0;
   int scheduleType = 0;
+  int repeatUntil = 0;
   String remarks = "";
 
   ScheduleModel() {
@@ -33,6 +34,7 @@ class ScheduleModel {
     copy.repeatType = repeatType;
     copy.scheduleType = scheduleType;
     copy.remarks = remarks;
+    copy.repeatUntil = repeatUntil;
     return copy;
   }
 
@@ -47,6 +49,7 @@ class ScheduleModel {
         endTime != model.endTime ||
         repeatType != model.repeatType ||
         scheduleType != model.scheduleType ||
+        repeatUntil != model.repeatUntil ||
         remarks.compareTo(model.remarks) != 0;
   }
 }

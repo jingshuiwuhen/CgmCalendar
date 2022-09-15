@@ -19,6 +19,8 @@
     "edit": "Edit",
     "delete_schedule": "Delete Schedule",
     "repeat": "Repeat",
+    "repeat_until": "Repeat Until",
+    "repeat_until_none": "Never",
     "type": "Type",
     "notes": "Notes",
     "for_this_schedule_only": "For this schedule only",

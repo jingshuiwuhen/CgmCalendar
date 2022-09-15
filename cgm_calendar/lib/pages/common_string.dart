@@ -1,6 +1,8 @@
 import 'package:cgm_calendar/generated/l10n.dart';
+import 'package:cgm_calendar/global.dart';
 import 'package:cgm_calendar/view_models/set_schedule_page_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class CommonString {
   static String getRepeatStr(BuildContext context, RepeatType repeatType) {
@@ -20,6 +22,16 @@ class CommonString {
         break;
     }
     return text;
+  }
+
+  static String getRepeatUntilStr(BuildContext context, int repeatUntil) {
+    if (repeatUntil == 0) {
+      return S.of(context).repeat_until_none;
+    }
+
+    int repeatUntilDate = repeatUntil ~/ 10000;
+    DateTime time = DateTime.parse(repeatUntilDate.toString());
+    return DateFormat.yMMMMd(Global.localeStr()).format(time);
   }
 
   static String getScheduleStr(

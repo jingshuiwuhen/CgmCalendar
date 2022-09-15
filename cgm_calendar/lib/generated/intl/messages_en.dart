@@ -75,6 +75,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "repeat_type_every_week":
             MessageLookupByLibrary.simpleMessage("Every Week"),
         "repeat_type_none": MessageLookupByLibrary.simpleMessage("Never"),
+        "repeat_until": MessageLookupByLibrary.simpleMessage("Repeat Until"),
+        "repeat_until_none": MessageLookupByLibrary.simpleMessage("Never"),
         "saturday": MessageLookupByLibrary.simpleMessage("Sat"),
         "schedule_detail":
             MessageLookupByLibrary.simpleMessage("Schedule Detail"),

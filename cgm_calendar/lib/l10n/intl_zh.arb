@@ -19,6 +19,8 @@
     "edit": "编辑",
     "delete_schedule": "删除日程",
     "repeat": "重复",
+    "repeat_until": "重复结束",
+    "repeat_until_none": "永不",
     "type": "类型",
     "notes": "备注",
     "for_this_schedule_only": "仅针对此日程",

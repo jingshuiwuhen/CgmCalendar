@@ -64,6 +64,7 @@ class ScheduleDBModel {
     scheduleModel.repeatType = repeatType;
     scheduleModel.scheduleType = scheduleType;
     scheduleModel.remarks = remarks;
+    scheduleModel.repeatUntil = repeatUntil;
     return scheduleModel;
   }
 
@@ -74,5 +75,6 @@ class ScheduleDBModel {
     repeatType = model.repeatType;
     scheduleType = model.scheduleType;
     remarks = model.remarks;
+    repeatUntil = model.repeatUntil;
   }
 }

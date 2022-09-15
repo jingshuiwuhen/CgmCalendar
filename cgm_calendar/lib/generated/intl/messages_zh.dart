@@ -59,6 +59,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "repeat_type_every_month": MessageLookupByLibrary.simpleMessage("每月"),
         "repeat_type_every_week": MessageLookupByLibrary.simpleMessage("每周"),
         "repeat_type_none": MessageLookupByLibrary.simpleMessage("永不"),
+        "repeat_until": MessageLookupByLibrary.simpleMessage("重复结束"),
+        "repeat_until_none": MessageLookupByLibrary.simpleMessage("永不"),
         "schedule_detail": MessageLookupByLibrary.simpleMessage("日程详细"),
         "schedule_not_exist": MessageLookupByLibrary.simpleMessage("没有日程"),
         "schedule_type_personal": MessageLookupByLibrary.simpleMessage("个人"),
