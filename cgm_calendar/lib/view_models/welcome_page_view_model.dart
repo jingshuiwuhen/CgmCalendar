@@ -22,6 +22,7 @@ class WelcomePageViewModel with ChangeNotifier {
       return;
     }
 
+    await Future.delayed(const Duration(seconds: 2));
     OneContext().context = context;
     await OneContext().showProgressIndicator();
     remoteApi.updateTokenToHeader(token);

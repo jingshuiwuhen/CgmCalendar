@@ -99,7 +99,11 @@ class MonthPage extends StatelessWidget {
                 children: [
                   IconButton(
                     onPressed: () {
-                      rViewModel.controller.jumpToPage(monthModelIndex);
+                      rViewModel.controller.animateToPage(
+                        monthModelIndex,
+                        duration: const Duration(milliseconds: 500),
+                        curve: Curves.easeOutSine,
+                      );
                     },
                     icon: const Icon(
                       Icons.calendar_today,
@@ -268,8 +272,9 @@ class MonthPage extends StatelessWidget {
 
   Route _addSchedulePageRoute() {
     return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) =>
-          SetSchedulePage(),
+      pageBuilder: (context, animation, secondaryAnimation) => SetSchedulePage(
+        selectedDayModel: rViewModel.day,
+      ),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(0.0, 1.0);
         const end = Offset.zero;

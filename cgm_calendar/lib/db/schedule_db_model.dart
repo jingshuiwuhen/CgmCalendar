@@ -56,7 +56,7 @@ class ScheduleDBModel {
   }
 
   ScheduleModel copyToScheduleModel() {
-    ScheduleModel scheduleModel = ScheduleModel();
+    ScheduleModel scheduleModel = ScheduleModel(DateTime.now());
     scheduleModel.id = id ?? 0;
     scheduleModel.title = title;
     scheduleModel.startTime = startTime;

@@ -45,7 +45,9 @@ class ScheduleDetailPage extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => SetSchedulePage(scheduleModel: model),
+                    builder: (context) => SetSchedulePage(
+                      scheduleModel: model,
+                    ),
                   ),
                 );
               },

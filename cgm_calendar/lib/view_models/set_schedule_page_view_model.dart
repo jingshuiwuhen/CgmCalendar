@@ -6,6 +6,7 @@ import 'package:cgm_calendar/models/day_model.dart';
 import 'package:cgm_calendar/models/schedule_model.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
+import 'package:sprintf/sprintf.dart';
 
 enum RepeatType {
   none,
@@ -40,12 +41,20 @@ class SetSchedulePageViewModel with ChangeNotifier {
   ScheduleModel? _oldSchedule;
   late ScheduleModel _newSchedule;
 
-  SetSchedulePageViewModel(ScheduleModel? schedule) {
+  SetSchedulePageViewModel(
+      ScheduleModel? schedule, DayModel? selectedDayModel) {
     _oldSchedule = schedule;
     if (_oldSchedule != null) {
       _newSchedule = _oldSchedule!.copy();
     } else {
-      _newSchedule = ScheduleModel();
+      if (selectedDayModel == null || selectedDayModel.isToday()) {
+        _newSchedule = ScheduleModel(DateTime.now());
+      } else {
+        String timeStr = "${selectedDayModel.year}${sprintf("%02i", [
+              selectedDayModel.month
+            ])}${sprintf("%02i", [selectedDayModel.dayOfMonth])} 09:00:00";
+        _newSchedule = ScheduleModel(DateTime.parse(timeStr));
+      }
     }
 
     _titleEditingController = TextEditingController(text: _newSchedule.title);

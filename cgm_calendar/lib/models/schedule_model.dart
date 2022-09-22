@@ -10,10 +10,9 @@ class ScheduleModel {
   int repeatUntil = 0;
   String remarks = "";
 
-  ScheduleModel() {
-    DateTime now = DateTime.now();
-    String startDateStr = formatDate(now, [yyyy, '/', mm, '/', dd]);
-    DateTime oneHourFromNow = now.add(const Duration(hours: 1));
+  ScheduleModel(DateTime time) {
+    DateTime oneHourFromNow = time.add(const Duration(hours: 1));
+    String startDateStr = formatDate(oneHourFromNow, [yyyy, '/', mm, '/', dd]);
     String startTimeStr = "${formatDate(oneHourFromNow, [HH])}:00";
     startTime = int.parse(
         "${startDateStr.replaceAll(RegExp(r'/'), "")}${startTimeStr.replaceAll(RegExp(r':'), "")}");
@@ -26,7 +25,7 @@ class ScheduleModel {
   }
 
   ScheduleModel copy() {
-    ScheduleModel copy = ScheduleModel();
+    ScheduleModel copy = ScheduleModel(DateTime.now());
     copy.id = id;
     copy.title = title;
     copy.startTime = startTime;

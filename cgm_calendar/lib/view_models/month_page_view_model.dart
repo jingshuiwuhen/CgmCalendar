@@ -7,12 +7,13 @@ class MonthPageViewModel with ChangeNotifier {
   String _title = "";
   late PageController _controller;
   late DayModel _day;
-  int _selectIndex = 0;
+  late int _selectIndex;
 
   MonthPageViewModel(int index) {
     _title = Global.allMonths[index].getYearAndMonthStr();
     _controller = PageController(initialPage: index, keepPage: false);
-    _day = Global.allMonths[index].daysOfMonth[0];
+    _setSelectIndex(index);
+    _day = Global.allMonths[index].daysOfMonth[_selectIndex];
   }
 
   String get title => _title;
@@ -23,8 +24,8 @@ class MonthPageViewModel with ChangeNotifier {
   void onPageChanged(int index) {
     MonthModel newMonth = Global.allMonths[index];
     _title = newMonth.getYearAndMonthStr();
-    _day = newMonth.daysOfMonth.first;
-    _selectIndex = 0;
+    _setSelectIndex(index);
+    _day = newMonth.daysOfMonth[_selectIndex];
     notifyListeners();
   }
 
@@ -36,5 +37,16 @@ class MonthPageViewModel with ChangeNotifier {
 
   void refreshPage() {
     notifyListeners();
+  }
+
+  void _setSelectIndex(int index) {
+    _selectIndex = 0;
+    MonthModel monthModel = Global.allMonths[index];
+    if (!monthModel.isThisMonth()) {
+      return;
+    }
+
+    _selectIndex =
+        monthModel.daysOfMonth.indexWhere((element) => element.isToday());
   }
 }

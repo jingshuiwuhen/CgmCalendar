@@ -1,5 +1,6 @@
 import 'package:cgm_calendar/generated/l10n.dart';
 import 'package:cgm_calendar/global.dart';
+import 'package:cgm_calendar/models/day_model.dart';
 import 'package:cgm_calendar/models/schedule_model.dart';
 import 'package:cgm_calendar/pages/common_string.dart';
 import 'package:cgm_calendar/view_models/set_schedule_page_view_model.dart';
@@ -13,18 +14,23 @@ import 'package:sprintf/sprintf.dart';
 // ignore: must_be_immutable
 class SetSchedulePage extends StatelessWidget {
   ScheduleModel? scheduleModel;
+  DayModel? selectedDayModel;
   late SetSchedulePageViewModel wViewModel;
   late SetSchedulePageViewModel rViewModel;
 
   SetSchedulePage({
     Key? key,
     this.scheduleModel,
+    this.selectedDayModel,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => SetSchedulePageViewModel(scheduleModel),
+      create: (_) => SetSchedulePageViewModel(
+        scheduleModel,
+        selectedDayModel,
+      ),
       builder: (context, child) {
         wViewModel = context.watch<SetSchedulePageViewModel>();
         rViewModel = context.read<SetSchedulePageViewModel>();
