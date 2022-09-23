@@ -609,6 +609,16 @@ class S {
       args: [],
     );
   }
+
+  /// `CGM Group AD.`
+  String get adv {
+    return Intl.message(
+      'CGM Group AD.',
+      name: 'adv',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -24,6 +24,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "Setting": MessageLookupByLibrary.simpleMessage("设定"),
         "add": MessageLookupByLibrary.simpleMessage("添加"),
+        "adv": MessageLookupByLibrary.simpleMessage("CGM Group广告"),
         "all_day": MessageLookupByLibrary.simpleMessage("全天"),
         "auth_code_expired": MessageLookupByLibrary.simpleMessage("验证码已过期"),
         "auth_code_wrong": MessageLookupByLibrary.simpleMessage("验证码错误"),
@@ -40,6 +41,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "for_future_schedule": MessageLookupByLibrary.simpleMessage("针对将来日程"),
         "for_this_schedule_only":
             MessageLookupByLibrary.simpleMessage("仅针对此日程"),
+        "friday": MessageLookupByLibrary.simpleMessage("五"),
         "get_code": MessageLookupByLibrary.simpleMessage("获取验证码"),
         "input_email": MessageLookupByLibrary.simpleMessage("请输入邮箱"),
         "input_password": MessageLookupByLibrary.simpleMessage("请输入密码"),
@@ -61,19 +63,23 @@ class MessageLookup extends MessageLookupByLibrary {
         "repeat_type_none": MessageLookupByLibrary.simpleMessage("永不"),
         "repeat_until": MessageLookupByLibrary.simpleMessage("重复结束"),
         "repeat_until_none": MessageLookupByLibrary.simpleMessage("永不"),
+        "saturday": MessageLookupByLibrary.simpleMessage("六"),
         "schedule_detail": MessageLookupByLibrary.simpleMessage("日程详细"),
         "schedule_not_exist": MessageLookupByLibrary.simpleMessage("没有日程"),
         "schedule_type_personal": MessageLookupByLibrary.simpleMessage("个人"),
         "schedule_type_work": MessageLookupByLibrary.simpleMessage("工作"),
         "second": MessageLookupByLibrary.simpleMessage("秒"),
         "start": MessageLookupByLibrary.simpleMessage("开始"),
+        "sunday": MessageLookupByLibrary.simpleMessage("日"),
         "system_error": MessageLookupByLibrary.simpleMessage("系统错误。请联系客服"),
+        "thursday": MessageLookupByLibrary.simpleMessage("四"),
         "title": MessageLookupByLibrary.simpleMessage("标题"),
         "token_verify_failed": MessageLookupByLibrary.simpleMessage("请重新登录"),
         "tuesday": MessageLookupByLibrary.simpleMessage("二"),
         "type": MessageLookupByLibrary.simpleMessage("类型"),
         "verification_code": MessageLookupByLibrary.simpleMessage("验证码"),
         "version": MessageLookupByLibrary.simpleMessage("版本"),
+        "wedsday": MessageLookupByLibrary.simpleMessage("三"),
         "wish_to_delete": MessageLookupByLibrary.simpleMessage("您确定要删除此日程吗？")
       };
 }

@@ -15,6 +15,7 @@ class LeftDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: Colors.white,
       child: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,6 +100,45 @@ class LeftDrawer extends StatelessWidget {
                     // ),
                   ],
                 ).toList(),
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.grey[300]!,
+                  width: 1,
+                ),
+              ),
+              alignment: Alignment.bottomCenter,
+              margin: EdgeInsets.only(
+                bottom: 0.05.sh,
+                left: 10.w,
+                right: 10.w,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Image.asset(
+                    'assets/adv.png',
+                    fit: BoxFit.contain,
+                    width: 250.w,
+                    height: 250.w,
+                  ),
+                  Container(
+                    alignment: Alignment.bottomRight,
+                    margin: EdgeInsets.only(
+                      right: 5.w,
+                      bottom: 5.h,
+                    ),
+                    child: Text(
+                      S.of(context).adv,
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 12.sp,
+                      ),
+                    ),
+                  )
+                ],
               ),
             ),
           ],

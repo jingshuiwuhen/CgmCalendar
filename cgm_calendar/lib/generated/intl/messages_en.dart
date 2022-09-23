@@ -24,6 +24,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "Setting": MessageLookupByLibrary.simpleMessage("Setting"),
         "add": MessageLookupByLibrary.simpleMessage("Add"),
+        "adv": MessageLookupByLibrary.simpleMessage("CGM Group AD."),
         "all_day": MessageLookupByLibrary.simpleMessage("All Day"),
         "auth_code_expired": MessageLookupByLibrary.simpleMessage(
             "Verification code has expired"),

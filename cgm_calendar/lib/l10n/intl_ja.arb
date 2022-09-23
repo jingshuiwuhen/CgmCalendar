@@ -54,5 +54,6 @@
     "auth_code_wrong": "認証コードが間違いました",
     "auth_code_expired": "認証コードが締切でした",
     "email_not_exist": "アカウントが存在しません",
-    "password_wrong": "パスワードが間違いました"
+    "password_wrong": "パスワードが間違いました",
+    "adv": "CGM Group広告"
 }

@@ -54,5 +54,6 @@
     "auth_code_wrong": "Verification code is not right",
     "auth_code_expired": "Verification code has expired",
     "email_not_exist": "Account is not existed",
-    "password_wrong": "Password is not right"
+    "password_wrong": "Password is not right",
+    "adv": "CGM Group AD."
 }

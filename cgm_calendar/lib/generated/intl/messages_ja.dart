@@ -24,6 +24,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "Setting": MessageLookupByLibrary.simpleMessage("設定"),
         "add": MessageLookupByLibrary.simpleMessage("追加"),
+        "adv": MessageLookupByLibrary.simpleMessage("CGM Group広告"),
         "all_day": MessageLookupByLibrary.simpleMessage("終日"),
         "auth_code_expired":
             MessageLookupByLibrary.simpleMessage("認証コードが締切でした"),
