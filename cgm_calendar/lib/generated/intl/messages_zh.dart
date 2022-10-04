@@ -31,6 +31,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "cancel": MessageLookupByLibrary.simpleMessage("取消"),
         "clear_all_data": MessageLookupByLibrary.simpleMessage("清空数据"),
         "delete_schedule": MessageLookupByLibrary.simpleMessage("删除日程"),
+        "do_logout": MessageLookupByLibrary.simpleMessage("确定要退出登录吗?"),
         "done": MessageLookupByLibrary.simpleMessage("完成"),
         "edit": MessageLookupByLibrary.simpleMessage("编辑"),
         "edit_schedule": MessageLookupByLibrary.simpleMessage("编辑日程"),
@@ -48,6 +49,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "input_verification_code":
             MessageLookupByLibrary.simpleMessage("请输入验证码"),
         "login": MessageLookupByLibrary.simpleMessage("登录"),
+        "logout": MessageLookupByLibrary.simpleMessage("退出登录"),
         "monday": MessageLookupByLibrary.simpleMessage("一"),
         "new_schedule": MessageLookupByLibrary.simpleMessage("新建日程"),
         "not_email": MessageLookupByLibrary.simpleMessage("输入的邮箱格式不正确"),

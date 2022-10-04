@@ -72,7 +72,9 @@ flutter:
 
   assets:
     - assets/welcome.png
-    - assets/adv.png
+    - assets/adv_main.png
+    - assets/adv_app_store.png
+    - assets/adv_google_play.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

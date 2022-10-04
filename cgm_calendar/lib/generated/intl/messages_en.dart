@@ -35,6 +35,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Clear All Data"),
         "delete_schedule":
             MessageLookupByLibrary.simpleMessage("Delete Schedule"),
+        "do_logout":
+            MessageLookupByLibrary.simpleMessage("Are you sure to logout?"),
         "done": MessageLookupByLibrary.simpleMessage("Done"),
         "edit": MessageLookupByLibrary.simpleMessage("Edit"),
         "edit_schedule": MessageLookupByLibrary.simpleMessage("Edit Schedule"),
@@ -57,6 +59,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "input_verification_code": MessageLookupByLibrary.simpleMessage(
             "Please input verification code"),
         "login": MessageLookupByLibrary.simpleMessage("Login"),
+        "logout": MessageLookupByLibrary.simpleMessage("Logout"),
         "monday": MessageLookupByLibrary.simpleMessage("Mon"),
         "new_schedule": MessageLookupByLibrary.simpleMessage("New Schedule"),
         "not_email": MessageLookupByLibrary.simpleMessage("This is not email"),

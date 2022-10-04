@@ -32,6 +32,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "cancel": MessageLookupByLibrary.simpleMessage("キャンセル"),
         "clear_all_data": MessageLookupByLibrary.simpleMessage("データを削除する"),
         "delete_schedule": MessageLookupByLibrary.simpleMessage("スゲジュール削除"),
+        "do_logout": MessageLookupByLibrary.simpleMessage("ログアウトで宜しいですか?"),
         "done": MessageLookupByLibrary.simpleMessage("完了"),
         "edit": MessageLookupByLibrary.simpleMessage("編集"),
         "edit_schedule": MessageLookupByLibrary.simpleMessage("スゲジュール編集"),
@@ -51,6 +52,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "input_verification_code":
             MessageLookupByLibrary.simpleMessage("認証コードを入力してください"),
         "login": MessageLookupByLibrary.simpleMessage("ログイン"),
+        "logout": MessageLookupByLibrary.simpleMessage("ログアウト"),
         "monday": MessageLookupByLibrary.simpleMessage("月"),
         "new_schedule": MessageLookupByLibrary.simpleMessage("新規スゲジュール"),
         "not_email": MessageLookupByLibrary.simpleMessage("メールアドレスではありません"),

@@ -55,5 +55,7 @@
     "auth_code_expired": "Verification code has expired",
     "email_not_exist": "Account is not existed",
     "password_wrong": "Password is not right",
-    "adv": "CGM Group AD."
+    "adv": "CGM Group AD.",
+    "logout": "Logout",
+    "do_logout":"Are you sure to logout?"
 }
