@@ -24,13 +24,13 @@ void main() {
       Global.init();
       Global.info = await PackageInfo.fromPlatform();
 
-      YearModel oldestYear = Global.oldYears.last;
-      await DBManager.db
-          .deleteTimeOutSchedules(int.parse("${oldestYear.year}01010000"));
-      List<ScheduleDBModel> models = await DBManager.db.getAll();
-      for (ScheduleDBModel model in models) {
-        AddScheduleHelper.addToCalendar(model);
-      }
+      // YearModel oldestYear = Global.oldYears.last;
+      // await DBManager.db
+      //     .deleteTimeOutSchedules(int.parse("${oldestYear.year}01010000"));
+      // List<ScheduleDBModel> models = await DBManager.db.getAll();
+      // for (ScheduleDBModel model in models) {
+      //   AddScheduleHelper.addToCalendar(model);
+      // }
 
       runApp(
         const CgmCalanderApp(),
