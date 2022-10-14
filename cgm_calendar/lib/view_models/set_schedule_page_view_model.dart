@@ -204,7 +204,7 @@ class SetSchedulePageViewModel with ChangeNotifier {
     ScheduleDBModel model = await DBManager.db.getOneSchedule(_oldSchedule!.id);
     model.copyFromScheduleModel(_newSchedule);
     await DBManager.db.update(model);
-    _deleteSchedules(model.id!);
+    _deleteSchedules(model.id);
     AddScheduleHelper.addToCalendar(model);
   }
 
@@ -216,7 +216,7 @@ class SetSchedulePageViewModel with ChangeNotifier {
     newModel.exceptionTimes = model.exceptionTimes;
     newModel = await DBManager.db.insert(newModel);
     AddScheduleHelper.addToCalendar(newModel);
-    await _deleteUnuseScheduleDBData(newModel.id!);
+    await _deleteUnuseScheduleDBData(newModel.id);
 
     if (type == EditType.thisOnly) {
       model.exceptionTimes =
@@ -225,9 +225,9 @@ class SetSchedulePageViewModel with ChangeNotifier {
       model.repeatUntil = _oldSchedule!.startTime;
     }
     await DBManager.db.update(model);
-    _deleteSchedules(model.id!);
+    _deleteSchedules(model.id);
     AddScheduleHelper.addToCalendar(model);
-    await _deleteUnuseScheduleDBData(model.id!);
+    await _deleteUnuseScheduleDBData(model.id);
   }
 
   void _deleteSchedules(int id) {

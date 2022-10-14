@@ -87,7 +87,9 @@ class YearPage extends StatelessWidget {
               ),
             ),
           ),
-          drawer: const LeftDrawer(),
+          drawer: LeftDrawer(
+            clean: () => _rViewModel.refresh(),
+          ),
           body: CustomScrollView(
             controller: _scrollController,
             center: _centerKey,

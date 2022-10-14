@@ -12,7 +12,7 @@ const String columnScheduleType = "schedule_type";
 const String columnRemarks = "remarks";
 
 class ScheduleDBModel {
-  int? id;
+  int id = 0;
   String title = "";
   int startTime = 0;
   int endTime = 0;
@@ -24,8 +24,9 @@ class ScheduleDBModel {
 
   ScheduleDBModel();
 
-  Map<String, Object?> toMap() {
-    var map = <String, Object?>{
+  Map<String, Object> toMap() {
+    var map = <String, Object>{
+      columnId: id,
       columnTitle: title,
       columnStartTime: startTime,
       columnEndTime: endTime,
@@ -36,14 +37,10 @@ class ScheduleDBModel {
       columnRemarks: remarks,
     };
 
-    if (id != null) {
-      map[columnId] = id;
-    }
-
     return map;
   }
 
-  ScheduleDBModel.fromMap(Map<String, Object?> map) {
+  ScheduleDBModel.fromMap(Map<String, dynamic> map) {
     id = map[columnId]! as int;
     title = map[columnTitle]! as String;
     startTime = map[columnStartTime]! as int;
@@ -57,7 +54,7 @@ class ScheduleDBModel {
 
   ScheduleModel copyToScheduleModel() {
     ScheduleModel scheduleModel = ScheduleModel(DateTime.now());
-    scheduleModel.id = id ?? 0;
+    scheduleModel.id = id;
     scheduleModel.title = title;
     scheduleModel.startTime = startTime;
     scheduleModel.endTime = endTime;

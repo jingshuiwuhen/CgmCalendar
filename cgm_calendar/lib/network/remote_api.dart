@@ -50,6 +50,17 @@ class RemoteApi {
     return json.decode(result.toString());
   }
 
+  Future<List<Map<String, dynamic>>> getSchedules(
+      int uid, int startTime) async {
+    Map<String, dynamic> dataMap = {};
+    dataMap['uid'] = uid;
+    dataMap['start_time'] = startTime;
+    var result =
+        await _dio.post("/app/limit/schedule/get_all_schedule", data: dataMap);
+    Map<String, dynamic> jsonObj = json.decode(result.toString());
+    return jsonObj['schedules'];
+  }
+
   void updateTokenToHeader(String token) {
     _dio.updateToken(token);
   }

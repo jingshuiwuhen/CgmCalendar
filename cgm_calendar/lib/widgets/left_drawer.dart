@@ -11,10 +11,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LeftDrawer extends StatelessWidget {
-  final Function()? clean;
+  final Function() clean;
   const LeftDrawer({
     Key? key,
-    this.clean,
+    required this.clean,
   }) : super(key: key);
 
   @override
@@ -81,9 +81,7 @@ class LeftDrawer extends StatelessWidget {
                             day.scheduleList.clear();
                           }
                         });
-                        if (clean != null) {
-                          clean!();
-                        }
+                        clean();
                         navigator.pop();
                       },
                     ),

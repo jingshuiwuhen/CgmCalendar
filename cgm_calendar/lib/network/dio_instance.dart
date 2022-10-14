@@ -69,6 +69,7 @@ class DioInstance with DioMixin implements Dio {
       case "000000":
       case "010000":
       case "020000":
+      case "040000":
         Global.showToast(S.of(_context).system_error);
         break;
       case "000001":

@@ -26,21 +26,13 @@ class DBManager {
 
   Future<ScheduleDBModel> insert(ScheduleDBModel model) async {
     await _checkDB();
-    model.id = await database?.insert(tableName, model.toMap());
+    model.id = await database!.insert(tableName, model.toMap());
     return model;
   }
 
   Future delete(int id) async {
     await _checkDB();
     await database?.delete(tableName, where: "$columnId = ?", whereArgs: [id]);
-  }
-
-  Future deleteTimeOutSchedules(int time) async {
-    await _checkDB();
-    await database?.delete(tableName,
-        where:
-            "($columnRepeatType = ? and $columnEndTime <= ?) or ($columnRepeatType <> ? and ($columnRepeatUntil <= ? and $columnRepeatUntil > ?))",
-        whereArgs: [0, time, 0, time, 0]);
   }
 
   Future deleteAll() async {
@@ -54,33 +46,9 @@ class DBManager {
         where: "$columnId = ?", whereArgs: [model.id]);
   }
 
-  Future<List<ScheduleDBModel>> getAll() async {
-    List<ScheduleDBModel> datas = List.empty(growable: true);
-    await _checkDB();
-    List<Map<String, Object?>>? maps =
-        await database?.query(tableName, columns: [
-      columnId,
-      columnTitle,
-      columnStartTime,
-      columnEndTime,
-      columnExceptionTimes,
-      columnRepeatUntil,
-      columnRepeatType,
-      columnScheduleType,
-      columnRemarks,
-    ]);
-
-    if (maps != null && maps.isNotEmpty) {
-      for (Map<String, Object?> map in maps) {
-        datas.add(ScheduleDBModel.fromMap(map));
-      }
-    }
-    return datas;
-  }
-
   Future<ScheduleDBModel> getOneSchedule(int id) async {
     await _checkDB();
-    List<Map<String, Object?>>? maps = await database?.query(
+    List<Map<String, Object?>> maps = await database!.query(
       tableName,
       columns: [
         columnId,
@@ -97,6 +65,6 @@ class DBManager {
       whereArgs: [id],
     );
 
-    return ScheduleDBModel.fromMap(maps!.first);
+    return ScheduleDBModel.fromMap(maps.first);
   }
 }

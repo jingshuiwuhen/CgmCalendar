@@ -1,4 +1,8 @@
+import 'package:cgm_calendar/add_schedule_helper.dart';
 import 'package:cgm_calendar/app_shared_pref.dart';
+import 'package:cgm_calendar/db/schedule_db_model.dart';
+import 'package:cgm_calendar/global.dart';
+import 'package:cgm_calendar/models/year_model.dart';
 import 'package:cgm_calendar/network/remote_api.dart';
 import 'package:flutter/material.dart';
 import 'package:one_context/one_context.dart';
@@ -30,10 +34,27 @@ class WelcomePageViewModel with ChangeNotifier {
       Map<String, dynamic> data = await remoteApi.refreshToken();
       AppSharedPref.saveAccessToken(data["token"]);
       remoteApi.updateTokenToHeader(data["token"]);
-      success();
     } catch (e) {
+      OneContext().hideProgressIndicator();
       AppSharedPref.saveAccessToken("");
       remoteApi.updateTokenToHeader("");
+      _signState = SignState.idle;
+      notifyListeners();
+      return;
+    }
+
+    try {
+      int uid = await AppSharedPref.loadUid();
+      YearModel oldestYear = Global.oldYears.last;
+      int startTime = int.parse("${oldestYear.year}01010000");
+      List<Map<String, dynamic>> schedules =
+          await remoteApi.getSchedules(uid, startTime);
+
+      for (Map<String, dynamic> schedule in schedules) {
+        AddScheduleHelper.addToCalendar(ScheduleDBModel.fromMap(schedule));
+      }
+      success();
+    } catch (e) {
       _signState = SignState.idle;
       notifyListeners();
     } finally {

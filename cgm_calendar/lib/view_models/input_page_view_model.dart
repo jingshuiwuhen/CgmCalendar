@@ -1,6 +1,9 @@
+import 'package:cgm_calendar/add_schedule_helper.dart';
 import 'package:cgm_calendar/app_shared_pref.dart';
+import 'package:cgm_calendar/db/schedule_db_model.dart';
 import 'package:cgm_calendar/generated/l10n.dart';
 import 'package:cgm_calendar/global.dart';
+import 'package:cgm_calendar/models/year_model.dart';
 import 'package:cgm_calendar/network/remote_api.dart';
 import 'package:flutter/widgets.dart';
 import 'package:one_context/one_context.dart';
@@ -139,6 +142,16 @@ class InputPageViewModel with ChangeNotifier {
       AppSharedPref.saveAccessToken(login["token"]);
       AppSharedPref.saveUid(login["uid"]);
       remoteApi.updateTokenToHeader(login["token"]);
+
+      YearModel oldestYear = Global.oldYears.last;
+      int startTime = int.parse("${oldestYear.year}01010000");
+      List<Map<String, dynamic>> schedules =
+          await remoteApi.getSchedules(login["uid"], startTime);
+
+      for (Map<String, dynamic> schedule in schedules) {
+        AddScheduleHelper.addToCalendar(ScheduleDBModel.fromMap(schedule));
+      }
+
       return Future.value(true);
     } catch (e) {
       return Future.value(false);
