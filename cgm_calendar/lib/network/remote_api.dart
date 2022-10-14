@@ -61,6 +61,18 @@ class RemoteApi {
     return jsonObj['schedules'];
   }
 
+  Future deleteAllSchedules(int uid) async {
+    Map<String, dynamic> dataMap = {};
+    dataMap['uid'] = uid;
+    await _dio.post("/app/limit/schedule/delete_all_schedule", data: dataMap);
+  }
+
+  Future deleteAccount(int uid) async {
+    Map<String, dynamic> dataMap = {};
+    dataMap['uid'] = uid;
+    await _dio.post("/app/limit/user/delete_account", data: dataMap);
+  }
+
   void updateTokenToHeader(String token) {
     _dio.updateToken(token);
   }

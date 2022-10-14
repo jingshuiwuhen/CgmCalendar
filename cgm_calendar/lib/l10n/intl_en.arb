@@ -57,5 +57,8 @@
     "password_wrong": "Password is not right",
     "adv": "CGM Group AD.",
     "logout": "Logout",
-    "do_logout":"Are you sure to logout?"
+    "do_logout":"Are you sure to logout?",
+    "do_clear":"Are you sure to delete all schedules?",
+    "delete_account": "Delete Account",
+    "do_delete_account": "Are you sure to delete your account?"
 }

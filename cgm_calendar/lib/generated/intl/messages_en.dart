@@ -33,8 +33,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "clear_all_data":
             MessageLookupByLibrary.simpleMessage("Clear All Data"),
+        "delete_account":
+            MessageLookupByLibrary.simpleMessage("Delete Account"),
         "delete_schedule":
             MessageLookupByLibrary.simpleMessage("Delete Schedule"),
+        "do_clear": MessageLookupByLibrary.simpleMessage(
+            "Are you sure to delete all schedules?"),
+        "do_delete_account": MessageLookupByLibrary.simpleMessage(
+            "Are you sure to delete your account?"),
         "do_logout":
             MessageLookupByLibrary.simpleMessage("Are you sure to logout?"),
         "done": MessageLookupByLibrary.simpleMessage("Done"),

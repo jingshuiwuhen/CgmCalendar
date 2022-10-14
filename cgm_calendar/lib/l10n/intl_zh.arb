@@ -57,5 +57,8 @@
     "password_wrong": "密码不正确",
     "adv": "CGM Group广告",
     "logout": "退出登录",
-    "do_logout":"确定要退出登录吗?"
+    "do_logout":"确定要退出登录吗?",
+    "do_clear":"要删除所有的日程吗?",
+    "delete_account": "注销账号",
+    "do_delete_account": "要注销当前账号吗?"
 }

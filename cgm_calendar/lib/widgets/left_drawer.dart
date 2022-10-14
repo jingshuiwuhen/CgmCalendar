@@ -1,14 +1,15 @@
 import 'dart:io';
 
 import 'package:cgm_calendar/app_shared_pref.dart';
-import 'package:cgm_calendar/db/db_manager.dart';
 import 'package:cgm_calendar/generated/l10n.dart';
 import 'package:cgm_calendar/global.dart';
 import 'package:cgm_calendar/models/day_model.dart';
+import 'package:cgm_calendar/network/remote_api.dart';
 import 'package:cgm_calendar/pages/welcome_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:one_context/one_context.dart';
 
 class LeftDrawer extends StatelessWidget {
   final Function() clean;
@@ -74,15 +75,57 @@ class LeftDrawer extends StatelessWidget {
                         ),
                       ),
                       onTap: () async {
-                        final navigator = Navigator.of(context);
-                        await DBManager.db.deleteAll();
-                        Global.idScheduleMap.forEach((id, days) {
-                          for (DayModel day in days) {
-                            day.scheduleList.clear();
-                          }
-                        });
-                        clean();
-                        navigator.pop();
+                        showCupertinoModalPopup<void>(
+                          context: context,
+                          builder: (context) => CupertinoActionSheet(
+                            title: Text(
+                              S.of(context).do_clear,
+                              style: const TextStyle(
+                                color: Colors.grey,
+                              ),
+                            ),
+                            actions: [
+                              CupertinoActionSheetAction(
+                                isDestructiveAction: true,
+                                onPressed: () async {
+                                  final navigator = Navigator.of(context);
+                                  navigator.pop();
+                                  OneContext().context = context;
+                                  final remoteApi = RemoteApi(context);
+                                  await OneContext().showProgressIndicator();
+                                  try {
+                                    await remoteApi.deleteAllSchedules(
+                                        await AppSharedPref.loadUid());
+                                    Global.idScheduleMap.forEach((id, days) {
+                                      for (DayModel day in days) {
+                                        day.scheduleList.clear();
+                                      }
+                                    });
+                                    navigator.pop();
+                                    clean();
+                                  } catch (e) {
+                                    debugPrint(
+                                        "deleteAllSchedules error ${e.toString()}");
+                                  } finally {
+                                    OneContext().hideProgressIndicator();
+                                  }
+                                },
+                                child: Text(
+                                  S.of(context).clear_all_data,
+                                  style: TextStyle(fontSize: 20.sp),
+                                ),
+                              ),
+                            ],
+                            cancelButton: CupertinoActionSheetAction(
+                              isDestructiveAction: true,
+                              onPressed: () => Navigator.pop(context),
+                              child: Text(
+                                S.of(context).cancel,
+                                style: TextStyle(fontSize: 20.sp),
+                              ),
+                            ),
+                          ),
+                        );
                       },
                     ),
                     ListTile(
@@ -126,6 +169,76 @@ class LeftDrawer extends StatelessWidget {
                                 },
                                 child: Text(
                                   S.of(context).logout,
+                                  style: TextStyle(fontSize: 20.sp),
+                                ),
+                              ),
+                            ],
+                            cancelButton: CupertinoActionSheetAction(
+                              isDestructiveAction: true,
+                              onPressed: () => Navigator.pop(context),
+                              child: Text(
+                                S.of(context).cancel,
+                                style: TextStyle(fontSize: 20.sp),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                    ListTile(
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 20.w,
+                      ),
+                      leading: Icon(
+                        Icons.delete_outline_outlined,
+                        size: 24.sp,
+                        color: Colors.redAccent,
+                      ),
+                      title: Text(
+                        S.of(context).delete_account,
+                        style: TextStyle(
+                          color: Colors.redAccent,
+                          fontSize: 20.sp,
+                        ),
+                      ),
+                      onTap: () {
+                        showCupertinoModalPopup<void>(
+                          context: context,
+                          builder: (context) => CupertinoActionSheet(
+                            title: Text(
+                              S.of(context).do_delete_account,
+                              style: const TextStyle(
+                                color: Colors.grey,
+                              ),
+                            ),
+                            actions: [
+                              CupertinoActionSheetAction(
+                                isDestructiveAction: true,
+                                onPressed: () async {
+                                  final navigator = Navigator.of(context);
+                                  navigator.pop();
+                                  OneContext().context = context;
+                                  final remoteApi = RemoteApi(context);
+                                  await OneContext().showProgressIndicator();
+                                  try {
+                                    await remoteApi.deleteAccount(
+                                        await AppSharedPref.loadUid());
+                                    await AppSharedPref.saveAccessToken("");
+                                    navigator.pushAndRemoveUntil(
+                                      MaterialPageRoute(
+                                        builder: (context) => WelcomePage(),
+                                      ),
+                                      (route) => false,
+                                    );
+                                  } catch (e) {
+                                    debugPrint(
+                                        "delete account error ${e.toString()}");
+                                  } finally {
+                                    OneContext().hideProgressIndicator();
+                                  }
+                                },
+                                child: Text(
+                                  S.of(context).delete_account,
                                   style: TextStyle(fontSize: 20.sp),
                                 ),
                               ),

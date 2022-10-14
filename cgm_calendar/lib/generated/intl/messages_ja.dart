@@ -31,7 +31,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "auth_code_wrong": MessageLookupByLibrary.simpleMessage("認証コードが間違いました"),
         "cancel": MessageLookupByLibrary.simpleMessage("キャンセル"),
         "clear_all_data": MessageLookupByLibrary.simpleMessage("データを削除する"),
+        "delete_account": MessageLookupByLibrary.simpleMessage("アカウント削除"),
         "delete_schedule": MessageLookupByLibrary.simpleMessage("スゲジュール削除"),
+        "do_clear":
+            MessageLookupByLibrary.simpleMessage("全部スゲジュールを削除します。宜しいですか?"),
+        "do_delete_account":
+            MessageLookupByLibrary.simpleMessage("アカウントを削除します。宜しいですか?"),
         "do_logout": MessageLookupByLibrary.simpleMessage("ログアウトで宜しいですか?"),
         "done": MessageLookupByLibrary.simpleMessage("完了"),
         "edit": MessageLookupByLibrary.simpleMessage("編集"),

@@ -639,6 +639,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Are you sure to delete all schedules?`
+  String get do_clear {
+    return Intl.message(
+      'Are you sure to delete all schedules?',
+      name: 'do_clear',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete Account`
+  String get delete_account {
+    return Intl.message(
+      'Delete Account',
+      name: 'delete_account',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure to delete your account?`
+  String get do_delete_account {
+    return Intl.message(
+      'Are you sure to delete your account?',
+      name: 'do_delete_account',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

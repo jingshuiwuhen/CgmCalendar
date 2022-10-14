@@ -35,11 +35,6 @@ class DBManager {
     await database?.delete(tableName, where: "$columnId = ?", whereArgs: [id]);
   }
 
-  Future deleteAll() async {
-    await _checkDB();
-    await database?.delete(tableName);
-  }
-
   Future update(ScheduleDBModel model) async {
     await _checkDB();
     await database?.update(tableName, model.toMap(),
