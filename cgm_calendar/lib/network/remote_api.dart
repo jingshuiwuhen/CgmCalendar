@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cgm_calendar/db/schedule_db_model.dart';
 import 'package:cgm_calendar/network/dio_instance.dart';
 import 'package:flutter/widgets.dart';
 
@@ -71,6 +72,15 @@ class RemoteApi {
     Map<String, dynamic> dataMap = {};
     dataMap['uid'] = uid;
     await _dio.post("/app/limit/user/delete_account", data: dataMap);
+  }
+
+  Future<int> addNewSchedule(ScheduleDBModel model, int uid) async {
+    Map<String, dynamic> dataMap = model.toMap();
+    dataMap['uid'] = uid;
+    var result = await _dio.post("/app/limit/schedule/add_new_schedule",
+        data: model.toMap());
+    Map<String, dynamic> jsonObj = json.decode(result.toString());
+    return jsonObj['id'];
   }
 
   void updateTokenToHeader(String token) {

@@ -1,11 +1,14 @@
 import 'package:cgm_calendar/add_schedule_helper.dart';
+import 'package:cgm_calendar/app_shared_pref.dart';
 import 'package:cgm_calendar/db/db_manager.dart';
 import 'package:cgm_calendar/db/schedule_db_model.dart';
 import 'package:cgm_calendar/global.dart';
 import 'package:cgm_calendar/models/day_model.dart';
 import 'package:cgm_calendar/models/schedule_model.dart';
+import 'package:cgm_calendar/network/remote_api.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
+import 'package:one_context/one_context.dart';
 import 'package:sprintf/sprintf.dart';
 
 enum RepeatType {
@@ -193,11 +196,21 @@ class SetSchedulePageViewModel with ChangeNotifier {
     _remarksFocus.unfocus();
   }
 
-  Future addNewSchedule() async {
+  Future addNewSchedule(BuildContext context, Function() success) async {
     ScheduleDBModel model = ScheduleDBModel();
     model.copyFromScheduleModel(_newSchedule);
-    await DBManager.db.insert(model);
-    AddScheduleHelper.addToCalendar(model);
+    final remoteApi = RemoteApi(context);
+    OneContext().context = context;
+    await OneContext().showProgressIndicator();
+    try {
+      model.id =
+          await remoteApi.addNewSchedule(model, await AppSharedPref.loadUid());
+      AddScheduleHelper.addToCalendar(model);
+    } catch (e) {
+      debugPrint("addNewSchedule error ${e.toString()}");
+    } finally {
+      OneContext().hideProgressIndicator();
+    }
   }
 
   Future editNoRepeatSchedule() async {

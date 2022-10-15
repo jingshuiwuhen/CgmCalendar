@@ -66,6 +66,7 @@ class ScheduleDBModel {
   }
 
   void copyFromScheduleModel(ScheduleModel model) {
+    id = model.id;
     title = model.title;
     startTime = model.startTime;
     endTime = model.endTime;

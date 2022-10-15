@@ -77,8 +77,8 @@ class SetSchedulePage extends StatelessWidget {
 
                     final navigator = Navigator.of(context);
                     if (scheduleModel == null) {
-                      await rViewModel.addNewSchedule();
-                      navigator.pop();
+                      await rViewModel.addNewSchedule(
+                          context, () => navigator.pop());
                       return;
                     }
 
