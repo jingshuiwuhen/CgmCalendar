@@ -88,8 +88,11 @@ class SetSchedulePage extends StatelessWidget {
                     }
 
                     if (scheduleModel!.repeatType == RepeatType.none.index) {
-                      await rViewModel.editNoRepeatSchedule();
-                      navigator.popUntil(ModalRoute.withName("MonthPage"));
+                      await rViewModel.editNoRepeatSchedule(
+                          context,
+                          () => navigator
+                              .popUntil(ModalRoute.withName("MonthPage")));
+
                       return;
                     }
 

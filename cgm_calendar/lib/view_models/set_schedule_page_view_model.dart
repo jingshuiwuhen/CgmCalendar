@@ -206,6 +206,7 @@ class SetSchedulePageViewModel with ChangeNotifier {
       model.id =
           await remoteApi.addNewSchedule(model, await AppSharedPref.loadUid());
       AddScheduleHelper.addToCalendar(model);
+      success();
     } catch (e) {
       debugPrint("addNewSchedule error ${e.toString()}");
     } finally {
@@ -213,12 +214,24 @@ class SetSchedulePageViewModel with ChangeNotifier {
     }
   }
 
-  Future editNoRepeatSchedule() async {
-    ScheduleDBModel model = await DBManager.db.getOneSchedule(_oldSchedule!.id);
-    model.copyFromScheduleModel(_newSchedule);
-    await DBManager.db.update(model);
-    _deleteSchedules(model.id);
-    AddScheduleHelper.addToCalendar(model);
+  Future editNoRepeatSchedule(BuildContext context, Function() success) async {
+    final remoteApi = RemoteApi(context);
+    OneContext().context = context;
+    await OneContext().showProgressIndicator();
+    try {
+      Map<String, dynamic> schedule = await remoteApi.getOneSchedule(
+          _oldSchedule!.id, await AppSharedPref.loadUid());
+      ScheduleDBModel model = ScheduleDBModel.fromMap(schedule);
+      model.copyFromScheduleModel(_newSchedule);
+      await remoteApi.updateSchedule(model, await AppSharedPref.loadUid());
+      _deleteSchedules(model.id);
+      AddScheduleHelper.addToCalendar(model);
+      success();
+    } catch (e) {
+      debugPrint('editNoRepeatSchedule error ${e.toString()}');
+    } finally {
+      OneContext().hideProgressIndicator();
+    }
   }
 
   Future editRepeatSchedule(EditType type) async {
