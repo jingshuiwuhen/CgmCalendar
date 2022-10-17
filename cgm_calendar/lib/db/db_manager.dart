@@ -24,12 +24,6 @@ class DBManager {
     }
   }
 
-  Future<ScheduleDBModel> insert(ScheduleDBModel model) async {
-    await _checkDB();
-    model.id = await database!.insert(tableName, model.toMap());
-    return model;
-  }
-
   Future delete(int id) async {
     await _checkDB();
     await database?.delete(tableName, where: "$columnId = ?", whereArgs: [id]);

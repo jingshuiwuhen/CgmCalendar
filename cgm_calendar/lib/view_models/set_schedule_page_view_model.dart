@@ -234,26 +234,41 @@ class SetSchedulePageViewModel with ChangeNotifier {
     }
   }
 
-  Future editRepeatSchedule(EditType type) async {
-    ScheduleDBModel model = await DBManager.db.getOneSchedule(_oldSchedule!.id);
+  Future editRepeatSchedule(
+      EditType type, BuildContext context, Function() success) async {
+    final remoteApi = RemoteApi(context);
+    OneContext().context = context;
+    await OneContext().showProgressIndicator();
+    try {
+      Map<String, dynamic> schedule = await remoteApi.getOneSchedule(
+          _oldSchedule!.id, await AppSharedPref.loadUid());
+      ScheduleDBModel model = ScheduleDBModel.fromMap(schedule);
 
-    ScheduleDBModel newModel = ScheduleDBModel();
-    newModel.copyFromScheduleModel(_newSchedule);
-    newModel.exceptionTimes = model.exceptionTimes;
-    newModel = await DBManager.db.insert(newModel);
-    AddScheduleHelper.addToCalendar(newModel);
-    await _deleteUnuseScheduleDBData(newModel.id);
+      ScheduleDBModel newModel = ScheduleDBModel();
+      newModel.copyFromScheduleModel(_newSchedule);
+      newModel.exceptionTimes = model.exceptionTimes;
+      newModel.id = await remoteApi.addNewSchedule(
+          newModel, await AppSharedPref.loadUid());
+      AddScheduleHelper.addToCalendar(newModel);
 
-    if (type == EditType.thisOnly) {
-      model.exceptionTimes =
-          "${model.exceptionTimes}${_oldSchedule!.startTime},";
-    } else {
-      model.repeatUntil = _oldSchedule!.startTime;
+      if (type == EditType.thisOnly) {
+        model.exceptionTimes =
+            "${model.exceptionTimes}${_oldSchedule!.startTime},";
+      } else {
+        model.repeatUntil = _oldSchedule!.startTime;
+      }
+      await remoteApi.updateSchedule(model, await AppSharedPref.loadUid());
+      _deleteSchedules(model.id);
+      AddScheduleHelper.addToCalendar(model);
+
+      List<int> ids = [newModel.id, model.id];
+      await _deleteUnuseScheduleDBData(ids, remoteApi);
+      success();
+    } catch (e) {
+      debugPrint('editNoRepeatSchedule error ${e.toString()}');
+    } finally {
+      OneContext().hideProgressIndicator();
     }
-    await DBManager.db.update(model);
-    _deleteSchedules(model.id);
-    AddScheduleHelper.addToCalendar(model);
-    await _deleteUnuseScheduleDBData(model.id);
   }
 
   void _deleteSchedules(int id) {
@@ -267,10 +282,14 @@ class SetSchedulePageViewModel with ChangeNotifier {
     }
   }
 
-  Future _deleteUnuseScheduleDBData(int id) async {
-    List<DayModel>? list = Global.idScheduleMap[id];
-    if (list == null || list.isEmpty) {
-      await DBManager.db.delete(id);
+  Future _deleteUnuseScheduleDBData(List<int> ids, RemoteApi remoteApi) async {
+    List<int> deleteIds = List.empty(growable: true);
+    for (var id in ids) {
+      List<DayModel>? list = Global.idScheduleMap[id];
+      if (list == null || list.isEmpty) {
+        deleteIds.add(id);
+      }
     }
+    await remoteApi.deleteSchedules(ids, await AppSharedPref.loadUid());
   }
 }

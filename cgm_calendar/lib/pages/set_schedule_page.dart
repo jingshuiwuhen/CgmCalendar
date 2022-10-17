@@ -441,9 +441,11 @@ class SetSchedulePage extends StatelessWidget {
         CupertinoActionSheetAction(
           isDestructiveAction: true,
           onPressed: () async {
-            final navigator = Navigator.of(pContext);
-            await rViewModel.editRepeatSchedule(EditType.thisOnly);
-            navigator.popUntil(ModalRoute.withName("MonthPage"));
+            await rViewModel.editRepeatSchedule(
+                EditType.thisOnly,
+                pContext,
+                () => Navigator.of(pContext)
+                    .popUntil(ModalRoute.withName("MonthPage")));
           },
           child: Text(S.of(pContext).for_this_schedule_only),
         ),
@@ -454,9 +456,11 @@ class SetSchedulePage extends StatelessWidget {
       CupertinoActionSheetAction(
         isDestructiveAction: true,
         onPressed: () async {
-          final navigator = Navigator.of(pContext);
-          await rViewModel.editRepeatSchedule(EditType.futureContainsThis);
-          navigator.popUntil(ModalRoute.withName("MonthPage"));
+          await rViewModel.editRepeatSchedule(
+              EditType.futureContainsThis,
+              pContext,
+              () => Navigator.of(pContext)
+                  .popUntil(ModalRoute.withName("MonthPage")));
         },
         child: Text(S.of(pContext).for_future_schedule),
       ),
