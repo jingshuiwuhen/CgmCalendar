@@ -17,7 +17,7 @@ class RemoteApi {
     return json.decode(response.toString());
   }
 
-  Future requestEmailAuthCode(String email) async {
+  Future<void> requestEmailAuthCode(String email) async {
     Map<String, dynamic> dataMap = {};
     dataMap['email'] = email;
     await _dio.post(
@@ -26,14 +26,14 @@ class RemoteApi {
     );
   }
 
-  Future authEmailCode(String email, String authCode) async {
+  Future<void> authEmailCode(String email, String authCode) async {
     Map<String, dynamic> dataMap = {};
     dataMap['email'] = email;
     dataMap['email_auth_code'] = authCode;
     await _dio.post("/app/open/email_auth/auth_email_code", data: dataMap);
   }
 
-  Future registry(
+  Future<void> registry(
     String email,
     String password,
   ) async {
@@ -43,7 +43,7 @@ class RemoteApi {
     await _dio.post("/app/open/user/registry", data: dataMap);
   }
 
-  Future login(String email, String password) async {
+  Future<Map<String, dynamic>> login(String email, String password) async {
     Map<String, dynamic> dataMap = {};
     dataMap['email'] = email;
     dataMap['password'] = password;
@@ -62,20 +62,20 @@ class RemoteApi {
     return jsonObj['schedules'];
   }
 
-  Future deleteAllSchedules(int uid) async {
+  Future<void> deleteAllSchedules(int uid) async {
     Map<String, dynamic> dataMap = {};
     dataMap['uid'] = uid;
     await _dio.post("/app/limit/schedule/delete_all_schedules", data: dataMap);
   }
 
-  Future deleteSchedules(List<int> ids, int uid) async {
+  Future<void> deleteSchedules(List<int> ids, int uid) async {
     Map<String, dynamic> dataMap = {};
     dataMap['uid'] = uid;
     dataMap['ids'] = ids;
     await _dio.post("/app/limit/schedule/delete_schedule", data: dataMap);
   }
 
-  Future deleteAccount(int uid) async {
+  Future<void> deleteAccount(int uid) async {
     Map<String, dynamic> dataMap = {};
     dataMap['uid'] = uid;
     await _dio.post("/app/limit/user/delete_account", data: dataMap);
@@ -100,7 +100,7 @@ class RemoteApi {
     return jsonObj['schedule'];
   }
 
-  Future updateSchedule(ScheduleDBModel model, int uid) async {
+  Future<void> updateSchedule(ScheduleDBModel model, int uid) async {
     Map<String, dynamic> dataMap = model.toMap();
     dataMap['uid'] = uid;
     await _dio.post("/app/limit/schedule/update_one_schedule", data: dataMap);

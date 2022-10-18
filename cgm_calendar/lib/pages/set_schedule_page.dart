@@ -70,29 +70,27 @@ class SetSchedulePage extends StatelessWidget {
                   right: 10.w,
                 ),
                 child: GestureDetector(
-                  onTap: () async {
+                  onTap: () {
                     if (!rViewModel.canAddSchedule()) {
                       return;
                     }
 
-                    final navigator = Navigator.of(context);
                     if (scheduleModel == null) {
-                      await rViewModel.addNewSchedule(
-                          context, () => navigator.pop());
+                      rViewModel.addNewSchedule(
+                          context, () => Navigator.of(context).pop());
                       return;
                     }
 
                     if (!rViewModel.isChanged()) {
-                      navigator.pop();
+                      Navigator.of(context).pop();
                       return;
                     }
 
                     if (scheduleModel!.repeatType == RepeatType.none.index) {
-                      await rViewModel.editNoRepeatSchedule(
+                      rViewModel.editNoRepeatSchedule(
                           context,
-                          () => navigator
+                          () => Navigator.of(context)
                               .popUntil(ModalRoute.withName("MonthPage")));
-
                       return;
                     }
 
@@ -440,8 +438,8 @@ class SetSchedulePage extends StatelessWidget {
       actions.add(
         CupertinoActionSheetAction(
           isDestructiveAction: true,
-          onPressed: () async {
-            await rViewModel.editRepeatSchedule(
+          onPressed: () {
+            rViewModel.editRepeatSchedule(
                 EditType.thisOnly,
                 pContext,
                 () => Navigator.of(pContext)
@@ -455,8 +453,8 @@ class SetSchedulePage extends StatelessWidget {
     actions.add(
       CupertinoActionSheetAction(
         isDestructiveAction: true,
-        onPressed: () async {
-          await rViewModel.editRepeatSchedule(
+        onPressed: () {
+          rViewModel.editRepeatSchedule(
               EditType.futureContainsThis,
               pContext,
               () => Navigator.of(pContext)

@@ -1,10 +1,13 @@
 import 'package:cgm_calendar/add_schedule_helper.dart';
-import 'package:cgm_calendar/db/db_manager.dart';
+import 'package:cgm_calendar/app_shared_pref.dart';
 import 'package:cgm_calendar/db/schedule_db_model.dart';
 import 'package:cgm_calendar/global.dart';
 import 'package:cgm_calendar/models/day_model.dart';
 import 'package:cgm_calendar/models/schedule_model.dart';
+import 'package:cgm_calendar/network/remote_api.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:one_context/one_context.dart';
 
 enum DeleteType {
   thisOnly,
@@ -68,27 +71,54 @@ class ScheduleDetailPageViewModel {
     }
   }
 
-  Future deleteNoRepeatSchedule() async {
-    await DBManager.db.delete(_model.id);
-    _deleteLocalSchedule(_model.id);
+  Future deleteNoRepeatSchedule(
+      BuildContext context, Function() success) async {
+    final remoteApi = RemoteApi(context);
+    OneContext().context = context;
+    await OneContext().showProgressIndicator();
+    try {
+      await remoteApi
+          .deleteSchedules([_model.id], await AppSharedPref.loadUid());
+      _deleteLocalSchedule(_model.id);
+      success();
+    } catch (e) {
+      debugPrint("deleteNoRepeatSchedule error ${e.toString()}");
+    } finally {
+      OneContext().hideProgressIndicator();
+    }
   }
 
-  Future deleteRepeatSchedule(DeleteType deleteType) async {
-    ScheduleDBModel dbModel = await DBManager.db.getOneSchedule(_model.id);
-    if (deleteType == DeleteType.thisOnly) {
-      dbModel.exceptionTimes = "${dbModel.exceptionTimes}${_model.startTime},";
-    } else {
-      dbModel.repeatUntil = _model.startTime;
-    }
+  Future deleteRepeatSchedule(
+      DeleteType deleteType, BuildContext context, Function() success) async {
+    final remoteApi = RemoteApi(context);
+    OneContext().context = context;
+    await OneContext().showProgressIndicator();
+    try {
+      Map<String, dynamic> schedule = await remoteApi.getOneSchedule(
+          _model.id, await AppSharedPref.loadUid());
+      ScheduleDBModel dbModel = ScheduleDBModel.fromMap(schedule);
+      if (deleteType == DeleteType.thisOnly) {
+        dbModel.exceptionTimes =
+            "${dbModel.exceptionTimes}${_model.startTime},";
+      } else {
+        dbModel.repeatUntil = _model.startTime;
+      }
 
-    if (dbModel.repeatUntil > 0 && dbModel.repeatUntil <= dbModel.startTime) {
-      await DBManager.db.delete(_model.id);
-    } else {
-      await DBManager.db.update(dbModel);
-    }
+      if (dbModel.repeatUntil > 0 && dbModel.repeatUntil <= dbModel.startTime) {
+        await remoteApi
+            .deleteSchedules([_model.id], await AppSharedPref.loadUid());
+      } else {
+        await remoteApi.updateSchedule(dbModel, await AppSharedPref.loadUid());
+      }
 
-    _deleteLocalSchedule(_model.id);
-    AddScheduleHelper.addToCalendar(dbModel);
+      _deleteLocalSchedule(_model.id);
+      AddScheduleHelper.addToCalendar(dbModel);
+      success();
+    } catch (e) {
+      debugPrint("deleteRepeatSchedule error ${e.toString()}");
+    } finally {
+      OneContext().hideProgressIndicator();
+    }
   }
 
   void _deleteLocalSchedule(int id) {

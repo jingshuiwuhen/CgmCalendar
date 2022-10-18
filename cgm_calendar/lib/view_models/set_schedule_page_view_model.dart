@@ -1,6 +1,5 @@
 import 'package:cgm_calendar/add_schedule_helper.dart';
 import 'package:cgm_calendar/app_shared_pref.dart';
-import 'package:cgm_calendar/db/db_manager.dart';
 import 'package:cgm_calendar/db/schedule_db_model.dart';
 import 'package:cgm_calendar/global.dart';
 import 'package:cgm_calendar/models/day_model.dart';

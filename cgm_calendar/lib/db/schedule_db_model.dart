@@ -1,6 +1,5 @@
 import 'package:cgm_calendar/models/schedule_model.dart';
 
-const String tableName = "Schedule";
 const String columnId = "id";
 const String columnTitle = "title";
 const String columnStartTime = "start_time";

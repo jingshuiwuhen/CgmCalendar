@@ -315,20 +315,23 @@ class ScheduleDetailPage extends StatelessWidget {
         actions: [
           CupertinoActionSheetAction(
             isDestructiveAction: true,
-            onPressed: () async {
-              final navigator = Navigator.of(context);
-              await viewModel.deleteRepeatSchedule(DeleteType.thisOnly);
-              navigator.popUntil(ModalRoute.withName("MonthPage"));
+            onPressed: () {
+              viewModel.deleteRepeatSchedule(
+                  DeleteType.thisOnly,
+                  context,
+                  () => Navigator.of(context)
+                      .popUntil(ModalRoute.withName("MonthPage")));
             },
             child: Text(S.of(context).for_this_schedule_only),
           ),
           CupertinoActionSheetAction(
             isDestructiveAction: true,
-            onPressed: () async {
-              final navigator = Navigator.of(context);
-              await viewModel
-                  .deleteRepeatSchedule(DeleteType.futureContainsThis);
-              navigator.popUntil(ModalRoute.withName("MonthPage"));
+            onPressed: () {
+              viewModel.deleteRepeatSchedule(
+                  DeleteType.futureContainsThis,
+                  context,
+                  () => Navigator.of(context)
+                      .popUntil(ModalRoute.withName("MonthPage")));
             },
             child: Text(S.of(context).for_future_schedule),
           ),
@@ -356,9 +359,10 @@ class ScheduleDetailPage extends StatelessWidget {
           CupertinoActionSheetAction(
             isDestructiveAction: true,
             onPressed: () async {
-              final navigator = Navigator.of(context);
-              await viewModel.deleteNoRepeatSchedule();
-              navigator.popUntil(ModalRoute.withName("MonthPage"));
+              await viewModel.deleteNoRepeatSchedule(
+                  context,
+                  () => Navigator.of(context)
+                      .popUntil(ModalRoute.withName("MonthPage")));
             },
             child: Text(S.of(context).delete_schedule),
           ),
