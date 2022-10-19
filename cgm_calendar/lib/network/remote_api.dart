@@ -14,6 +14,7 @@ class RemoteApi {
   }
 
   Future refreshToken() async {
+    _dio.updateToken(await AppSharedPref.loadAccessToken());
     var response = await _dio.get("/app/limit/user/refreshToken");
     return json.decode(response.toString());
   }
@@ -75,7 +76,7 @@ class RemoteApi {
     Map<String, dynamic> dataMap = {};
     dataMap['uid'] = uid;
     dataMap['ids'] = ids;
-    await _dio.post("/app/limit/schedule/delete_schedule", data: dataMap);
+    await _dio.post("/app/limit/schedule/delete_schedules", data: dataMap);
   }
 
   Future<void> deleteAccount(int uid) async {
@@ -89,8 +90,8 @@ class RemoteApi {
     _dio.updateToken(await AppSharedPref.loadAccessToken());
     Map<String, dynamic> dataMap = model.toMap();
     dataMap['uid'] = uid;
-    var result = await _dio.post("/app/limit/schedule/add_new_schedule",
-        data: model.toMap());
+    var result =
+        await _dio.post("/app/limit/schedule/add_new_schedule", data: dataMap);
     Map<String, dynamic> jsonObj = json.decode(result.toString());
     return jsonObj['id'];
   }
