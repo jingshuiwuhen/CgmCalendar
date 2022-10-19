@@ -174,6 +174,9 @@ class AddScheduleHelper {
           targetMonth = Global
               .newYears[startYear - thisYear].monthsOfYear[startMonth - 1];
         } else {
+          if (thisYear - startYear > Global.oldYears.length) {
+            continue;
+          }
           targetMonth = Global
               .oldYears[thisYear - startYear - 1].monthsOfYear[startMonth - 1];
         }
