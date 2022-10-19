@@ -121,7 +121,6 @@ class InputPageViewModel with ChangeNotifier {
       );
       AppSharedPref.saveAccessToken(login["token"]);
       AppSharedPref.saveUid(login["uid"]);
-      remoteApi.updateTokenToHeader(login["token"]);
       return Future.value(true);
     } catch (e) {
       return Future.value(false);
@@ -141,12 +140,10 @@ class InputPageViewModel with ChangeNotifier {
       );
       AppSharedPref.saveAccessToken(login["token"]);
       AppSharedPref.saveUid(login["uid"]);
-      remoteApi.updateTokenToHeader(login["token"]);
 
       YearModel oldestYear = Global.oldYears.last;
       int startTime = int.parse("${oldestYear.year}01010000");
-      List<Map<String, dynamic>> schedules =
-          await remoteApi.getSchedules(login["uid"], startTime);
+      List schedules = await remoteApi.getSchedules(login["uid"], startTime);
 
       for (Map<String, dynamic> schedule in schedules) {
         AddScheduleHelper.addToCalendar(ScheduleDBModel.fromMap(schedule));

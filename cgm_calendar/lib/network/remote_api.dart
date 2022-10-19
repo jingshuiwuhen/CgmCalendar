@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cgm_calendar/app_shared_pref.dart';
 import 'package:cgm_calendar/db/schedule_db_model.dart';
 import 'package:cgm_calendar/network/dio_instance.dart';
 import 'package:flutter/widgets.dart';
@@ -51,8 +52,8 @@ class RemoteApi {
     return json.decode(result.toString());
   }
 
-  Future<List<Map<String, dynamic>>> getSchedules(
-      int uid, int startTime) async {
+  Future<List> getSchedules(int uid, int startTime) async {
+    _dio.updateToken(await AppSharedPref.loadAccessToken());
     Map<String, dynamic> dataMap = {};
     dataMap['uid'] = uid;
     dataMap['start_time'] = startTime;
@@ -63,12 +64,14 @@ class RemoteApi {
   }
 
   Future<void> deleteAllSchedules(int uid) async {
+    _dio.updateToken(await AppSharedPref.loadAccessToken());
     Map<String, dynamic> dataMap = {};
     dataMap['uid'] = uid;
     await _dio.post("/app/limit/schedule/delete_all_schedules", data: dataMap);
   }
 
   Future<void> deleteSchedules(List<int> ids, int uid) async {
+    _dio.updateToken(await AppSharedPref.loadAccessToken());
     Map<String, dynamic> dataMap = {};
     dataMap['uid'] = uid;
     dataMap['ids'] = ids;
@@ -76,12 +79,14 @@ class RemoteApi {
   }
 
   Future<void> deleteAccount(int uid) async {
+    _dio.updateToken(await AppSharedPref.loadAccessToken());
     Map<String, dynamic> dataMap = {};
     dataMap['uid'] = uid;
     await _dio.post("/app/limit/user/delete_account", data: dataMap);
   }
 
   Future<int> addNewSchedule(ScheduleDBModel model, int uid) async {
+    _dio.updateToken(await AppSharedPref.loadAccessToken());
     Map<String, dynamic> dataMap = model.toMap();
     dataMap['uid'] = uid;
     var result = await _dio.post("/app/limit/schedule/add_new_schedule",
@@ -91,6 +96,7 @@ class RemoteApi {
   }
 
   Future<Map<String, dynamic>> getOneSchedule(int id, int uid) async {
+    _dio.updateToken(await AppSharedPref.loadAccessToken());
     Map<String, dynamic> dataMap = {};
     dataMap['id'] = id;
     dataMap['uid'] = uid;
@@ -101,12 +107,9 @@ class RemoteApi {
   }
 
   Future<void> updateSchedule(ScheduleDBModel model, int uid) async {
+    _dio.updateToken(await AppSharedPref.loadAccessToken());
     Map<String, dynamic> dataMap = model.toMap();
     dataMap['uid'] = uid;
     await _dio.post("/app/limit/schedule/update_one_schedule", data: dataMap);
-  }
-
-  void updateTokenToHeader(String token) {
-    _dio.updateToken(token);
   }
 }

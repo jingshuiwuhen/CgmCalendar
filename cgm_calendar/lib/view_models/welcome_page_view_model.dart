@@ -29,15 +29,12 @@ class WelcomePageViewModel with ChangeNotifier {
     await Future.delayed(const Duration(seconds: 2));
     OneContext().context = context;
     await OneContext().showProgressIndicator();
-    remoteApi.updateTokenToHeader(token);
     try {
       Map<String, dynamic> data = await remoteApi.refreshToken();
       AppSharedPref.saveAccessToken(data["token"]);
-      remoteApi.updateTokenToHeader(data["token"]);
     } catch (e) {
       OneContext().hideProgressIndicator();
       AppSharedPref.saveAccessToken("");
-      remoteApi.updateTokenToHeader("");
       _signState = SignState.idle;
       notifyListeners();
       return;
@@ -47,14 +44,14 @@ class WelcomePageViewModel with ChangeNotifier {
       int uid = await AppSharedPref.loadUid();
       YearModel oldestYear = Global.oldYears.last;
       int startTime = int.parse("${oldestYear.year}01010000");
-      List<Map<String, dynamic>> schedules =
-          await remoteApi.getSchedules(uid, startTime);
+      List schedules = await remoteApi.getSchedules(uid, startTime);
 
       for (Map<String, dynamic> schedule in schedules) {
         AddScheduleHelper.addToCalendar(ScheduleDBModel.fromMap(schedule));
       }
       success();
     } catch (e) {
+      debugPrint('getSchedules error : ${e.toString()}');
       _signState = SignState.idle;
       notifyListeners();
     } finally {

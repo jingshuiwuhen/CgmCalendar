@@ -90,8 +90,8 @@ class LeftDrawer extends StatelessWidget {
                                 onPressed: () async {
                                   final navigator = Navigator.of(context);
                                   navigator.pop();
-                                  OneContext().context = context;
                                   final remoteApi = RemoteApi(context);
+                                  OneContext().context = context;
                                   await OneContext().showProgressIndicator();
                                   try {
                                     await remoteApi.deleteAllSchedules(
@@ -217,8 +217,8 @@ class LeftDrawer extends StatelessWidget {
                                 onPressed: () async {
                                   final navigator = Navigator.of(context);
                                   navigator.pop();
-                                  OneContext().context = context;
                                   final remoteApi = RemoteApi(context);
+                                  OneContext().context = context;
                                   await OneContext().showProgressIndicator();
                                   try {
                                     await remoteApi.deleteAccount(
