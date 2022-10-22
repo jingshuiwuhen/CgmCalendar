@@ -135,12 +135,12 @@ class LeftDrawer extends StatelessWidget {
                       leading: Icon(
                         Icons.logout_outlined,
                         size: 24.sp,
-                        color: Colors.redAccent,
+                        color: Colors.black,
                       ),
                       title: Text(
                         S.of(context).logout,
                         style: TextStyle(
-                          color: Colors.redAccent,
+                          color: Colors.black,
                           fontSize: 20.sp,
                         ),
                       ),
@@ -192,12 +192,12 @@ class LeftDrawer extends StatelessWidget {
                       leading: Icon(
                         Icons.delete_outline_outlined,
                         size: 24.sp,
-                        color: Colors.redAccent,
+                        color: Colors.black,
                       ),
                       title: Text(
                         S.of(context).delete_account,
                         style: TextStyle(
-                          color: Colors.redAccent,
+                          color: Colors.black,
                           fontSize: 20.sp,
                         ),
                       ),
