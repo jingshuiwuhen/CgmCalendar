@@ -31,6 +31,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "auth_code_wrong": MessageLookupByLibrary.simpleMessage(
             "Verification code is not right"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+        "check_privacy":
+            MessageLookupByLibrary.simpleMessage("Read Privacy and agree"),
         "clear_all_data":
             MessageLookupByLibrary.simpleMessage("Clear All Data"),
         "delete_account":
@@ -76,6 +78,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "At least 6 digit password. Only number and letter"),
         "password_wrong":
             MessageLookupByLibrary.simpleMessage("Password is not right"),
+        "please_check_privacy": MessageLookupByLibrary.simpleMessage(
+            "Please read Privacy and agree"),
+        "privacy_title": MessageLookupByLibrary.simpleMessage("Privacy"),
         "register": MessageLookupByLibrary.simpleMessage("Register"),
         "repeat": MessageLookupByLibrary.simpleMessage("Repeat"),
         "repeat_type_every_day":

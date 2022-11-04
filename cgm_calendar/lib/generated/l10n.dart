@@ -669,6 +669,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Privacy`
+  String get privacy_title {
+    return Intl.message(
+      'Privacy',
+      name: 'privacy_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Read Privacy and agree`
+  String get check_privacy {
+    return Intl.message(
+      'Read Privacy and agree',
+      name: 'check_privacy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please read Privacy and agree`
+  String get please_check_privacy {
+    return Intl.message(
+      'Please read Privacy and agree',
+      name: 'please_check_privacy',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

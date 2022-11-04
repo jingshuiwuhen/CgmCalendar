@@ -15,6 +15,7 @@ class InputPageViewModel with ChangeNotifier {
       TextEditingController();
   final TextEditingController _passwordEditingController =
       TextEditingController();
+  bool _isAgreed = false;
 
   InputPageViewModel(this.context);
 
@@ -23,6 +24,7 @@ class InputPageViewModel with ChangeNotifier {
       _authCodeEditingController;
   TextEditingController get passwordEditingController =>
       _passwordEditingController;
+  bool get isAgreed => _isAgreed;
 
   Future<bool> requestEmailAuthCode() async {
     String? emailInputError = _checkEmail();
@@ -76,6 +78,11 @@ class InputPageViewModel with ChangeNotifier {
 
     if (!isLogin && _authCodeEditingController.text.isEmpty) {
       Global.showToast(S.of(context).input_verification_code);
+      return false;
+    }
+
+    if (!isLogin && !_isAgreed) {
+      Global.showToast(S.of(context).please_check_privacy);
       return false;
     }
 
@@ -155,5 +162,10 @@ class InputPageViewModel with ChangeNotifier {
     } finally {
       OneContext().hideProgressIndicator();
     }
+  }
+
+  void refreshCheckBox(bool isChecked) {
+    _isAgreed = isChecked;
+    notifyListeners();
   }
 }

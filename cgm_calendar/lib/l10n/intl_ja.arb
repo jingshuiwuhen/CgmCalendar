@@ -60,5 +60,8 @@
     "do_logout":"ログアウトで宜しいですか?",
     "do_clear":"全部スゲジュールを削除します。宜しいですか?",
     "delete_account": "アカウント削除",
-    "do_delete_account": "アカウントを削除します。宜しいですか?"
+    "do_delete_account": "アカウントを削除します。宜しいですか?",
+    "privacy_title": "プライバシー",
+    "check_privacy": "プライバシーを読んで同意する",
+    "please_check_privacy": "プライバシーを読んで同意してください"
 }

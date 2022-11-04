@@ -43,7 +43,7 @@ class WelcomePage extends StatelessWidget {
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.6,
                 child: Image.asset(
-                  'assets/welcome.png',
+                  'assets/images/welcome.png',
                   fit: BoxFit.contain,
                 ),
               ),

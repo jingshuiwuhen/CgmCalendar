@@ -29,6 +29,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "auth_code_expired": MessageLookupByLibrary.simpleMessage("验证码已过期"),
         "auth_code_wrong": MessageLookupByLibrary.simpleMessage("验证码错误"),
         "cancel": MessageLookupByLibrary.simpleMessage("取消"),
+        "check_privacy": MessageLookupByLibrary.simpleMessage("阅读隐私政策并同意"),
         "clear_all_data": MessageLookupByLibrary.simpleMessage("清空数据"),
         "delete_account": MessageLookupByLibrary.simpleMessage("注销账号"),
         "delete_schedule": MessageLookupByLibrary.simpleMessage("删除日程"),
@@ -60,6 +61,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "notes": MessageLookupByLibrary.simpleMessage("备注"),
         "password": MessageLookupByLibrary.simpleMessage("最少6位密码。只能包含数组和字母"),
         "password_wrong": MessageLookupByLibrary.simpleMessage("密码不正确"),
+        "please_check_privacy":
+            MessageLookupByLibrary.simpleMessage("请阅读隐私政策并同意"),
+        "privacy_title": MessageLookupByLibrary.simpleMessage("隐私政策"),
         "register": MessageLookupByLibrary.simpleMessage("注册"),
         "repeat": MessageLookupByLibrary.simpleMessage("重复"),
         "repeat_type_every_day": MessageLookupByLibrary.simpleMessage("每天"),

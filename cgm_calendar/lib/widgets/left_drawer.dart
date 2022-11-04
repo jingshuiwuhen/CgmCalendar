@@ -5,6 +5,7 @@ import 'package:cgm_calendar/generated/l10n.dart';
 import 'package:cgm_calendar/global.dart';
 import 'package:cgm_calendar/models/day_model.dart';
 import 'package:cgm_calendar/network/remote_api.dart';
+import 'package:cgm_calendar/pages/privacy.dart';
 import 'package:cgm_calendar/pages/welcome_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -124,6 +125,29 @@ class LeftDrawer extends StatelessWidget {
                                 style: TextStyle(fontSize: 20.sp),
                               ),
                             ),
+                          ),
+                        );
+                      },
+                    ),
+                    ListTile(
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 20.w,
+                      ),
+                      leading: Icon(
+                        Icons.privacy_tip_outlined,
+                        size: 24.sp,
+                      ),
+                      title: Text(
+                        S.of(context).privacy_title,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20.sp,
+                        ),
+                      ),
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const Privacy(),
                           ),
                         );
                       },
@@ -276,15 +300,15 @@ class LeftDrawer extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Image.asset(
-                    'assets/adv_main.png',
+                    'assets/images/adv_main.png',
                     fit: BoxFit.contain,
                     width: 250.w,
                     height: 170.h,
                   ),
                   Image.asset(
                     Platform.isIOS
-                        ? 'assets/adv_app_store.png'
-                        : 'assets/adv_google_play.png',
+                        ? 'assets/images/adv_app_store.png'
+                        : 'assets/images/adv_google_play.png',
                     fit: BoxFit.contain,
                     width: 80.w,
                     height: 25.h,

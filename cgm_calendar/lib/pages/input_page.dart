@@ -1,7 +1,10 @@
 import 'package:cgm_calendar/generated/l10n.dart';
+import 'package:cgm_calendar/pages/privacy.dart';
 import 'package:cgm_calendar/pages/year_page.dart';
 import 'package:cgm_calendar/view_models/input_page_view_model.dart';
 import 'package:cgm_calendar/widgets/input_area_auth.dart';
+import 'package:easy_rich_text/easy_rich_text.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -47,6 +50,7 @@ class Inputpage extends StatelessWidget {
           create: (_) => InputPageViewModel(context),
           builder: (context, child) {
             InputPageViewModel rViewModel = context.read<InputPageViewModel>();
+            InputPageViewModel wViewModel = context.watch<InputPageViewModel>();
             return Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -128,6 +132,40 @@ class Inputpage extends StatelessWidget {
                           border: InputBorder.none,
                         ),
                       ),
+                    ],
+                  ),
+                ),
+                Visibility(
+                  visible: !isLogin,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Checkbox(
+                        value: wViewModel.isAgreed,
+                        onChanged: (value) =>
+                            rViewModel.refreshCheckBox(value!),
+                      ),
+                      EasyRichText(
+                        S.of(context).check_privacy,
+                        defaultStyle: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 16.sp,
+                        ),
+                        patternList: [
+                          EasyRichTextPattern(
+                            targetString: S.of(context).privacy_title,
+                            style: const TextStyle(color: Colors.red),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => const Privacy(),
+                                  ),
+                                );
+                              },
+                          ),
+                        ],
+                      )
                     ],
                   ),
                 ),

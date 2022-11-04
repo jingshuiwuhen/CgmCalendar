@@ -30,6 +30,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("認証コードが締切でした"),
         "auth_code_wrong": MessageLookupByLibrary.simpleMessage("認証コードが間違いました"),
         "cancel": MessageLookupByLibrary.simpleMessage("キャンセル"),
+        "check_privacy": MessageLookupByLibrary.simpleMessage("プライバシーを読んで同意する"),
         "clear_all_data": MessageLookupByLibrary.simpleMessage("データを削除する"),
         "delete_account": MessageLookupByLibrary.simpleMessage("アカウント削除"),
         "delete_schedule": MessageLookupByLibrary.simpleMessage("スゲジュール削除"),
@@ -65,6 +66,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "notes": MessageLookupByLibrary.simpleMessage("備考"),
         "password": MessageLookupByLibrary.simpleMessage("最短6位のパスワード。数字と文字のみ"),
         "password_wrong": MessageLookupByLibrary.simpleMessage("パスワードが間違いました"),
+        "please_check_privacy":
+            MessageLookupByLibrary.simpleMessage("プライバシーを読んで同意してください"),
+        "privacy_title": MessageLookupByLibrary.simpleMessage("プライバシー"),
         "register": MessageLookupByLibrary.simpleMessage("サインアップ"),
         "repeat": MessageLookupByLibrary.simpleMessage("繰り返し"),
         "repeat_type_every_day": MessageLookupByLibrary.simpleMessage("毎日"),
