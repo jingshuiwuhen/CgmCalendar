@@ -78,6 +78,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "schedule_type_personal": MessageLookupByLibrary.simpleMessage("个人"),
         "schedule_type_work": MessageLookupByLibrary.simpleMessage("工作"),
         "second": MessageLookupByLibrary.simpleMessage("秒"),
+        "skip": MessageLookupByLibrary.simpleMessage("跳过"),
         "start": MessageLookupByLibrary.simpleMessage("开始"),
         "sunday": MessageLookupByLibrary.simpleMessage("日"),
         "system_error": MessageLookupByLibrary.simpleMessage("系统错误。请联系客服"),

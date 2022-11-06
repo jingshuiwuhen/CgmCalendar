@@ -118,6 +118,38 @@ class WelcomePage extends StatelessWidget {
                         ),
                       ),
                     ),
+                    Container(
+                      margin: EdgeInsets.only(
+                        top: 10.h,
+                      ),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                              builder: (context) => YearPage(),
+                            ),
+                            (route) => false,
+                          );
+                        },
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.grey),
+                          minimumSize: MaterialStateProperty.all(
+                            Size(
+                              0.6.sw,
+                              0.045.sh,
+                            ),
+                          ),
+                        ),
+                        child: Text(
+                          S.of(context).skip,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18.sp,
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),

@@ -63,5 +63,6 @@
     "do_delete_account": "要注销当前账号吗?",
     "privacy_title": "隐私政策",
     "check_privacy": "阅读隐私政策并同意",
-    "please_check_privacy": "请阅读隐私政策并同意"
+    "please_check_privacy": "请阅读隐私政策并同意",
+    "skip": "跳过"
 }

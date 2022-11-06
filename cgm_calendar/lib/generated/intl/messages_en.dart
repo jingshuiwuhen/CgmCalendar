@@ -101,6 +101,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Personal"),
         "schedule_type_work": MessageLookupByLibrary.simpleMessage("Work"),
         "second": MessageLookupByLibrary.simpleMessage("s"),
+        "skip": MessageLookupByLibrary.simpleMessage("Skip"),
         "start": MessageLookupByLibrary.simpleMessage("Start"),
         "sunday": MessageLookupByLibrary.simpleMessage("Sun"),
         "system_error": MessageLookupByLibrary.simpleMessage(

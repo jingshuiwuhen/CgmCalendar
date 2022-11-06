@@ -63,5 +63,6 @@
     "do_delete_account": "アカウントを削除します。宜しいですか?",
     "privacy_title": "プライバシー",
     "check_privacy": "プライバシーを読んで同意する",
-    "please_check_privacy": "プライバシーを読んで同意してください"
+    "please_check_privacy": "プライバシーを読んで同意してください",
+    "skip": "あとで"
 }

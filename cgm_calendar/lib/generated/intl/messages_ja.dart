@@ -83,6 +83,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "schedule_type_personal": MessageLookupByLibrary.simpleMessage("個人"),
         "schedule_type_work": MessageLookupByLibrary.simpleMessage("仕事"),
         "second": MessageLookupByLibrary.simpleMessage("秒"),
+        "skip": MessageLookupByLibrary.simpleMessage("あとで"),
         "start": MessageLookupByLibrary.simpleMessage("開始"),
         "sunday": MessageLookupByLibrary.simpleMessage("日"),
         "system_error": MessageLookupByLibrary.simpleMessage(

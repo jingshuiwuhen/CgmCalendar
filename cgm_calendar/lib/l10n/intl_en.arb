@@ -63,5 +63,6 @@
     "do_delete_account": "Are you sure to delete your account?",
     "privacy_title": "Privacy",
     "check_privacy": "Read Privacy and agree",
-    "please_check_privacy": "Please read Privacy and agree"
+    "please_check_privacy": "Please read Privacy and agree",
+    "skip": "Skip"
 }

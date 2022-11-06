@@ -1,4 +1,6 @@
+import 'package:cgm_calendar/app_shared_pref.dart';
 import 'package:cgm_calendar/pages/set_schedule_page.dart';
+import 'package:cgm_calendar/pages/welcome_page.dart';
 import 'package:cgm_calendar/view_models/year_page_view_model.dart';
 import 'package:cgm_calendar/widgets/cell_one_year.dart';
 import 'package:cgm_calendar/widgets/left_drawer.dart';
@@ -33,7 +35,17 @@ class YearPage extends StatelessWidget {
             actions: [
               IconButton(
                 onPressed: () async {
-                  await Navigator.of(context).push(_createRoute());
+                  final navigator = Navigator.of(context);
+                  String token = await AppSharedPref.loadAccessToken();
+                  if (token == "") {
+                    navigator.push(
+                      MaterialPageRoute(
+                        builder: (context) => WelcomePage(),
+                      ),
+                    );
+                    return;
+                  }
+                  await navigator.push(_createRoute());
                   _rViewModel.refresh();
                 },
                 icon: const Icon(
@@ -71,7 +83,7 @@ class YearPage extends StatelessWidget {
                   ),
                   const Spacer(),
                   Builder(
-                    builder: ((context) {
+                    builder: (context) {
                       return IconButton(
                         onPressed: () {
                           Scaffold.of(context).openDrawer();
@@ -81,13 +93,14 @@ class YearPage extends StatelessWidget {
                           color: Colors.red,
                         ),
                       );
-                    }),
+                    },
                   ),
                 ],
               ),
             ),
           ),
           drawer: LeftDrawer(
+            isLogined: _wViewModel.isLogined,
             clean: () => _rViewModel.refresh(),
           ),
           body: CustomScrollView(
@@ -98,8 +111,9 @@ class YearPage extends StatelessWidget {
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
                     return CellOneYear(
-                        yearModel: _wViewModel.oldYears[index],
-                        oneYearClick: () => _rViewModel.refresh());
+                      yearModel: _wViewModel.oldYears[index],
+                      oneYearClick: () => _rViewModel.refresh(),
+                    );
                   },
                   childCount: _wViewModel.oldYears.length,
                 ),
@@ -109,8 +123,9 @@ class YearPage extends StatelessWidget {
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
                     return CellOneYear(
-                        yearModel: _wViewModel.newYears[index],
-                        oneYearClick: () => _rViewModel.refresh());
+                      yearModel: _wViewModel.newYears[index],
+                      oneYearClick: () => _rViewModel.refresh(),
+                    );
                   },
                   childCount: _wViewModel.newYears.length,
                 ),

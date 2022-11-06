@@ -81,6 +81,7 @@ class MonthPage extends StatelessWidget {
             ),
           ),
           drawer: LeftDrawer(
+            isLogined: wViewModel.isLogined,
             clean: () => rViewModel.refreshPage(),
           ),
           bottomNavigationBar: Container(
