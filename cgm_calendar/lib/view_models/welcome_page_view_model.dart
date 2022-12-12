@@ -49,6 +49,7 @@ class WelcomePageViewModel with ChangeNotifier {
       for (Map<String, dynamic> schedule in schedules) {
         AddScheduleHelper.addToCalendar(ScheduleDBModel.fromMap(schedule));
       }
+      Global.setApnsToken(remoteApi);
       success();
     } catch (e) {
       debugPrint('getSchedules error : ${e.toString()}');

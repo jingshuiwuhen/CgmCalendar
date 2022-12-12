@@ -48,6 +48,7 @@ dependencies:
   fluttertoast: ^8.0.9
   flutter_widget_from_html: ^0.9.0
   easy_rich_text: ^1.1.0
+  flutter_apns_only: ^1.6.0
 
 dev_dependencies:
   flutter_test:

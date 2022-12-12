@@ -19,7 +19,9 @@ class RemoteApi {
     return json.decode(response.toString());
   }
 
-  Future<void> requestEmailAuthCode(String email) async {
+  Future<void> requestEmailAuthCode(
+    String email,
+  ) async {
     Map<String, dynamic> dataMap = {};
     dataMap['email'] = email;
     await _dio.post(
@@ -28,7 +30,10 @@ class RemoteApi {
     );
   }
 
-  Future<void> authEmailCode(String email, String authCode) async {
+  Future<void> authEmailCode(
+    String email,
+    String authCode,
+  ) async {
     Map<String, dynamic> dataMap = {};
     dataMap['email'] = email;
     dataMap['email_auth_code'] = authCode;
@@ -45,7 +50,10 @@ class RemoteApi {
     await _dio.post("/app/open/user/registry", data: dataMap);
   }
 
-  Future<Map<String, dynamic>> login(String email, String password) async {
+  Future<Map<String, dynamic>> login(
+    String email,
+    String password,
+  ) async {
     Map<String, dynamic> dataMap = {};
     dataMap['email'] = email;
     dataMap['password'] = password;
@@ -53,7 +61,10 @@ class RemoteApi {
     return json.decode(result.toString());
   }
 
-  Future<List> getSchedules(int uid, int startTime) async {
+  Future<List> getSchedules(
+    int uid,
+    int startTime,
+  ) async {
     _dio.updateToken(await AppSharedPref.loadAccessToken());
     Map<String, dynamic> dataMap = {};
     dataMap['uid'] = uid;
@@ -64,14 +75,19 @@ class RemoteApi {
     return jsonObj['schedules'];
   }
 
-  Future<void> deleteAllSchedules(int uid) async {
+  Future<void> deleteAllSchedules(
+    int uid,
+  ) async {
     _dio.updateToken(await AppSharedPref.loadAccessToken());
     Map<String, dynamic> dataMap = {};
     dataMap['uid'] = uid;
     await _dio.post("/app/limit/schedule/delete_all_schedules", data: dataMap);
   }
 
-  Future<void> deleteSchedules(List<int> ids, int uid) async {
+  Future<void> deleteSchedules(
+    List<int> ids,
+    int uid,
+  ) async {
     _dio.updateToken(await AppSharedPref.loadAccessToken());
     Map<String, dynamic> dataMap = {};
     dataMap['uid'] = uid;
@@ -79,14 +95,19 @@ class RemoteApi {
     await _dio.post("/app/limit/schedule/delete_schedules", data: dataMap);
   }
 
-  Future<void> deleteAccount(int uid) async {
+  Future<void> deleteAccount(
+    int uid,
+  ) async {
     _dio.updateToken(await AppSharedPref.loadAccessToken());
     Map<String, dynamic> dataMap = {};
     dataMap['uid'] = uid;
     await _dio.post("/app/limit/user/delete_account", data: dataMap);
   }
 
-  Future<int> addNewSchedule(ScheduleDBModel model, int uid) async {
+  Future<int> addNewSchedule(
+    ScheduleDBModel model,
+    int uid,
+  ) async {
     _dio.updateToken(await AppSharedPref.loadAccessToken());
     Map<String, dynamic> dataMap = model.toMap();
     dataMap['uid'] = uid;
@@ -96,7 +117,10 @@ class RemoteApi {
     return jsonObj['id'];
   }
 
-  Future<Map<String, dynamic>> getOneSchedule(int id, int uid) async {
+  Future<Map<String, dynamic>> getOneSchedule(
+    int id,
+    int uid,
+  ) async {
     _dio.updateToken(await AppSharedPref.loadAccessToken());
     Map<String, dynamic> dataMap = {};
     dataMap['id'] = id;
@@ -107,10 +131,23 @@ class RemoteApi {
     return jsonObj['schedule'];
   }
 
-  Future<void> updateSchedule(ScheduleDBModel model, int uid) async {
+  Future<void> updateSchedule(
+    ScheduleDBModel model,
+    int uid,
+  ) async {
     _dio.updateToken(await AppSharedPref.loadAccessToken());
     Map<String, dynamic> dataMap = model.toMap();
     dataMap['uid'] = uid;
     await _dio.post("/app/limit/schedule/update_one_schedule", data: dataMap);
+  }
+
+  Future<void> setApnsToken(
+    int uid,
+    String deviceToken,
+  ) async {
+    Map<String, dynamic> dataMap = {};
+    dataMap['uid'] = uid;
+    dataMap['device_token'] = deviceToken;
+    await _dio.post("/app/open/user/setApnsToken", data: dataMap);
   }
 }

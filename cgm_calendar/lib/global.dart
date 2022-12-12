@@ -1,9 +1,12 @@
 import 'dart:io';
 
+import 'package:cgm_calendar/app_shared_pref.dart';
 import 'package:cgm_calendar/models/day_model.dart';
 import 'package:cgm_calendar/models/month_model.dart';
 import 'package:cgm_calendar/models/year_model.dart';
+import 'package:cgm_calendar/network/remote_api.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_apns_only/flutter_apns_only.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -15,6 +18,7 @@ class Global {
   static final List<YearModel> newYears = [];
   static final List<MonthModel> allMonths = [];
   static final Map<int, List<DayModel>> idScheduleMap = {};
+  static final conncetor = ApnsPushConnectorOnly();
 
   static init() {
     int lastYear = DateTime.now().year - 1;
@@ -44,6 +48,20 @@ class Global {
       YearModel year = newYears[i];
       allMonths.addAll(year.monthsOfYear);
     }
+  }
+
+  static void setApnsToken(RemoteApi api) {
+    conncetor.token.addListener(() async {
+      final token = conncetor.token.value;
+      debugPrint('device token $token');
+      try {
+        await api.setApnsToken(await AppSharedPref.loadUid(), token ?? "");
+      } catch (e) {
+        debugPrint('setApnsToken error ${e.toString()}');
+      }
+    });
+    conncetor.configureApns();
+    conncetor.requestNotificationPermissions();
   }
 
   static String localeStr() {
