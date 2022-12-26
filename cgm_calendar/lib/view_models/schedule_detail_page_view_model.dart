@@ -1,10 +1,11 @@
 import 'package:cgm_calendar/add_schedule_helper.dart';
 import 'package:cgm_calendar/app_shared_pref.dart';
-import 'package:cgm_calendar/db/schedule_db_model.dart';
+import 'package:cgm_calendar/models/schedule_db_model.dart';
 import 'package:cgm_calendar/global.dart';
 import 'package:cgm_calendar/models/day_model.dart';
 import 'package:cgm_calendar/models/schedule_model.dart';
 import 'package:cgm_calendar/network/remote_api.dart';
+import 'package:cgm_calendar/view_models/set_schedule_page_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:one_context/one_context.dart';
@@ -19,10 +20,11 @@ class ScheduleDetailPageViewModel {
   String _title = "";
   String _timeStr1 = "";
   String _timeStr2 = "";
-  int _repeatType = 0;
-  int _scheduleType = 0;
+  RepeatType _repeatType = RepeatType.none;
+  ScheduleType _scheduleType = ScheduleType.personal;
   int _repeatUntil = 0;
   String _remarks = "";
+  AlertType _alertType = AlertType.none;
 
   ScheduleDetailPageViewModel(ScheduleModel model) {
     _model = model;
@@ -32,10 +34,11 @@ class ScheduleDetailPageViewModel {
   String get title => _title;
   String get timeStr1 => _timeStr1;
   String get timeStr2 => _timeStr2;
-  int get repeatType => _repeatType;
-  int get scheduleType => _scheduleType;
+  RepeatType get repeatType => _repeatType;
+  ScheduleType get scheduleType => _scheduleType;
   int get repeatUntil => _repeatUntil;
   String get remarks => _remarks;
+  AlertType get alertType => _alertType;
 
   void _setParams() {
     _title = _model.title;
@@ -44,6 +47,7 @@ class ScheduleDetailPageViewModel {
     _scheduleType = _model.scheduleType;
     _remarks = _model.remarks;
     _repeatUntil = _model.repeatUntil;
+    _alertType = _model.alarmType;
   }
 
   void _makeTimeStr() {
@@ -77,8 +81,10 @@ class ScheduleDetailPageViewModel {
     OneContext().context = context;
     await OneContext().showProgressIndicator();
     try {
-      await remoteApi
-          .deleteSchedules([_model.id], await AppSharedPref.loadUid());
+      await remoteApi.deleteSchedules(
+        [_model.id],
+        await AppSharedPref.loadUid(),
+      );
       _deleteLocalSchedule(_model.id);
       success();
     } catch (e) {
@@ -95,7 +101,9 @@ class ScheduleDetailPageViewModel {
     await OneContext().showProgressIndicator();
     try {
       Map<String, dynamic> schedule = await remoteApi.getOneSchedule(
-          _model.id, await AppSharedPref.loadUid());
+        _model.id,
+        await AppSharedPref.loadUid(),
+      );
       ScheduleDBModel dbModel = ScheduleDBModel.fromMap(schedule);
       if (deleteType == DeleteType.thisOnly) {
         dbModel.exceptionTimes =
@@ -105,10 +113,15 @@ class ScheduleDetailPageViewModel {
       }
 
       if (dbModel.repeatUntil > 0 && dbModel.repeatUntil <= dbModel.startTime) {
-        await remoteApi
-            .deleteSchedules([_model.id], await AppSharedPref.loadUid());
+        await remoteApi.deleteSchedules(
+          [_model.id],
+          await AppSharedPref.loadUid(),
+        );
       } else {
-        await remoteApi.updateSchedule(dbModel, await AppSharedPref.loadUid());
+        await remoteApi.updateSchedule(
+          dbModel,
+          await AppSharedPref.loadUid(),
+        );
       }
 
       _deleteLocalSchedule(_model.id);

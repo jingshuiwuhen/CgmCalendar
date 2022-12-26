@@ -64,5 +64,14 @@
     "privacy_title": "Privacy",
     "check_privacy": "Read Privacy and agree",
     "please_check_privacy": "Please read Privacy and agree",
-    "skip": "Skip"
+    "skip": "Skip",
+    "alert": "Alert",
+    "alert_none": "None",
+    "alert_5m_before": "5 minutes before",
+    "alert_10m_before": "10 minutes before",
+    "alert_15m_before": "15 minutes before",
+    "alert_30m_before": "30 minutes before",
+    "alert_1h_before": "1 hour before",
+    "alert_2h_before": "2 hours before",
+    "alert_1d_before": "1 day before"
 }

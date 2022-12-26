@@ -10,8 +10,8 @@ class DioInstance with DioMixin implements Dio {
   late BuildContext _context;
   DioInstance._([BaseOptions? options]) {
     options = BaseOptions(
-      baseUrl: "http://8.210.114.49",
-      // baseUrl: "http://192.168.100.159:3000",
+      // baseUrl: "http://8.210.114.49",
+      baseUrl: "http://192.168.100.159:3000",
       contentType: 'application/json',
       connectTimeout: 10000,
       sendTimeout: 10000,

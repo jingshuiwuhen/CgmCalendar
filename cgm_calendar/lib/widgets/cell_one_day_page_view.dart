@@ -65,7 +65,7 @@ class CellOneDayPageView extends StatelessWidget {
                       color: dayModel.scheduleList.isEmpty
                           ? null
                           : dayModel.scheduleList[0].scheduleType ==
-                                  SchedualType.personal.index
+                                  ScheduleType.personal
                               ? Colors.lightBlue[100]
                               : Colors.purpleAccent[100],
                       padding: EdgeInsets.fromLTRB(
@@ -93,7 +93,7 @@ class CellOneDayPageView extends StatelessWidget {
                       color: dayModel.scheduleList.length < 2
                           ? null
                           : dayModel.scheduleList[1].scheduleType ==
-                                  SchedualType.personal.index
+                                  ScheduleType.personal
                               ? Colors.lightBlue[100]
                               : Colors.purpleAccent[100],
                       padding: EdgeInsets.fromLTRB(
@@ -121,7 +121,7 @@ class CellOneDayPageView extends StatelessWidget {
                       color: dayModel.scheduleList.length < 3
                           ? null
                           : dayModel.scheduleList[2].scheduleType ==
-                                  SchedualType.personal.index
+                                  ScheduleType.personal
                               ? Colors.lightBlue[100]
                               : Colors.purpleAccent[100],
                       padding: EdgeInsets.fromLTRB(

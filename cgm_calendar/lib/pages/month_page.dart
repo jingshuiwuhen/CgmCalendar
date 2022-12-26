@@ -220,7 +220,7 @@ class MonthPage extends StatelessWidget {
                                     ),
                                     decoration: BoxDecoration(
                                       color: schedule.scheduleType ==
-                                              SchedualType.personal.index
+                                              ScheduleType.personal
                                           ? Colors.lightBlue[100]
                                           : Colors.purpleAccent[100],
                                       borderRadius:

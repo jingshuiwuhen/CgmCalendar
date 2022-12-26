@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:cgm_calendar/app_shared_pref.dart';
-import 'package:cgm_calendar/db/schedule_db_model.dart';
+import 'package:cgm_calendar/models/schedule_db_model.dart';
 import 'package:cgm_calendar/network/dio_instance.dart';
 import 'package:flutter/widgets.dart';
 
@@ -70,7 +70,7 @@ class RemoteApi {
     dataMap['uid'] = uid;
     dataMap['start_time'] = startTime;
     var result =
-        await _dio.post("/app/limit/schedule/get_all_schedule", data: dataMap);
+        await _dio.post("/app/limit/schedule/get_all_schedule_v1.0.1", data: dataMap);
     Map<String, dynamic> jsonObj = json.decode(result.toString());
     return jsonObj['schedules'];
   }

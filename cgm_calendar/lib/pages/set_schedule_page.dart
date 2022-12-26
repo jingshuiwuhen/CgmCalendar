@@ -2,6 +2,7 @@ import 'package:cgm_calendar/generated/l10n.dart';
 import 'package:cgm_calendar/global.dart';
 import 'package:cgm_calendar/models/day_model.dart';
 import 'package:cgm_calendar/models/schedule_model.dart';
+import 'package:cgm_calendar/pages/alert_select_page.dart';
 import 'package:cgm_calendar/pages/common_string.dart';
 import 'package:cgm_calendar/view_models/set_schedule_page_view_model.dart';
 import 'package:cgm_calendar/widgets/cell_date_time_picker.dart';
@@ -86,7 +87,7 @@ class SetSchedulePage extends StatelessWidget {
                       return;
                     }
 
-                    if (scheduleModel!.repeatType == RepeatType.none.index) {
+                    if (scheduleModel!.repeatType == RepeatType.none) {
                       rViewModel.editNoRepeatSchedule(
                           context,
                           () => Navigator.of(context)
@@ -226,7 +227,68 @@ class SetSchedulePage extends StatelessWidget {
                                     Icons.arrow_forward_ios,
                                     size: 12.sp,
                                     color: Colors.grey,
-                                  )
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Divider(
+                        height: 2.h,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            S.of(context).alert,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18.sp,
+                            ),
+                          ),
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () async {
+                                rViewModel.cancelFocus();
+                                AlertType? alertType = await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => AlertSelectPage(
+                                      alertType: rViewModel.alertType,
+                                    ),
+                                  ),
+                                );
+
+                                if (alertType != null) {
+                                  rViewModel.updateAlertType(alertType);
+                                }
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(
+                                      10.w,
+                                      11.h,
+                                      5.w,
+                                      11.h,
+                                    ),
+                                    child: Text(
+                                      CommonString.getAlertStr(
+                                        context,
+                                        wViewModel.alertType,
+                                      ),
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 15.sp,
+                                      ),
+                                    ),
+                                  ),
+                                  Icon(
+                                    Icons.arrow_forward_ios,
+                                    size: 12.sp,
+                                    color: Colors.grey,
+                                  ),
                                 ],
                               ),
                             ),
@@ -235,7 +297,7 @@ class SetSchedulePage extends StatelessWidget {
                       ),
                       Visibility(
                         visible: scheduleModel != null &&
-                            scheduleModel!.repeatType != RepeatType.none.index,
+                            scheduleModel!.repeatType != RepeatType.none,
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
@@ -298,9 +360,9 @@ class SetSchedulePage extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           rViewModel.cancelFocus();
-                          _showSelector<SchedualType>(
+                          _showSelector<ScheduleType>(
                             context,
-                            SchedualType.values,
+                            ScheduleType.values,
                           );
                         },
                         child: Row(
@@ -318,7 +380,7 @@ class SetSchedulePage extends StatelessWidget {
                                 children: [
                                   CircleAvatar(
                                     backgroundColor: wViewModel.scheduleType ==
-                                            SchedualType.personal
+                                            ScheduleType.personal
                                         ? Colors.lightBlue[100]
                                         : Colors.purpleAccent[100],
                                     radius: 3.r,
@@ -418,14 +480,14 @@ class SetSchedulePage extends StatelessWidget {
           if (type is RepeatType) {
             rViewModel.updateRepeatType(type);
           } else {
-            rViewModel.updateScheduleType((type as SchedualType));
+            rViewModel.updateScheduleType((type as ScheduleType));
           }
           Navigator.pop(context);
         },
         child: Text(
           type is RepeatType
               ? CommonString.getRepeatStr(context, type)
-              : CommonString.getScheduleStr(context, (type as SchedualType)),
+              : CommonString.getScheduleStr(context, (type as ScheduleType)),
         ),
       ));
     }

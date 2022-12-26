@@ -64,5 +64,14 @@
     "privacy_title": "プライバシー",
     "check_privacy": "プライバシーを読んで同意する",
     "please_check_privacy": "プライバシーを読んで同意してください",
-    "skip": "あとで"
+    "skip": "あとで",
+    "alert": "通知",
+    "alert_none": "なし",
+    "alert_5m_before": "5分前",
+    "alert_10m_before": "10分前",
+    "alert_15m_before": "15分前",
+    "alert_30m_before": "30分前",
+    "alert_1h_before": "1時間前",
+    "alert_2h_before": "2時間前",
+    "alert_1d_before": "1日前"
 }

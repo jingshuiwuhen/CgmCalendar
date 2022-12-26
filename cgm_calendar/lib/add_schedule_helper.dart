@@ -1,4 +1,4 @@
-import 'package:cgm_calendar/db/schedule_db_model.dart';
+import 'package:cgm_calendar/models/schedule_db_model.dart';
 import 'package:cgm_calendar/global.dart';
 import 'package:cgm_calendar/models/day_model.dart';
 import 'package:cgm_calendar/models/month_model.dart';

@@ -25,6 +25,21 @@ class MessageLookup extends MessageLookupByLibrary {
         "Setting": MessageLookupByLibrary.simpleMessage("Setting"),
         "add": MessageLookupByLibrary.simpleMessage("Add"),
         "adv": MessageLookupByLibrary.simpleMessage("CGM Group AD."),
+        "alert": MessageLookupByLibrary.simpleMessage("Alert"),
+        "alert_10m_before":
+            MessageLookupByLibrary.simpleMessage("10 minutes before"),
+        "alert_15m_before":
+            MessageLookupByLibrary.simpleMessage("15 minutes before"),
+        "alert_1d_before": MessageLookupByLibrary.simpleMessage("1 day before"),
+        "alert_1h_before":
+            MessageLookupByLibrary.simpleMessage("1 hour before"),
+        "alert_2h_before":
+            MessageLookupByLibrary.simpleMessage("2 hours before"),
+        "alert_30m_before":
+            MessageLookupByLibrary.simpleMessage("30 minutes before"),
+        "alert_5m_before":
+            MessageLookupByLibrary.simpleMessage("5 minutes before"),
+        "alert_none": MessageLookupByLibrary.simpleMessage("None"),
         "all_day": MessageLookupByLibrary.simpleMessage("All Day"),
         "auth_code_expired": MessageLookupByLibrary.simpleMessage(
             "Verification code has expired"),

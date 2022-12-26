@@ -80,7 +80,7 @@ class ScheduleDetailPage extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () async {
-                if (model.repeatType == RepeatType.none.index) {
+                if (model.repeatType == RepeatType.none) {
                   _showDeleteConfirmSelector(context);
                   return;
                 }
@@ -172,7 +172,9 @@ class ScheduleDetailPage extends StatelessWidget {
                   const Spacer(),
                   Text(
                     CommonString.getRepeatStr(
-                        context, RepeatType.values[viewModel.repeatType]),
+                      context,
+                      viewModel.repeatType,
+                    ),
                     style: TextStyle(
                       color: Colors.grey,
                       fontSize: 20.sp,
@@ -182,8 +184,7 @@ class ScheduleDetailPage extends StatelessWidget {
               ),
             ),
             Visibility(
-              visible:
-                  RepeatType.values[viewModel.repeatType] != RepeatType.none,
+              visible: viewModel.repeatType != RepeatType.none,
               child: Container(
                 margin: EdgeInsets.only(
                   bottom: 10.h,
@@ -250,10 +251,10 @@ class ScheduleDetailPage extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       CircleAvatar(
-                        backgroundColor: viewModel.scheduleType ==
-                                SchedualType.personal.index
-                            ? Colors.lightBlue[100]
-                            : Colors.purpleAccent[100],
+                        backgroundColor:
+                            viewModel.scheduleType == ScheduleType.personal
+                                ? Colors.lightBlue[100]
+                                : Colors.purpleAccent[100],
                         radius: 3.r,
                       ),
                       Padding(
@@ -261,8 +262,10 @@ class ScheduleDetailPage extends StatelessWidget {
                           left: 10.w,
                         ),
                         child: Text(
-                          CommonString.getScheduleStr(context,
-                              SchedualType.values[viewModel.scheduleType]),
+                          CommonString.getScheduleStr(
+                            context,
+                            viewModel.scheduleType,
+                          ),
                           style: TextStyle(
                             color: Colors.grey,
                             fontSize: 20.sp,
@@ -270,6 +273,43 @@ class ScheduleDetailPage extends StatelessWidget {
                         ),
                       ),
                     ],
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                bottom: 10.h,
+              ),
+              padding: EdgeInsets.only(
+                bottom: 10.h,
+              ),
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: Colors.grey[200]!,
+                  ),
+                ),
+              ),
+              child: Row(
+                children: [
+                  Text(
+                    S.of(context).alert,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20.sp,
+                    ),
+                  ),
+                  const Spacer(),
+                  Text(
+                    CommonString.getAlertStr(
+                      context,
+                      viewModel.alertType,
+                    ),
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 20.sp,
+                    ),
                   ),
                 ],
               ),

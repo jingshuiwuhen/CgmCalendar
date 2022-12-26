@@ -64,5 +64,14 @@
     "privacy_title": "隐私政策",
     "check_privacy": "阅读隐私政策并同意",
     "please_check_privacy": "请阅读隐私政策并同意",
-    "skip": "跳过"
+    "skip": "跳过",
+    "alert": "提醒",
+    "alert_none": "无",
+    "alert_5m_before": "5分钟前",
+    "alert_10m_before": "10分钟前",
+    "alert_15m_before": "15分钟前",
+    "alert_30m_before": "30分钟前",
+    "alert_1h_before": "1小时前",
+    "alert_2h_before": "2小时前",
+    "alert_1d_before": "1天前"
 }

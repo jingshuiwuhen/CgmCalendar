@@ -709,6 +709,96 @@ class S {
       args: [],
     );
   }
+
+  /// `Alert`
+  String get alert {
+    return Intl.message(
+      'Alert',
+      name: 'alert',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `None`
+  String get alert_none {
+    return Intl.message(
+      'None',
+      name: 'alert_none',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `5 minutes before`
+  String get alert_5m_before {
+    return Intl.message(
+      '5 minutes before',
+      name: 'alert_5m_before',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `10 minutes before`
+  String get alert_10m_before {
+    return Intl.message(
+      '10 minutes before',
+      name: 'alert_10m_before',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `15 minutes before`
+  String get alert_15m_before {
+    return Intl.message(
+      '15 minutes before',
+      name: 'alert_15m_before',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `30 minutes before`
+  String get alert_30m_before {
+    return Intl.message(
+      '30 minutes before',
+      name: 'alert_30m_before',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `1 hour before`
+  String get alert_1h_before {
+    return Intl.message(
+      '1 hour before',
+      name: 'alert_1h_before',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `2 hours before`
+  String get alert_2h_before {
+    return Intl.message(
+      '2 hours before',
+      name: 'alert_2h_before',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `1 day before`
+  String get alert_1d_before {
+    return Intl.message(
+      '1 day before',
+      name: 'alert_1d_before',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -1,6 +1,6 @@
 import 'package:cgm_calendar/add_schedule_helper.dart';
 import 'package:cgm_calendar/app_shared_pref.dart';
-import 'package:cgm_calendar/db/schedule_db_model.dart';
+import 'package:cgm_calendar/models/schedule_db_model.dart';
 import 'package:cgm_calendar/global.dart';
 import 'package:cgm_calendar/models/day_model.dart';
 import 'package:cgm_calendar/models/schedule_model.dart';
@@ -17,7 +17,7 @@ enum RepeatType {
   everyMonth,
 }
 
-enum SchedualType {
+enum ScheduleType {
   personal,
   work,
 }
@@ -25,6 +25,17 @@ enum SchedualType {
 enum EditType {
   thisOnly,
   futureContainsThis,
+}
+
+enum AlertType {
+  none,
+  fiveMinutesBefore,
+  tenMinutesBefore,
+  fifteenMinutesBefore,
+  thirtyMinutesBefore,
+  oneHourBefore,
+  twoHoursBefore,
+  oneDayBefore,
 }
 
 class SetSchedulePageViewModel with ChangeNotifier {
@@ -36,12 +47,13 @@ class SetSchedulePageViewModel with ChangeNotifier {
   late String _endTime;
   late RepeatType _repeatType;
   int _repeatUntil = 0;
-  late SchedualType _scheduleType;
+  late ScheduleType _scheduleType;
   late bool _isNotRightTime;
   late TextEditingController _remarksEditingController;
   late FocusNode _remarksFocus;
   ScheduleModel? _oldSchedule;
   late ScheduleModel _newSchedule;
+  late AlertType _alertType;
 
   SetSchedulePageViewModel(
       ScheduleModel? schedule, DayModel? selectedDayModel) {
@@ -76,9 +88,9 @@ class SetSchedulePageViewModel with ChangeNotifier {
         "${end.substring(0, 4)}/${end.substring(4, 6)}/${end.substring(6, 8)}";
     _endTime = "${end.substring(8, 10)}:${end.substring(10)}";
 
-    _repeatType = RepeatType.values[_newSchedule.repeatType];
+    _repeatType = _newSchedule.repeatType;
     _repeatUntil = _newSchedule.repeatUntil;
-    _scheduleType = SchedualType.values[_newSchedule.scheduleType];
+    _scheduleType = _newSchedule.scheduleType;
     _isNotRightTime = false;
 
     _remarksEditingController =
@@ -87,6 +99,8 @@ class SetSchedulePageViewModel with ChangeNotifier {
       _newSchedule.remarks = _remarksEditingController.text;
     });
     _remarksFocus = FocusNode();
+
+    _alertType = _newSchedule.alarmType;
   }
 
   TextEditingController get titleEditingController => _titleEditingController;
@@ -96,12 +110,13 @@ class SetSchedulePageViewModel with ChangeNotifier {
   String get endDate => _endDate;
   String get endTime => _endTime;
   RepeatType get repeatType => _repeatType;
-  SchedualType get scheduleType => _scheduleType;
+  ScheduleType get scheduleType => _scheduleType;
   int get repeatUntil => _repeatUntil;
   bool get isNotRightTime => _isNotRightTime;
   TextEditingController? get remarksEditingController =>
       _remarksEditingController;
   FocusNode get remarksFocus => _remarksFocus;
+  AlertType get alertType => _alertType;
 
   void updateStartDate(DateTime newStartDate) {
     _startDate = formatDate(newStartDate, [yyyy, '/', mm, '/', dd]);
@@ -134,7 +149,7 @@ class SetSchedulePageViewModel with ChangeNotifier {
   void updateRepeatType(RepeatType repeatType) {
     _repeatType = repeatType;
     notifyListeners();
-    _newSchedule.repeatType = repeatType.index;
+    _newSchedule.repeatType = repeatType;
   }
 
   void updateRepeatUntil(int repeatUntil) {
@@ -143,10 +158,16 @@ class SetSchedulePageViewModel with ChangeNotifier {
     _newSchedule.repeatUntil = repeatUntil;
   }
 
-  void updateScheduleType(SchedualType scheduleType) {
+  void updateScheduleType(ScheduleType scheduleType) {
     _scheduleType = scheduleType;
     notifyListeners();
-    _newSchedule.scheduleType = scheduleType.index;
+    _newSchedule.scheduleType = scheduleType;
+  }
+
+  void updateAlertType(AlertType alertType) {
+    _alertType = alertType;
+    notifyListeners();
+    _newSchedule.alarmType = alertType;
   }
 
   DateTime getInitialDateTimeOfRepeatUntil() {
@@ -202,8 +223,10 @@ class SetSchedulePageViewModel with ChangeNotifier {
     OneContext().context = context;
     await OneContext().showProgressIndicator();
     try {
-      model.id =
-          await remoteApi.addNewSchedule(model, await AppSharedPref.loadUid());
+      model.id = await remoteApi.addNewSchedule(
+        model,
+        await AppSharedPref.loadUid(),
+      );
       AddScheduleHelper.addToCalendar(model);
       success();
     } catch (e) {
@@ -219,10 +242,15 @@ class SetSchedulePageViewModel with ChangeNotifier {
     await OneContext().showProgressIndicator();
     try {
       Map<String, dynamic> schedule = await remoteApi.getOneSchedule(
-          _oldSchedule!.id, await AppSharedPref.loadUid());
+        _oldSchedule!.id,
+        await AppSharedPref.loadUid(),
+      );
       ScheduleDBModel model = ScheduleDBModel.fromMap(schedule);
       model.copyFromScheduleModel(_newSchedule);
-      await remoteApi.updateSchedule(model, await AppSharedPref.loadUid());
+      await remoteApi.updateSchedule(
+        model,
+        await AppSharedPref.loadUid(),
+      );
       _deleteSchedules(model.id);
       AddScheduleHelper.addToCalendar(model);
       success();
@@ -240,14 +268,18 @@ class SetSchedulePageViewModel with ChangeNotifier {
     await OneContext().showProgressIndicator();
     try {
       Map<String, dynamic> schedule = await remoteApi.getOneSchedule(
-          _oldSchedule!.id, await AppSharedPref.loadUid());
+        _oldSchedule!.id,
+        await AppSharedPref.loadUid(),
+      );
       ScheduleDBModel model = ScheduleDBModel.fromMap(schedule);
 
       ScheduleDBModel newModel = ScheduleDBModel();
       newModel.copyFromScheduleModel(_newSchedule);
       newModel.exceptionTimes = model.exceptionTimes;
       newModel.id = await remoteApi.addNewSchedule(
-          newModel, await AppSharedPref.loadUid());
+        newModel,
+        await AppSharedPref.loadUid(),
+      );
       AddScheduleHelper.addToCalendar(newModel);
 
       if (type == EditType.thisOnly) {
@@ -256,7 +288,10 @@ class SetSchedulePageViewModel with ChangeNotifier {
       } else {
         model.repeatUntil = _oldSchedule!.startTime;
       }
-      await remoteApi.updateSchedule(model, await AppSharedPref.loadUid());
+      await remoteApi.updateSchedule(
+        model,
+        await AppSharedPref.loadUid(),
+      );
       _deleteSchedules(model.id);
       AddScheduleHelper.addToCalendar(model);
 
@@ -289,6 +324,9 @@ class SetSchedulePageViewModel with ChangeNotifier {
         deleteIds.add(id);
       }
     }
-    await remoteApi.deleteSchedules(ids, await AppSharedPref.loadUid());
+    await remoteApi.deleteSchedules(
+      ids,
+      await AppSharedPref.loadUid(),
+    );
   }
 }

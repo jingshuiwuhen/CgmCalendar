@@ -35,14 +35,45 @@ class CommonString {
   }
 
   static String getScheduleStr(
-      BuildContext context, SchedualType schedualType) {
+      BuildContext context, ScheduleType schedualType) {
     String text = "";
     switch (schedualType) {
-      case SchedualType.personal:
+      case ScheduleType.personal:
         text = S.of(context).schedule_type_personal;
         break;
-      case SchedualType.work:
+      case ScheduleType.work:
         text = S.of(context).schedule_type_work;
+        break;
+    }
+    return text;
+  }
+
+  static String getAlertStr(BuildContext context, AlertType alertType) {
+    String text = "";
+    switch (alertType) {
+      case AlertType.none:
+        text = S.of(context).alert_none;
+        break;
+      case AlertType.fiveMinutesBefore:
+        text = S.of(context).alert_5m_before;
+        break;
+      case AlertType.tenMinutesBefore:
+        text = S.of(context).alert_10m_before;
+        break;
+      case AlertType.fifteenMinutesBefore:
+        text = S.of(context).alert_15m_before;
+        break;
+      case AlertType.thirtyMinutesBefore:
+        text = S.of(context).alert_30m_before;
+        break;
+      case AlertType.oneHourBefore:
+        text = S.of(context).alert_1h_before;
+        break;
+      case AlertType.twoHoursBefore:
+        text = S.of(context).alert_2h_before;
+        break;
+      case AlertType.oneDayBefore:
+        text = S.of(context).alert_1d_before;
         break;
     }
     return text;
